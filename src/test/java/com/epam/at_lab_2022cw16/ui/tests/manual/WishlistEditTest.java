@@ -1,103 +1,192 @@
 package com.epam.at_lab_2022cw16.ui.tests.manual;
 
+import com.epam.at_lab_2022cw16.ui.constants.AlertMessageTexts;
+import com.epam.at_lab_2022cw16.ui.constants.ObjectNames;
+import com.epam.at_lab_2022cw16.ui.constants.PageTitles;
+import com.epam.at_lab_2022cw16.ui.model.User;
 import com.epam.at_lab_2022cw16.ui.page.*;
-import org.openqa.selenium.WebElement;
-import org.testng.Assert;
-import org.testng.annotations.Test;
+import com.epam.at_lab_2022cw16.ui.page.pageElements.ProductBlock;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 
 import java.util.List;
 
-public class WishlistEditTest extends CommonConditions {
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+public class WishlistEditTest extends AbstractBaseTest {
+
     private static final String HOMEPAGE_URL = "http://automationpractice.com/index.php";
-    private static final String HOMEPAGE_TITLE = "My Store";
-    private static final String MY_ACCOUNT_PAGE_TITLE = "My account - My Store";
-    private static final String PAGE_WITH_SUMMER_DRESSES_TITLE = "Summer Dresses - My Store";
-    private static final String PAGE_WITH_T_SHIRTS_TITLE = "T-shirts - My Store";
-    private static final String PAGE_WITH_EVENING_DRESSES_TITLE = "Evening Dresses - My Store";
-    private static final String MY_WISHLIST_NAME = "My wishlist";
-    private static final String ALERT_MESSAGE_TEXT = "Do you really want to delete this wishlist ?";
 
-    @Test(description = "browser setup")
-    public void editWishlistTest() throws InterruptedException {
+    @Order(1)
+    @Test
+    public void userOpenHomepage() {
         MyStoreHomepage myStoreHomepage = new MyStoreHomepage(driver);
-        myStoreHomepage.openPage(HOMEPAGE_URL);
-        Assert.assertEquals(driver.getTitle(), HOMEPAGE_TITLE);
+        myStoreHomepage.openPage();
+        assertEquals(myStoreHomepage.getTitle(driver), PageTitles.HOMEPAGE_TITLE.getPageTitle());
+    }
 
+    @Order(2)
+    @Test
+    public void userLogIn() {
+        MyStoreHomepage myStoreHomepage = new MyStoreHomepage(driver);
         myStoreHomepage.pressSignInButton();
+        User user = new User("mikalay.murashko@gmail.com", "12345");
         AuthenticationPage authenticationPage = new AuthenticationPage(driver);
-        authenticationPage.inputEmail("mikalay.murashko@gmail.com")
-                .inputPassword("12345")
+        authenticationPage.inputEmail(user.getUsername())
+                .inputPassword(user.getPassword())
                 .proceedToMyAccountPage();
-        Assert.assertEquals(driver.getTitle(), MY_ACCOUNT_PAGE_TITLE);
+        assertEquals(authenticationPage.getTitle(driver), PageTitles.MY_ACCOUNT_PAGE_TITLE.getPageTitle());
+    }
 
+    @Order(3)
+    @Test
+    public void userProceedToHomepage() {
         MyAccountPage myAccountPage = new MyAccountPage(driver);
-        myAccountPage.proceedToWishlist()
-                .returnToHomePage();
-        Assert.assertEquals(driver.getTitle(), HOMEPAGE_TITLE);
+        myAccountPage.proceedToHomepage();
+        assertEquals(myAccountPage.getTitle(driver), PageTitles.HOMEPAGE_TITLE.getPageTitle());
+    }
 
-        CatalogPage catalogPage = new CatalogPage(driver);
+    @Order(4)
+    @Test
+    public void userProceedToSummerDressCatalog() {
+        MyStoreHomepage myStoreHomepage = new MyStoreHomepage(driver);
         myStoreHomepage.openSummerDressesCatalog();
-        Assert.assertEquals(driver.getTitle(), PAGE_WITH_SUMMER_DRESSES_TITLE);
+        MyAccountPage myAccountPage = new MyAccountPage(driver);
+        assertEquals(myAccountPage.getTitle(driver), PageTitles.PAGE_WITH_SUMMER_DRESSES_TITLE.getPageTitle());
+    }
+
+    @Order(5)
+    @Test
+    public void userSwitchToListView() {
+        CatalogPage catalogPage = new CatalogPage(driver);
         catalogPage.switchToListView();
+        List<ProductBlock> products = catalogPage.getProducts();
+        assertTrue(products.size() > 0);
+        assertEquals(products.size(), catalogPage.getListOfAddToCartButtonsNumberValue());
+        assertEquals(products.size(), catalogPage.getMoreButtonsNumberValue());
+        assertEquals(products.size(), catalogPage.getAddToWishListButtonsNumberValue());
+        assertEquals(products.size(), catalogPage.getAddToCompareButtonsValue());
+    }
 
-        List<WebElement> rows = catalogPage.getListOfItemsFromCatalog();
-        Assert.assertTrue(rows.size() > 0);
-        Assert.assertEquals(rows.size(), catalogPage.getListOfAddToCartButtons().size());
-        Assert.assertEquals(rows.size(), catalogPage.getMoreButtons().size());
-        Assert.assertEquals(rows.size(), catalogPage.addToWishListButtons().size());
-        Assert.assertEquals(rows.size(), catalogPage.addToCompareButtons().size());
-
-        catalogPage.addFirstItemToWishlist();
-        Assert.assertTrue(catalogPage.infoBox().isDisplayed());
-        catalogPage.closeInfoBox()
-                .addSecondItemToWishlist();
-        Assert.assertTrue(catalogPage.infoBox().isDisplayed());
-        catalogPage.closeInfoBox()
-                .addThirdItemToWishlist();
-        Assert.assertTrue(catalogPage.infoBox().isDisplayed());
+    @Order(6)
+    @Test
+    public void userAddItemsToCart() {
+        CatalogPage catalogPage = new CatalogPage(driver);
+        List<ProductBlock> products = catalogPage.getProducts();
+        products.get(0).addToWishListButtonClick();
+        assertTrue(catalogPage.infoBoxIsDisplayed());
         catalogPage.closeInfoBox();
-        Assert.assertEquals(rows.size(), catalogPage.getListOfWishlistSolidButtons().size());
+        assertTrue(products.get(0).isAddToWishlistSolidButtonDisplayed());
+        products.get(1).addToWishListButtonClick();
+        assertTrue(catalogPage.infoBoxIsDisplayed());
+        catalogPage.closeInfoBox();
+        assertTrue(products.get(1).isAddToWishlistSolidButtonDisplayed());
+        products.get(2).addToWishListButtonClick();
+        assertTrue(catalogPage.infoBoxIsDisplayed());
+        catalogPage.closeInfoBox();
+        assertTrue(products.get(2).isAddToWishlistSolidButtonDisplayed());
+    }
+
+    @Order(7)
+    @Test
+    public void userProceedToWishlistAndCheckWishlistNameAndCounter() {
+        CatalogPage catalogPage = new CatalogPage(driver);
+        catalogPage.proceedToMyAccountPage()
+                .proceedToWishlist();
         WishlistPage wishlistPage = new WishlistPage(driver);
-        catalogPage.proceedToMyAccountPage()
-                .proceedToWishlist();
+        assertEquals(wishlistPage.getWishlistName(), ObjectNames.MY_WISHLIST_NAME.getObjectName());
+        assertEquals(wishlistPage.getItemsInWishlistCounterValue(), 3);
+    }
 
-        Assert.assertEquals(wishlistPage.getWishlistName().getText(), MY_WISHLIST_NAME);
-        Assert.assertEquals(wishlistPage.getItemsInWishlistCounter().getText(), "3");
+    @Order(8)
+    @Test
+    public void userPressViewWishlistButton() {
+        WishlistPage wishlistPage = new WishlistPage(driver);
         wishlistPage.pressViewWishlistButton();
+        assertEquals(wishlistPage.getWishlistRowSize(), 3);
+    }
 
-        Assert.assertEquals(wishlistPage.getWishlistRow().size(), 3);
+    @Order(9)
+    @Test
+    public void userRemoveFirstDressFromCart() {
+        WishlistPage wishlistPage = new WishlistPage(driver);
         wishlistPage.removeFirstDressFromCart();
+        assertEquals(wishlistPage.getWishlistRowSize(), 2);
+    }
 
-        Assert.assertEquals(wishlistPage.getWishlistRow().size(), 2);
+    @Order(10)
+    @Test
+    public void userProceedToTShirtsCatalog() {
+        WishlistPage wishlistPage = new WishlistPage(driver);
         wishlistPage.proceedToTShirtsCatalogPage();
+        assertEquals(wishlistPage.getTitle(driver), PageTitles.PAGE_WITH_T_SHIRTS_TITLE.getPageTitle());
+    }
 
-        Assert.assertEquals(driver.getTitle(), PAGE_WITH_T_SHIRTS_TITLE);
-        catalogPage.addTShirtToWishlist();
-
-        Assert.assertTrue(catalogPage.infoBox().isDisplayed());
+    @Order(11)
+    @Test
+    public void userAddTShirtToWishlist() {
+        CatalogPage catalogPage = new CatalogPage(driver);
+        catalogPage.getProducts().get(0).addToWishListButtonClick();
+        assertTrue(catalogPage.infoBoxIsDisplayed());
         catalogPage.closeInfoBox();
-        Assert.assertEquals(rows.size(), catalogPage.getListOfWishlistSolidButtons().size());
+        assertTrue(catalogPage.getProducts().get(0).isAddToWishlistSolidButtonDisplayed());
+    }
+
+    @Order(12)
+    @Test
+    public void userProceedToEveningDressesCatalog() {
+        CatalogPage catalogPage = new CatalogPage(driver);
         catalogPage.proceedToEveningDressesPage();
+        assertEquals(catalogPage.getTitle(driver), PageTitles.PAGE_WITH_EVENING_DRESSES_TITLE.getPageTitle());
+    }
 
-        Assert.assertEquals(driver.getTitle(), PAGE_WITH_EVENING_DRESSES_TITLE);
-        catalogPage.addEveningDressToWishlist();
-
-        Assert.assertTrue(catalogPage.infoBox().isDisplayed());
+    @Order(13)
+    @Test
+    public void userAddEveningDressToWishlist() {
+        CatalogPage catalogPage = new CatalogPage(driver);
+        catalogPage.getProducts().get(0).addToWishListButtonClick();
+        assertTrue(catalogPage.infoBoxIsDisplayed());
         catalogPage.closeInfoBox();
-        Assert.assertEquals(rows.size(), catalogPage.getListOfWishlistSolidButtons().size());
+        assertTrue(catalogPage.getProducts().get(0).isAddToWishlistSolidButtonDisplayed());
+    }
+
+    @Order(14)
+    @Test
+    public void userProceedToWishlistPage() {
+        CatalogPage catalogPage = new CatalogPage(driver);
         catalogPage.proceedToMyAccountPage()
                 .proceedToWishlist();
+        WishlistPage wishlistPage = new WishlistPage(driver);
+        assertEquals(wishlistPage.getWishlistName(), ObjectNames.MY_WISHLIST_NAME.getObjectName());
+        assertEquals(wishlistPage.getItemsInWishlistCounterValue(), 4);
+    }
 
-        Assert.assertEquals(wishlistPage.getWishlistName().getText(), MY_WISHLIST_NAME);
-        Assert.assertEquals(wishlistPage.getItemsInWishlistCounter().getText(), "4");
-
+    @Order(15)
+    @Test
+    public void userOpenMyWishlistAndCheckItsSize() {
+        WishlistPage wishlistPage = new WishlistPage(driver);
         wishlistPage.pressViewWishlistButton();
-        Assert.assertEquals(wishlistPage.getWishlistRow().size(), 4);
+        assertEquals(wishlistPage.getWishlistRowSize(), 4);
+    }
+
+    @Order(16)
+    @Test
+    public void userDeleteWishlist() {
+        WishlistPage wishlistPage = new WishlistPage(driver);
         wishlistPage.pressDeleteWishlistButton();
-
-        Assert.assertEquals(driver.switchTo().alert().getText(), ALERT_MESSAGE_TEXT);
+        assertEquals(driver.switchTo().alert().getText(), AlertMessageTexts.ALERT_MESSAGE_TEXT.getAlertMessageText());
         wishlistPage.acceptAlertMessage();
+    }
 
-        Assert.assertEquals(wishlistPage.isWishListTableDisplayed().size(), 0);
+    @Order(17)
+    @Test
+    public void userSeeNoWishlists() {
+        WishlistPage wishlistPage = new WishlistPage(driver);
+        assertEquals(wishlistPage.isWishListTableDisplayed().size(), 0);
     }
 }

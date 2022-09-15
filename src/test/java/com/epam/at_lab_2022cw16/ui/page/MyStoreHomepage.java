@@ -12,13 +12,19 @@ public class MyStoreHomepage extends AbstractPage {
 
     @FindBy(xpath = "//a[@class='login']")
     private WebElement signInButton;
+
     @FindBy(xpath = "//a[@title='Women']")
     private WebElement womenDressesBarButton;
+
     @FindBy(xpath = "//li[@class]//a[@title='Summer Dresses']")
     private WebElement summerDressesButton;
 
+    public MyStoreHomepage(WebDriver driver) {
+        super(driver);
+        PageFactory.initElements(driver,this);
+    }
 
-    public MyStoreHomepage openPage(String url) {
+    public MyStoreHomepage openPage() {
         driver.get(HOMEPAGE);
         return this;
     }
@@ -32,11 +38,5 @@ public class MyStoreHomepage extends AbstractPage {
         new Actions(driver).moveToElement(womenDressesBarButton).build().perform();
         summerDressesButton.click();
         return new CatalogPage(driver);
-    }
-
-    public MyStoreHomepage(WebDriver driver) {
-        super(driver);
-        this.driver = driver;
-        PageFactory.initElements(driver, this);
     }
 }
