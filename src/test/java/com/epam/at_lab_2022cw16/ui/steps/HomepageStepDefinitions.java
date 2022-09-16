@@ -7,7 +7,7 @@ import org.openqa.selenium.WebDriver;
 
 public class HomepageStepDefinitions {
 
-    protected static WebDriver driver = DriverHooks.getWebDriver();
+    private final WebDriver driver = DriverHooks.getWebDriver();
 
     @When("I open Home Page")
     public void openHomepage() {

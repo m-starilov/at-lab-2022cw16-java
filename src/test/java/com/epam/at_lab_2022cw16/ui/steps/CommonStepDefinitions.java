@@ -8,7 +8,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class CommonStepDefinitions {
 
-    protected static WebDriver driver = DriverHooks.getWebDriver();
+    private final WebDriver driver = DriverHooks.getWebDriver();
 
     @Then("I see {string} page title")
     public void checkPageTitle(String expectedTitle) {

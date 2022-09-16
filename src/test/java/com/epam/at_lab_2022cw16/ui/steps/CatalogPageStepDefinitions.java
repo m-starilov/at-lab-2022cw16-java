@@ -7,7 +7,7 @@ import org.openqa.selenium.WebDriver;
 
 public class CatalogPageStepDefinitions {
 
-    protected static WebDriver driver = DriverHooks.getWebDriver();
+    private final WebDriver driver = DriverHooks.getWebDriver();
 
     @When("I add to Compare product with id {int}")
     public void addItemsToCompare(int id) {

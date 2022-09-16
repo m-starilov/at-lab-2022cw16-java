@@ -7,7 +7,7 @@ import org.openqa.selenium.WebDriver;
 
 public class MyAccountStepDefinitions {
 
-    protected static WebDriver driver = DriverHooks.getWebDriver();
+    private final WebDriver driver = DriverHooks.getWebDriver();
 
     @When("I go to Catalog page")
     public void clickCatalogButton() {

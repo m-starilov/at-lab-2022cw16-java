@@ -13,7 +13,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class OrderPageStepDefinitions {
 
-    protected static WebDriver driver = DriverHooks.getWebDriver();
+    private final WebDriver driver = DriverHooks.getWebDriver();
 
     private final List<String> bankAccountInformation = new ArrayList<>(
             List.of("Pradeep Macharla", "xyz", "RTP")

@@ -8,7 +8,7 @@ import org.openqa.selenium.WebDriver;
 
 public class AuthenticationPageStepDefinitions {
 
-    protected static WebDriver driver = DriverHooks.getWebDriver();
+    private final WebDriver driver = DriverHooks.getWebDriver();
 
     private final User user = new User("mofrekoiquemma-6157@yopmail.com", "12345");
 

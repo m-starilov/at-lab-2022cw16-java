@@ -4,11 +4,13 @@ import com.epam.at_lab_2022cw16.ui.driver.WebDriverApp;
 import com.epam.at_lab_2022cw16.ui.utils.EnvironmentUtils;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
+import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 
 import java.util.Optional;
 
+@Log4j2
 public class DriverHooks {
 
     @Before
@@ -21,7 +23,7 @@ public class DriverHooks {
         EnvironmentUtils.setDriver(driver);
     }
 
-    @After
+    @After(order = 0)
     public static void closeBrowser() {
         Optional
                 .ofNullable(EnvironmentUtils.getDriver())
