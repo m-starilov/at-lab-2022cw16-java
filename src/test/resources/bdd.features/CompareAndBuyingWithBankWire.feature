@@ -3,7 +3,7 @@ Feature: Compare And Buying With BankWire
   Scenario: Compare And Buying With BankWire
     When I open Home Page
     And I click to Sign in button
-    And I enter correct credentials to Authentication form
+    And I log in with email "mofrekoiquemma-6157@yopmail.com" and password "12345"
     Then the My account page is opened
     When I go to Catalog page
     And I add to Compare product with id 5

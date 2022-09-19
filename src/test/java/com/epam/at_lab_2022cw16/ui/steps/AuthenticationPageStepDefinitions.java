@@ -10,10 +10,9 @@ public class AuthenticationPageStepDefinitions {
 
     private final WebDriver driver = EnvironmentUtils.getDriver();
 
-    private final User user = new User("mofrekoiquemma-6157@yopmail.com", "12345");
-
-    @When("I enter correct credentials to Authentication form")
-    public void login() {
+    @When("I log in with email {string} and password {string}")
+    public void login(String email, String password) {
+        User user = new User(email, password);
         AuthenticationPage authenticationPage = new AuthenticationPage(driver).inputEmail(user.getUsername());
         authenticationPage.inputPassword(user.getPassword());
         authenticationPage.proceedToMyAccountPage();

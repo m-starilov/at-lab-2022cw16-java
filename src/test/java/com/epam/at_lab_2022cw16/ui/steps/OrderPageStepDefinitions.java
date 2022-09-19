@@ -6,7 +6,7 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.openqa.selenium.WebDriver;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -14,9 +14,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class OrderPageStepDefinitions {
 
     private final WebDriver driver = EnvironmentUtils.getDriver();
-    private final List<String> bankAccountInformation = new ArrayList<>(
-            List.of("Pradeep Macharla", "xyz", "RTP")
-    );
+    private final List<String> bankAccountInformation = Arrays.asList("Pradeep Macharla", "xyz", "RTP");
 
     @Then("I see {string} in cart")
     public void checkNumberOfItemsInCart(String numberOfItems) {
