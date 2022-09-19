@@ -1,13 +1,13 @@
 package com.epam.at_lab_2022cw16.ui.steps;
 
 import com.epam.at_lab_2022cw16.ui.page.MyStoreHomepage;
-import com.epam.at_lab_2022cw16.ui.tests.bdd.hooks.DriverHooks;
+import com.epam.at_lab_2022cw16.ui.utils.EnvironmentUtils;
 import io.cucumber.java.en.When;
 import org.openqa.selenium.WebDriver;
 
 public class HomepageStepDefinitions {
 
-    private final WebDriver driver = DriverHooks.getWebDriver();
+    private final WebDriver driver = EnvironmentUtils.getDriver();
 
     @When("I open Home Page")
     public void openHomepage() {

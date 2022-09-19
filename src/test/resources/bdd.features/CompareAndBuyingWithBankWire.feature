@@ -4,7 +4,7 @@ Feature: Compare And Buying With BankWire
     When I open Home Page
     And I click to Sign in button
     And I enter correct credentials to Authentication form
-    Then I see "My account" page title
+    Then the My account page is opened
     When I go to Catalog page
     And I add to Compare product with id 5
     And I add to Compare product with id 6

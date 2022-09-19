@@ -30,8 +30,4 @@ public class DriverHooks {
                     EnvironmentUtils.removeDriver();
                 });
     }
-
-    public static WebDriver getWebDriver() {
-        return EnvironmentUtils.getDriver();
-    }
 }

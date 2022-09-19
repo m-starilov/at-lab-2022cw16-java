@@ -1,7 +1,7 @@
 package com.epam.at_lab_2022cw16.ui.steps;
 
 import com.epam.at_lab_2022cw16.ui.page.ComparisonPage;
-import com.epam.at_lab_2022cw16.ui.tests.bdd.hooks.DriverHooks;
+import com.epam.at_lab_2022cw16.ui.utils.EnvironmentUtils;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.openqa.selenium.WebDriver;
@@ -10,7 +10,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class ComparisonPageStepDefinitions {
 
-    private final WebDriver driver = DriverHooks.getWebDriver();
+    private final WebDriver driver = EnvironmentUtils.getDriver();
 
     @Then("I see {int} items is displayed")
     public void checkNumberOfItems(int expectedNumber) {

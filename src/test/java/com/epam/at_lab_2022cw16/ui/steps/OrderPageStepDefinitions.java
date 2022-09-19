@@ -1,7 +1,7 @@
 package com.epam.at_lab_2022cw16.ui.steps;
 
 import com.epam.at_lab_2022cw16.ui.page.*;
-import com.epam.at_lab_2022cw16.ui.tests.bdd.hooks.DriverHooks;
+import com.epam.at_lab_2022cw16.ui.utils.EnvironmentUtils;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.openqa.selenium.WebDriver;
@@ -13,8 +13,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class OrderPageStepDefinitions {
 
-    private final WebDriver driver = DriverHooks.getWebDriver();
-
+    private final WebDriver driver = EnvironmentUtils.getDriver();
     private final List<String> bankAccountInformation = new ArrayList<>(
             List.of("Pradeep Macharla", "xyz", "RTP")
     );
