@@ -1,18 +1,17 @@
-package com.epam.at_lab_2022cw16.ui.tests.manual;
+package com.epam.at_lab_2022cw16.ui.tests.bdd.hooks;
 
 import com.epam.at_lab_2022cw16.ui.driver.WebDriverApp;
 import com.epam.at_lab_2022cw16.ui.utils.EnvironmentUtils;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
+import io.cucumber.java.After;
+import io.cucumber.java.Before;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 
 import java.util.Optional;
 
-public abstract class AbstractBaseTest {
-
-    @BeforeAll
-    public static void openBrowser() {
+public class DriverHooks {
+    @Before
+    public static void setupBrowser() {
         WebDriver driver = new WebDriverApp()
                 .getChrome()
                 .defaultConfig()
@@ -21,8 +20,8 @@ public abstract class AbstractBaseTest {
         EnvironmentUtils.setDriver(driver);
     }
 
-    @AfterAll
-    public static void closeBrowser() {
+    @After
+    public static void stopBrowser() {
         Optional
                 .ofNullable(EnvironmentUtils.getDriver())
                 .ifPresent(webDriver -> {
@@ -31,7 +30,4 @@ public abstract class AbstractBaseTest {
                 });
     }
 
-    protected static WebDriver getWebDriver() {
-        return EnvironmentUtils.getDriver();
-    }
 }

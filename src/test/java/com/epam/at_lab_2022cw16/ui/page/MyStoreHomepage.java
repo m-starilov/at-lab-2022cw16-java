@@ -1,13 +1,12 @@
 package com.epam.at_lab_2022cw16.ui.page;
-
+import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 
-public class MyStoreHomepage extends AbstractPage {
-
+@Log4j2
+public class MyStoreHomepage extends AbstractBasePage {
     private static final String HOMEPAGE = "http://automationpractice.com/index.php";
 
     @FindBy(xpath = "//a[@class='login']")
@@ -18,15 +17,21 @@ public class MyStoreHomepage extends AbstractPage {
 
     @FindBy(xpath = "//li[@class]//a[@title='Summer Dresses']")
     private WebElement summerDressesButton;
-
     public MyStoreHomepage(WebDriver driver) {
         super(driver);
-        PageFactory.initElements(driver,this);
     }
 
+    @Override
     public MyStoreHomepage openPage() {
         driver.get(HOMEPAGE);
+        log.info("Start page is opened");
         return this;
+    }
+
+    public AuthenticationPage clickSignInButton() {
+        signInButton.click();
+        log.info("Go to Authentication Page");
+        return new AuthenticationPage(driver);
     }
 
     public AuthenticationPage pressSignInButton() {

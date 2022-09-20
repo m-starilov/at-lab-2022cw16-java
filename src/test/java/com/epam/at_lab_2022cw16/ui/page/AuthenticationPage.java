@@ -1,11 +1,15 @@
 package com.epam.at_lab_2022cw16.ui.page;
 
+import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 
-public class AuthenticationPage extends AbstractPage {
+@Log4j2
+public class AuthenticationPage extends AbstractBasePage {
+
+    private static final String BASE_URL = "http://automationpractice.com/index" +
+            ".php?controller=authentication&back=my-account";
 
     @FindBy(xpath = "//input[@id='email']")
     private WebElement emailField;
@@ -20,18 +24,27 @@ public class AuthenticationPage extends AbstractPage {
         super(driver);
     }
 
+    @Override
+    public AuthenticationPage openPage() {
+        driver.get(BASE_URL);
+        return this;
+    }
+
     public AuthenticationPage inputEmail(String email) {
-        driverWait().until(ExpectedConditions.elementToBeClickable(emailField)).sendKeys(email);
+        emailField.clear();
+        emailField.sendKeys(email);
         return this;
     }
 
     public AuthenticationPage inputPassword(String password) {
+        passwordField.clear();
         passwordField.sendKeys(password);
         return this;
     }
 
     public MyAccountPage proceedToMyAccountPage() {
         signInButton.click();
+        log.info("Sign In button is pressed");
         return new MyAccountPage(driver);
     }
 }
