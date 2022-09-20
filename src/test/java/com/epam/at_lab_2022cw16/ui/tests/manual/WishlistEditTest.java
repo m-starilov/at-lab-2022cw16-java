@@ -10,6 +10,7 @@ import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
+import org.openqa.selenium.WebDriver;
 
 import java.util.List;
 
@@ -19,15 +20,14 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class WishlistEditTest extends AbstractBaseTest {
-
-    private static final String HOMEPAGE_URL = "http://automationpractice.com/index.php";
+    private final WebDriver driver = getWebDriver();
 
     @Order(1)
     @Test
     public void userOpenHomepage() {
         MyStoreHomepage myStoreHomepage = new MyStoreHomepage(driver);
         myStoreHomepage.openPage();
-        assertEquals(myStoreHomepage.getTitle(driver), PageTitles.HOMEPAGE_TITLE.getPageTitle());
+        assertEquals(myStoreHomepage.getTitle(), PageTitles.HOMEPAGE_TITLE.getPageTitle());
     }
 
     @Order(2)
@@ -40,7 +40,7 @@ public class WishlistEditTest extends AbstractBaseTest {
         authenticationPage.inputEmail(user.getUsername())
                 .inputPassword(user.getPassword())
                 .proceedToMyAccountPage();
-        assertEquals(authenticationPage.getTitle(driver), PageTitles.MY_ACCOUNT_PAGE_TITLE.getPageTitle());
+        assertEquals(authenticationPage.getTitle(), PageTitles.MY_ACCOUNT_PAGE_TITLE.getPageTitle());
     }
 
     @Order(3)
@@ -48,7 +48,7 @@ public class WishlistEditTest extends AbstractBaseTest {
     public void userProceedToHomepage() {
         MyAccountPage myAccountPage = new MyAccountPage(driver);
         myAccountPage.proceedToHomepage();
-        assertEquals(myAccountPage.getTitle(driver), PageTitles.HOMEPAGE_TITLE.getPageTitle());
+        assertEquals(myAccountPage.getTitle(), PageTitles.HOMEPAGE_TITLE.getPageTitle());
     }
 
     @Order(4)
@@ -57,7 +57,7 @@ public class WishlistEditTest extends AbstractBaseTest {
         MyStoreHomepage myStoreHomepage = new MyStoreHomepage(driver);
         myStoreHomepage.openSummerDressesCatalog();
         MyAccountPage myAccountPage = new MyAccountPage(driver);
-        assertEquals(myAccountPage.getTitle(driver), PageTitles.PAGE_WITH_SUMMER_DRESSES_TITLE.getPageTitle());
+        assertEquals(myAccountPage.getTitle(), PageTitles.PAGE_WITH_SUMMER_DRESSES_TITLE.getPageTitle());
     }
 
     @Order(5)
@@ -65,7 +65,7 @@ public class WishlistEditTest extends AbstractBaseTest {
     public void userSwitchToListView() {
         CatalogPage catalogPage = new CatalogPage(driver);
         catalogPage.switchToListView();
-        List<ProductBlock> products = catalogPage.getProducts();
+        List<ProductBlock> products = catalogPage.getProductsList();
         assertTrue(products.size() > 0);
         assertEquals(products.size(), catalogPage.getListOfAddToCartButtonsNumberValue());
         assertEquals(products.size(), catalogPage.getMoreButtonsNumberValue());
@@ -77,7 +77,7 @@ public class WishlistEditTest extends AbstractBaseTest {
     @Test
     public void userAddItemsToCart() {
         CatalogPage catalogPage = new CatalogPage(driver);
-        List<ProductBlock> products = catalogPage.getProducts();
+        List<ProductBlock> products = catalogPage.getProductsList();
         products.get(0).addToWishListButtonClick();
         assertTrue(catalogPage.infoBoxIsDisplayed());
         catalogPage.closeInfoBox();
@@ -124,17 +124,17 @@ public class WishlistEditTest extends AbstractBaseTest {
     public void userProceedToTShirtsCatalog() {
         WishlistPage wishlistPage = new WishlistPage(driver);
         wishlistPage.proceedToTShirtsCatalogPage();
-        assertEquals(wishlistPage.getTitle(driver), PageTitles.PAGE_WITH_T_SHIRTS_TITLE.getPageTitle());
+        assertEquals(wishlistPage.getTitle(), PageTitles.PAGE_WITH_T_SHIRTS_TITLE.getPageTitle());
     }
 
     @Order(11)
     @Test
     public void userAddTShirtToWishlist() {
         CatalogPage catalogPage = new CatalogPage(driver);
-        catalogPage.getProducts().get(0).addToWishListButtonClick();
+        catalogPage.getProductsList().get(0).addToWishListButtonClick();
         assertTrue(catalogPage.infoBoxIsDisplayed());
         catalogPage.closeInfoBox();
-        assertTrue(catalogPage.getProducts().get(0).isAddToWishlistSolidButtonDisplayed());
+        assertTrue(catalogPage.getProductsList().get(0).isAddToWishlistSolidButtonDisplayed());
     }
 
     @Order(12)
@@ -142,17 +142,17 @@ public class WishlistEditTest extends AbstractBaseTest {
     public void userProceedToEveningDressesCatalog() {
         CatalogPage catalogPage = new CatalogPage(driver);
         catalogPage.proceedToEveningDressesPage();
-        assertEquals(catalogPage.getTitle(driver), PageTitles.PAGE_WITH_EVENING_DRESSES_TITLE.getPageTitle());
+        assertEquals(catalogPage.getTitle(), PageTitles.PAGE_WITH_EVENING_DRESSES_TITLE.getPageTitle());
     }
 
     @Order(13)
     @Test
     public void userAddEveningDressToWishlist() {
         CatalogPage catalogPage = new CatalogPage(driver);
-        catalogPage.getProducts().get(0).addToWishListButtonClick();
+        catalogPage.getProductsList().get(0).addToWishListButtonClick();
         assertTrue(catalogPage.infoBoxIsDisplayed());
         catalogPage.closeInfoBox();
-        assertTrue(catalogPage.getProducts().get(0).isAddToWishlistSolidButtonDisplayed());
+        assertTrue(catalogPage.getProductsList().get(0).isAddToWishlistSolidButtonDisplayed());
     }
 
     @Order(14)

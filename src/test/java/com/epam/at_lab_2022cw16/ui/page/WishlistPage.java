@@ -12,7 +12,7 @@ import java.time.Duration;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class WishlistPage extends AbstractPage {
+public class WishlistPage extends AbstractBasePage {
     @FindBy(xpath = "//a[contains(text(), 'View')]")
     private WebElement viewWishlistButton;
 

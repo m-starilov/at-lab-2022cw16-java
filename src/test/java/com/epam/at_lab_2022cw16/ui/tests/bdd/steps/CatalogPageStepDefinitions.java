@@ -18,8 +18,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class CatalogPageSteps {
-    protected WebDriver driver = EnvironmentUtils.getDriver();
+public class CatalogPageStepDefinitions {
+
+    private final WebDriver driver = EnvironmentUtils.getDriver();
+
     private CatalogPage catalog;
 
     @Given("the user opens CatalogPage")
@@ -61,7 +63,7 @@ public class CatalogPageSteps {
 
     @Then("all products filtered by {string} color")
     public void allProductsFilteredByColor(String colorFilter) {
-        List<List<String>> productsColors = catalog.getProductsList().stream().map(Product::getProductColor).collect(Collectors.toList());
+        List<List<String>> productsColors = catalog.getProducts().stream().map(Product::getProductColor).collect(Collectors.toList());
         Assertions.assertTrue(productsColors.stream().allMatch(colorList -> {
             boolean isContained = false;
             for (String color : colorList) {
@@ -89,7 +91,7 @@ public class CatalogPageSteps {
     @Then("the page displays products that match the price filter")
     public void thePageDisplaysProductsThatMatchThePriceFilter() {
         List<Double> minMaxPrice = catalog.getMinMaxPrice();
-        List<Double> productsPrice = catalog.getProductsList().stream().map(Product::getProductPrice).collect(Collectors.toList());
+        List<Double> productsPrice = catalog.getProducts().stream().map(Product::getProductPrice).collect(Collectors.toList());
         Assertions.assertEquals(productsPrice.size(), (productsPrice.stream().filter(p -> p > minMaxPrice.get(0) && p < minMaxPrice.get(1)).count()));
     }
 
@@ -115,7 +117,7 @@ public class CatalogPageSteps {
     private static boolean sortByParam(String param, CatalogPage catalog) {
         boolean isEquals;
         if (param.contains("name")) {
-            List<String> actualProductsNames = catalog.getProductsList().stream().map(Product::getProductName).collect(Collectors.toList());
+            List<String> actualProductsNames = catalog.getProducts().stream().map(Product::getProductName).collect(Collectors.toList());
             List<String> expectedProductsNames;
             if (param.contains("desc")) {
                 expectedProductsNames = Arrays.asList("Printed Summer Dress", "Printed Summer Dress", "Printed Dress", "Printed Dress", "Printed Chiffon Dress", "Faded Short Sleeve T-shirts", "Blouse");
@@ -124,7 +126,7 @@ public class CatalogPageSteps {
             }
             isEquals = expectedProductsNames.equals(actualProductsNames);
         } else {
-            List<Double> actualProductsPrices = catalog.getProductsList().stream().map(Product::getProductPrice).collect(Collectors.toList());
+            List<Double> actualProductsPrices = catalog.getProducts().stream().map(Product::getProductPrice).collect(Collectors.toList());
             List<Double> expectedProductsPrices;
             if (param.contains("desc")) {
                 expectedProductsPrices = Arrays.asList(50.99, 30.5, 28.98, 27.0, 26.0, 16.51, 16.4);
@@ -134,5 +136,15 @@ public class CatalogPageSteps {
             isEquals = expectedProductsPrices.equals(actualProductsPrices);
         }
         return isEquals;
+    }
+
+    @When("I add to Compare product with id {int}")
+    public void addItemsToCompare(int id) {
+        new CatalogPage(driver).addToCompareItemByID(id);
+    }
+
+    @When("I click to Compare button")
+    public void clickToCompareButton() {
+        new CatalogPage(driver).clickCompareButton();
     }
 }
