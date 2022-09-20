@@ -10,6 +10,7 @@ import org.openqa.selenium.WebDriver;
 import java.util.Optional;
 
 public class DriverHooks {
+
     @Before
     public static void setupBrowser() {
         WebDriver driver = new WebDriverApp()
@@ -20,8 +21,8 @@ public class DriverHooks {
         EnvironmentUtils.setDriver(driver);
     }
 
-    @After
-    public static void stopBrowser() {
+    @After(order = 0)
+    public static void closeBrowser() {
         Optional
                 .ofNullable(EnvironmentUtils.getDriver())
                 .ifPresent(webDriver -> {
@@ -29,5 +30,4 @@ public class DriverHooks {
                     EnvironmentUtils.removeDriver();
                 });
     }
-
 }

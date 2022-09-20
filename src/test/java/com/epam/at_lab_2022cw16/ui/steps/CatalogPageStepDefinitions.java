@@ -1,4 +1,4 @@
-package com.epam.at_lab_2022cw16.ui.tests.bdd.steps;
+package com.epam.at_lab_2022cw16.ui.steps;
 
 import com.epam.at_lab_2022cw16.ui.constants.ColorHEX;
 import com.epam.at_lab_2022cw16.ui.constants.ColorRGB;
@@ -18,8 +18,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class CatalogPageSteps {
-    protected WebDriver driver = EnvironmentUtils.getDriver();
+public class CatalogPageStepDefinitions {
+
+    private final WebDriver driver = EnvironmentUtils.getDriver();
+
     private CatalogPage catalog;
 
     @Given("the user opens CatalogPage")
@@ -134,5 +136,15 @@ public class CatalogPageSteps {
             isEquals = expectedProductsPrices.equals(actualProductsPrices);
         }
         return isEquals;
+    }
+
+    @When("I add to Compare product with id {int}")
+    public void addItemsToCompare(int id) {
+        new CatalogPage(driver).addToCompareItemByID(id);
+    }
+
+    @When("I click to Compare button")
+    public void clickToCompareButton() {
+        new CatalogPage(driver).clickCompareButton();
     }
 }
