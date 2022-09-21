@@ -26,6 +26,9 @@ public abstract class AbstractBasePage {
     @FindBy(xpath = "//li[@class]//a[@title='Summer Dresses']")
     protected WebElement summerDressesButton;
 
+    @FindBy(xpath = "//a[@title='View my customer account']")
+    protected WebElement viewMyAccountButton;
+
     protected AbstractBasePage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
@@ -53,6 +56,11 @@ public abstract class AbstractBasePage {
 
     public String getTitle() {
         return driver.getTitle();
+    }
+
+    public MyAccountPage openMyAccountPage() {
+        viewMyAccountButton.click();
+        return new MyAccountPage(driver);
     }
 
     public static boolean isDisplayed(By by) {

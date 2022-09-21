@@ -1,5 +1,7 @@
 package com.epam.at_lab_2022cw16.ui.tests.manual;
 
+import com.epam.at_lab_2022cw16.ui.constants.PageTitles;
+import com.epam.at_lab_2022cw16.ui.page.pageElements.Alert;
 import com.epam.at_lab_2022cw16.ui.model.User;
 import com.epam.at_lab_2022cw16.ui.page.*;
 import com.epam.at_lab_2022cw16.ui.utils.TestListener;
@@ -17,18 +19,21 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(TestListener.class)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class CompareAndBuyingWithBankWireTest extends AbstractBaseTest {
+public class CompareAndBuyingWithBankWireAndCommentInOrderHistoryTest extends AbstractBaseTest {
 
     private final WebDriver driver = getWebDriver();
 
     private static final String TOTAL_ORDER_PRICE = "$59.96";
+    private static final String USER_MESSAGE = "Please, send me photo of it!";
+    private static final String ALERT_DANGER_MESSAGE = "The message cannot be blank.";
+    private static final String ALERT_SUCCESS_MESSAGE = "Message successfully sent";
 
     @Test
     @Order(1)
     public void openHomepageTest() {
         MyStoreHomepage homepage = new MyStoreHomepage(driver).openPage();
         assertThat(homepage.getTitle())
-                .contains("My Store");
+                .isEqualTo(PageTitles.HOMEPAGE_TITLE.getPageTitle());
     }
 
     @Test
@@ -40,7 +45,7 @@ public class CompareAndBuyingWithBankWireTest extends AbstractBaseTest {
         authenticationPage.inputPassword(user.getPassword());
         MyAccountPage myAccountPage = authenticationPage.proceedToMyAccountPage();
         assertThat(myAccountPage.getTitle())
-                .contains("My account");
+                .isEqualTo(PageTitles.MY_ACCOUNT_PAGE_TITLE.getPageTitle());
     }
 
     @Test
@@ -129,5 +134,43 @@ public class CompareAndBuyingWithBankWireTest extends AbstractBaseTest {
                 .isEqualTo(TOTAL_ORDER_PRICE);
         assertThat(orderConfirmationPage.getBankAccountInformation())
                 .isEqualTo(bankAccountInformation);
+    }
+
+    @Test
+    @Order(10)
+    public void emptyCommentMessageTest() {
+        MyAccountPage myAccountPage = new OrderConfirmationPage(driver).openMyAccountPage();
+        assertThat(myAccountPage.getTitle())
+                .isEqualTo(PageTitles.MY_ACCOUNT_PAGE_TITLE.getPageTitle());
+        OrderHistoryPage ordersHistoryPage = myAccountPage.clickOrderHistoryButton();
+        assertThat(ordersHistoryPage.getTitle())
+                .isEqualTo(PageTitles.ORDER_HISTORY_PAGE_TITLE.getPageTitle());
+        ordersHistoryPage.showLastOrderDetails();
+        ordersHistoryPage.clickSendButton();
+        Alert alert = ordersHistoryPage.getAlert();
+        assertThat(alert.isDisplayed())
+                .isTrue();
+        assertThat(alert.isDanger())
+                .isTrue();
+        assertThat(alert.getMessage())
+                .contains(ALERT_DANGER_MESSAGE);
+    }
+
+    @Test
+    @Order(11)
+    public void nonEmptyCommentMessageTest() {
+        OrderHistoryPage ordersHistoryPage = new OrderHistoryPage(driver);
+        ordersHistoryPage.selectProductFromDropdownByID("5");
+        ordersHistoryPage.setMessageText(USER_MESSAGE);
+        ordersHistoryPage.clickSendButton();
+        Alert alert = ordersHistoryPage.getAlert();
+        assertThat(alert.isDisplayed())
+                .isTrue();
+        assertThat(alert.isSuccess())
+                .isTrue();
+        assertThat(alert.getMessage())
+                .contains(ALERT_SUCCESS_MESSAGE);
+        assertThat(ordersHistoryPage.getMessageText())
+                .isEqualTo(USER_MESSAGE);
     }
 }
