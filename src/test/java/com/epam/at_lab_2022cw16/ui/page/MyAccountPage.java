@@ -12,8 +12,24 @@ public class MyAccountPage extends AbstractBasePage {
     @FindBy(xpath = "//a[@title='Women']")
     private WebElement womenCatalogButton;
 
+    @FindBy(xpath = "//a[@title='My wishlists']")
+    private WebElement myWishListsButton;
+
+    @FindBy(xpath = "//img[@class='logo img-responsive']")
+    private WebElement mainLogo;
+
     public MyAccountPage(WebDriver driver) {
         super(driver);
+    }
+
+    public WishlistPage proceedToWishlist() {
+        myWishListsButton.click();
+        return new WishlistPage(driver);
+    }
+
+    public MyStoreHomepage proceedToHomepage() {
+        mainLogo.click();
+        return new MyStoreHomepage(driver);
     }
 
     public CatalogPage clickWomenCatalogButton() {

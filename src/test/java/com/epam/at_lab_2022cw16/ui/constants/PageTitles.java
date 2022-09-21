@@ -2,6 +2,7 @@ package com.epam.at_lab_2022cw16.ui.constants;
 
 public enum PageTitles {
     PAGE_WITH_WOMEN_TITLE("Women - My Store"),
+
     HOMEPAGE_TITLE("My Store"),
     MY_ACCOUNT_PAGE_TITLE("My account - My Store"),
     PAGE_WITH_SUMMER_DRESSES_TITLE("Summer Dresses - My Store"),
@@ -17,5 +18,4 @@ public enum PageTitles {
     public String getPageTitle() {
         return pageTitle;
     }
-
 }
