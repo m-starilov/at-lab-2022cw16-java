@@ -6,8 +6,7 @@ import com.epam.at_lab_2022cw16.ui.constants.ColorRGB;
 import com.epam.at_lab_2022cw16.ui.constants.PageTitles;
 import com.epam.at_lab_2022cw16.ui.constants.SortParams;
 import com.epam.at_lab_2022cw16.ui.model.Product;
-import com.epam.at_lab_2022cw16.ui.page.CatalogPage;
-
+import com.epam.at_lab_2022cw16.ui.page.WomenCatalogPage;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
@@ -27,11 +26,11 @@ import java.util.stream.Collectors;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class CatalogTest extends AbstractBaseTest {
 
+    private static final List<String> selectedFilter = new ArrayList<>();
+    private static final WomenCatalogPage page = new WomenCatalogPage(getWebDriver());
     private final ColorHEX filterByColorHEX = ColorHEX.YELLOW;
     private final ColorRGB colorRGB = ColorRGB.YELLOW;
     private final String selectedFilterBorderColor = ColorRGB.RED.getColorRGB();
-    private static final List<String> selectedFilter = new ArrayList<>();
-    private static CatalogPage page = new CatalogPage(getWebDriver());
 
     @Order(1)
     @Test

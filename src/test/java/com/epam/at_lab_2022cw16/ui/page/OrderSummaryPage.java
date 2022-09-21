@@ -24,6 +24,9 @@ public class OrderSummaryPage extends AbstractOrderPage {
     @FindBy(xpath = "//span[@id='total_price']")
     private WebElement totalOrderPrice;
 
+    @FindBy(xpath = "//p[contains(@class, 'alert')]")
+    private WebElement alertMessage;
+
     public OrderSummaryPage(WebDriver driver) {
         super(driver);
     }
@@ -32,6 +35,18 @@ public class OrderSummaryPage extends AbstractOrderPage {
         proceedToCheckoutButton.click();
         log.info("Go to Address information");
         return new OrderAddressPage(driver);
+    }
+
+    public String getSummaryProductsQuantity() {
+        return summaryProductsQuantity.getText();
+    }
+
+    public String getTotalPrice() {
+        return totalOrderPrice.getText();
+    }
+
+    public String getProductQuantity() {
+        return productQuantityHiddenInput.getAttribute("value");
     }
 
     public OrderSummaryPage setProductQuantity(String qty) {
@@ -48,11 +63,7 @@ public class OrderSummaryPage extends AbstractOrderPage {
         return this;
     }
 
-    public String getSummaryProductsQuantity() {
-        return summaryProductsQuantity.getText();
-    }
-
-    public String getTotalPrice() {
-        return totalOrderPrice.getText();
+    public String getAlertMessage() {
+        return waitForVisibilityOf(alertMessage).getText().trim();
     }
 }

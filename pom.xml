@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
@@ -17,9 +17,9 @@
         <log4j-core.version>2.18.0</log4j-core.version>
         <assertj-core.version>3.23.1</assertj-core.version>
         <cucumber.version>7.7.0</cucumber.version>
+        <lombok.version>1.18.24</lombok.version>
         <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
         <maven-compiler-plugin.version>3.10.1</maven-compiler-plugin.version>
-        <lombok.version>1.18.24</lombok.version>
 
         <forkCount>1</forkCount>
         <java.version>11</java.version>
@@ -109,6 +109,6 @@
             <version>${cucumber.version}</version>
             <scope>test</scope>
         </dependency>
-
     </dependencies>
+
 </project>

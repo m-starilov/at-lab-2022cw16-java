@@ -20,9 +20,8 @@ import java.util.stream.Collectors;
 import static java.lang.String.format;
 
 @Log4j2
-public class CatalogPage extends AbstractBasePage {
+public abstract class AbstractCatalogPage extends AbstractBasePage {
 
-    private static final String BASE_URL = "http://automationpractice.com/index.php?id_category=3&controller=category";
     private static final String PRODUCT = "//div[@id='center_column']/ul/li[%d]";
     private static final String ADD_TO_COMPARE_BUTTON = "//a[@class='add_to_compare'][@data-id-product='%d']";
     private static final String LOADED_CATALOG = "//ul[@style='opacity: 1;']";
@@ -92,11 +91,23 @@ public class CatalogPage extends AbstractBasePage {
     @FindBy(xpath = "//form[@class='compare-form']/button[@type='submit']")
     private WebElement compareButton;
 
-    public CatalogPage(WebDriver driver) {
+    @FindBy(xpath = "//div[@class='product-container']")
+    private List<WebElement> productContainers;
+
+    @FindBy(xpath = "//span[@class='available-now']")
+    private WebElement available;
+
+    @FindBy(xpath = "//span[contains(text(),'Add to cart')]")
+    private List<WebElement> addToCartButtons;
+
+    @FindBy(xpath = "//span[@class[contains(.,'continue')]]/span")
+    private WebElement continueShoppingButton;
+
+    public AbstractCatalogPage(WebDriver driver) {
         super(driver);
     }
 
-    public CatalogPage switchToListView() {
+    public AbstractCatalogPage switchToListView() {
         listViewButton.click();
         return this;
     }
@@ -106,7 +117,7 @@ public class CatalogPage extends AbstractBasePage {
         return new MyAccountPage(driver);
     }
 
-    public CatalogPage proceedToEveningDressesPage() {
+    public AbstractCatalogPage proceedToEveningDressesPage() {
         driverWait().until(ExpectedConditions.elementToBeClickable(womenDressesBarButton));
         new Actions(driver).moveToElement(womenDressesBarButton).build().perform();
         driverWait().until(ExpectedConditions.elementToBeClickable(eveningDressesButton)).click();
@@ -117,7 +128,7 @@ public class CatalogPage extends AbstractBasePage {
         return driverWait().until(ExpectedConditions.elementToBeClickable(addingConfirmationInfobox)).isDisplayed();
     }
 
-    public CatalogPage closeInfoBox() {
+    public AbstractCatalogPage closeInfoBox() {
         driverWait().until(ExpectedConditions.elementToBeClickable(closeInfoboxButton)).click();
         driverWait().until(ExpectedConditions.invisibilityOf(addingConfirmationInfobox));
         return this;
@@ -151,13 +162,7 @@ public class CatalogPage extends AbstractBasePage {
         return productsList.stream().map(ProductBlock::new).collect(Collectors.toList());
     }
 
-    @Override
-    public CatalogPage openPage() {
-        driver.get(BASE_URL);
-        return this;
-    }
-
-    public CatalogPage addToCompareItemByID(int id) {
+    public AbstractCatalogPage addToCompareItemByID(int id) {
         new Actions(driver)
                 .moveToElement(findElement(By.xpath(format(PRODUCT, id))))
                 .click(findElement(By.xpath(format(ADD_TO_COMPARE_BUTTON, id))))
@@ -173,19 +178,19 @@ public class CatalogPage extends AbstractBasePage {
         return new ComparisonPage(driver);
     }
 
-    public CatalogPage sortByType(String sortingType) {
+    public AbstractCatalogPage sortByType(String sortingType) {
         findElement(By.xpath(SORTING_MENU)).click();
         findElement(By.xpath(format(SORTING_TYPE, SORTING_MENU, sortingType))).click();
         return this;
     }
 
-    public CatalogPage filterByColor(String color) {
+    public AbstractCatalogPage filterByColor(String color) {
         findElement(By.xpath(format(COLOR_FILTER, color))).click();
         waitCatalogUpload();
         return this;
     }
 
-    public CatalogPage filterByPrice() {
+    public AbstractCatalogPage filterByPrice() {
         Actions actions = new Actions(driver);
         actions.dragAndDropBy(uiSlider, 20, 0).release().build().perform();
         return this;
@@ -203,13 +208,13 @@ public class CatalogPage extends AbstractBasePage {
         return priceFilterValue.getText();
     }
 
-    public CatalogPage removePriceFilter() {
+    public AbstractCatalogPage removePriceFilter() {
         Actions actions = new Actions(driver);
         actions.dragAndDropBy(uiSlider, -20, 0).release().build().perform();
         return this;
     }
 
-    public CatalogPage removeAllFilters() {
+    public AbstractCatalogPage removeAllFilters() {
         waitCatalogUpload();
         filterDeleteButton.forEach(WebElement::click);
         return this;
@@ -226,7 +231,6 @@ public class CatalogPage extends AbstractBasePage {
         appliedFilter.forEach(element -> filters.add(element.getText().toLowerCase(Locale.ROOT)));
         return filters;
     }
-
 
     public String getBorderColor(WebElement element) {
         waitCatalogUpload();
@@ -265,5 +269,15 @@ public class CatalogPage extends AbstractBasePage {
                 .collect(Collectors.toList()));
         product.setProductPrice(parseDoubleFromString(productElement.findElement(By.xpath(PRODUCT_PRICE)).getText()));
         return product;
+    }
+
+    public void addToCartNumberOfItems(int number) {
+        scrollTo(available);
+        for (int i = 0; i < number; i++) {
+            moveTo(productContainers.get(i));
+            addToCartButtons.get(i).click();
+            waitForVisibilityOf(continueShoppingButton).click();
+        }
+        log.info("Added " + number + " item(s) to cart");
     }
 }

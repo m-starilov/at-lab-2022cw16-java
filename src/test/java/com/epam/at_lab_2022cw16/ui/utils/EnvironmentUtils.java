@@ -10,12 +10,12 @@ public class EnvironmentUtils {
         return BrowserName.fromString(System.getProperty("browser", "chrome"));
     }
 
-    public static void setDriver(WebDriver driver) {
-        localDriver.set(driver);
-    }
-
     public static WebDriver getDriver() {
         return localDriver.get();
+    }
+
+    public static void setDriver(WebDriver driver) {
+        localDriver.set(driver);
     }
 
     public static void removeDriver() {

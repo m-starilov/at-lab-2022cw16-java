@@ -1,6 +1,11 @@
 package com.epam.at_lab_2022cw16.ui.steps;
 
-import com.epam.at_lab_2022cw16.ui.page.*;
+import com.epam.at_lab_2022cw16.ui.page.OrderAddressPage;
+import com.epam.at_lab_2022cw16.ui.page.OrderBankWirePaymentPage;
+import com.epam.at_lab_2022cw16.ui.page.OrderConfirmationPage;
+import com.epam.at_lab_2022cw16.ui.page.OrderPaymentPage;
+import com.epam.at_lab_2022cw16.ui.page.OrderShippingPage;
+import com.epam.at_lab_2022cw16.ui.page.OrderSummaryPage;
 import com.epam.at_lab_2022cw16.ui.utils.EnvironmentUtils;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;

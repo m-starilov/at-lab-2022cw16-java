@@ -1,9 +1,20 @@
 package com.epam.at_lab_2022cw16.ui.tests.manual;
 
 import com.epam.at_lab_2022cw16.ui.constants.PageTitles;
-import com.epam.at_lab_2022cw16.ui.page.pageElements.Alert;
 import com.epam.at_lab_2022cw16.ui.model.User;
-import com.epam.at_lab_2022cw16.ui.page.*;
+import com.epam.at_lab_2022cw16.ui.page.AuthenticationPage;
+import com.epam.at_lab_2022cw16.ui.page.ComparisonPage;
+import com.epam.at_lab_2022cw16.ui.page.MyAccountPage;
+import com.epam.at_lab_2022cw16.ui.page.MyStoreHomepage;
+import com.epam.at_lab_2022cw16.ui.page.OrderAddressPage;
+import com.epam.at_lab_2022cw16.ui.page.OrderBankWirePaymentPage;
+import com.epam.at_lab_2022cw16.ui.page.OrderConfirmationPage;
+import com.epam.at_lab_2022cw16.ui.page.OrderHistoryPage;
+import com.epam.at_lab_2022cw16.ui.page.OrderPaymentPage;
+import com.epam.at_lab_2022cw16.ui.page.OrderShippingPage;
+import com.epam.at_lab_2022cw16.ui.page.OrderSummaryPage;
+import com.epam.at_lab_2022cw16.ui.page.WomenCatalogPage;
+import com.epam.at_lab_2022cw16.ui.page.pageElements.Alert;
 import com.epam.at_lab_2022cw16.ui.utils.TestListener;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
@@ -21,12 +32,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class CompareAndBuyingWithBankWireAndCommentInOrderHistoryTest extends AbstractBaseTest {
 
-    private final WebDriver driver = getWebDriver();
-
     private static final String TOTAL_ORDER_PRICE = "$59.96";
     private static final String USER_MESSAGE = "Please, send me photo of it!";
     private static final String ALERT_DANGER_MESSAGE = "The message cannot be blank.";
     private static final String ALERT_SUCCESS_MESSAGE = "Message successfully sent";
+    private final WebDriver driver = getWebDriver();
 
     @Test
     @Order(1)
@@ -51,10 +61,10 @@ public class CompareAndBuyingWithBankWireAndCommentInOrderHistoryTest extends Ab
     @Test
     @Order(3)
     public void addToComparisonTest() {
-        CatalogPage catalogPage = new MyAccountPage(driver).clickWomenCatalogButton();
-        catalogPage.addToCompareItemByID(5);
-        catalogPage.addToCompareItemByID(6);
-        ComparisonPage comparisonPage = catalogPage.clickCompareButton();
+        WomenCatalogPage womenCatalogPage = new MyAccountPage(driver).clickWomenCatalogButton();
+        womenCatalogPage.addToCompareItemByID(5);
+        womenCatalogPage.addToCompareItemByID(6);
+        ComparisonPage comparisonPage = womenCatalogPage.clickCompareButton();
         assertThat(comparisonPage.getNumberOfComparableItems())
                 .isEqualTo(2);
     }
