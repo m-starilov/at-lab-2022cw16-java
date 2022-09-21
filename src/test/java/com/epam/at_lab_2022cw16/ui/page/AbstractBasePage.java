@@ -1,6 +1,8 @@
 package com.epam.at_lab_2022cw16.ui.page;
 
+import com.epam.at_lab_2022cw16.ui.utils.EnvironmentUtils;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -51,5 +53,13 @@ public abstract class AbstractBasePage {
 
     public String getTitle() {
         return driver.getTitle();
+    }
+
+    public static boolean isDisplayed(By by) {
+        try {
+            return EnvironmentUtils.getDriver().findElement(by).isDisplayed();
+        } catch (NoSuchElementException nsee) {
+            return false;
+        }
     }
 }
