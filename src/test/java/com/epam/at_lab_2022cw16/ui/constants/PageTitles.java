@@ -7,7 +7,8 @@ public enum PageTitles {
     MY_ACCOUNT_PAGE_TITLE("My account - My Store"),
     PAGE_WITH_SUMMER_DRESSES_TITLE("Summer Dresses - My Store"),
     PAGE_WITH_T_SHIRTS_TITLE("T-shirts - My Store"),
-    PAGE_WITH_EVENING_DRESSES_TITLE("Evening Dresses - My Store");
+    PAGE_WITH_EVENING_DRESSES_TITLE("Evening Dresses - My Store"),
+    ORDER_HISTORY_PAGE_TITLE("Order history - My Store");
 
     private final String pageTitle;
 

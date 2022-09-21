@@ -12,6 +12,9 @@ public class MyAccountPage extends AbstractBasePage {
     @FindBy(xpath = "//a[@title='Women']")
     private WebElement womenCatalogButton;
 
+    @FindBy(xpath = "//a[@title='Orders']")
+    private WebElement orderHistoryButton;
+
     @FindBy(xpath = "//a[@title='My wishlists']")
     private WebElement myWishListsButton;
 
@@ -37,5 +40,11 @@ public class MyAccountPage extends AbstractBasePage {
                 .click();
         log.info("Go to Catalog Page");
         return new CatalogPage(driver);
+    }
+
+    public OrderHistoryPage clickOrderHistoryButton() {
+        orderHistoryButton.click();
+        log.info("Go to Order History Page");
+        return new OrderHistoryPage(driver);
     }
 }
