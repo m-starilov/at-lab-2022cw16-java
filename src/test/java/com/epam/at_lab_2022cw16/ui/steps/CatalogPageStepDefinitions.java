@@ -1,4 +1,4 @@
-package com.epam.at_lab_2022cw16.ui.tests.bdd.steps;
+package com.epam.at_lab_2022cw16.ui.steps;
 
 import com.epam.at_lab_2022cw16.ui.constants.ColorHEX;
 import com.epam.at_lab_2022cw16.ui.constants.ColorRGB;
