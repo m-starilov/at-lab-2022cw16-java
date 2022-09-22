@@ -35,11 +35,11 @@ public class MyAccountPage extends AbstractBasePage {
         return new MyStoreHomepage(driver);
     }
 
-    public CatalogPage clickWomenCatalogButton() {
+    public WomenCatalogPage clickWomenCatalogButton() {
         driverWait().until(ExpectedConditions.elementToBeClickable(womenCatalogButton))
                 .click();
         log.info("Go to Catalog Page");
-        return new CatalogPage(driver);
+        return new WomenCatalogPage(driver);
     }
 
     public OrderHistoryPage clickOrderHistoryButton() {

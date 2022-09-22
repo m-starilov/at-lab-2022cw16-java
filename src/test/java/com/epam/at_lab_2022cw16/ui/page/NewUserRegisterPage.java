@@ -10,8 +10,10 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 
 public class NewUserRegisterPage extends AbstractBasePage {
+
     private static final String URL = "http://automationpractice.com/index.php?controller=authentication";
     private final String CREATE_ACCOUNT_ERROR_XPATH = "//*[@id=\"create_account_error\"]";
+
     @FindBy(xpath = "//*[@id=\"email_create\"]")
     private WebElement emailField;
 
@@ -36,6 +38,7 @@ public class NewUserRegisterPage extends AbstractBasePage {
         createAccountButton.click();
         new WebDriverWait(driver, Duration.ofSeconds(WAIT_TIMEOUT_SECONDS)).until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"create_account_error\"] | //*[@id=\"submitAccount\"]")));
     }
+
     public boolean isErrorMessageVisible() {
         return isDisplayed(By.xpath(CREATE_ACCOUNT_ERROR_XPATH));
     }

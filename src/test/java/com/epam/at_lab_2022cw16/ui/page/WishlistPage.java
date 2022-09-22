@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class WishlistPage extends AbstractBasePage {
+
     @FindBy(xpath = "//a[contains(text(), 'View')]")
     private WebElement viewWishlistButton;
 
@@ -52,10 +53,10 @@ public class WishlistPage extends AbstractBasePage {
         return this;
     }
 
-    public CatalogPage proceedToTShirtsCatalogPage() {
+    public AbstractCatalogPage proceedToTShirtsCatalogPage() {
         new Actions(driver).moveToElement(womenDressesBarButton).build().perform();
         tShirtsButton.click();
-        return new CatalogPage(driver);
+        return new TShirtsCatalogPage(driver);
     }
 
     public WishlistPage pressDeleteWishlistButton() {
@@ -69,7 +70,7 @@ public class WishlistPage extends AbstractBasePage {
         return this;
     }
 
-    public String getWishlistName(){
+    public String getWishlistName() {
         return driverWait().until(ExpectedConditions.elementToBeClickable(wishlistName)).getText();
     }
 

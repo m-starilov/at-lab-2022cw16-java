@@ -10,13 +10,13 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 @Log4j2
 public class OrderShippingPage extends AbstractOrderPage {
 
+    private final By fancyboxCloseButton = By.xpath("//a[@title='Close']");
+
     @FindBy(xpath = "//div[@id='center_column']//button")
     private WebElement proceedToCheckoutButton;
 
     @FindBy(xpath = "//input[@id='cgv']")
     private WebElement agreeToTheTermsCheckbox;
-
-    private final By fancyboxCloseButton = By.xpath("//a[@title='Close']");
 
     public OrderShippingPage(WebDriver driver) {
         super(driver);

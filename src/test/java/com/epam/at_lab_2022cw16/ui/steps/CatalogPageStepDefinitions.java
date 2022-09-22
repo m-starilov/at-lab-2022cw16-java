@@ -4,7 +4,7 @@ import com.epam.at_lab_2022cw16.ui.constants.ColorHEX;
 import com.epam.at_lab_2022cw16.ui.constants.ColorRGB;
 import com.epam.at_lab_2022cw16.ui.constants.PageTitles;
 import com.epam.at_lab_2022cw16.ui.model.Product;
-import com.epam.at_lab_2022cw16.ui.page.CatalogPage;
+import com.epam.at_lab_2022cw16.ui.page.WomenCatalogPage;
 import com.epam.at_lab_2022cw16.ui.utils.EnvironmentUtils;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
@@ -22,15 +22,15 @@ public class CatalogPageStepDefinitions {
 
     private final WebDriver driver = EnvironmentUtils.getDriver();
 
-    private CatalogPage catalog;
+    private WomenCatalogPage catalog;
 
-    @Given("the user opens CatalogPage")
+    @Given("the user opens WomenCatalogPage")
     public void openCatalog() {
-        catalog = new CatalogPage(driver);
+        catalog = new WomenCatalogPage(driver);
         catalog.openPage();
     }
 
-    @Then("the CatalogPage opened")
+    @Then("the WomenCatalogPage opened")
     public void theCatalogPageOpened() {
         Assertions.assertEquals(PageTitles.PAGE_WITH_WOMEN_TITLE.getPageTitle(), catalog.getTitle());
     }
@@ -114,7 +114,17 @@ public class CatalogPageStepDefinitions {
         Assertions.assertTrue(sortByParam(param, catalog));
     }
 
-    private static boolean sortByParam(String param, CatalogPage catalog) {
+    @When("I add to Compare product with id {int}")
+    public void addItemsToCompare(int id) {
+        new WomenCatalogPage(driver).addToCompareItemByID(id);
+    }
+
+    @When("I click to Compare button")
+    public void clickToCompareButton() {
+        new WomenCatalogPage(driver).clickCompareButton();
+    }
+
+    private static boolean sortByParam(String param, WomenCatalogPage catalog) {
         boolean isEquals;
         if (param.contains("name")) {
             List<String> actualProductsNames = catalog.getProducts().stream().map(Product::getProductName).collect(Collectors.toList());
@@ -138,13 +148,4 @@ public class CatalogPageStepDefinitions {
         return isEquals;
     }
 
-    @When("I add to Compare product with id {int}")
-    public void addItemsToCompare(int id) {
-        new CatalogPage(driver).addToCompareItemByID(id);
-    }
-
-    @When("I click to Compare button")
-    public void clickToCompareButton() {
-        new CatalogPage(driver).clickCompareButton();
-    }
 }

@@ -39,13 +39,6 @@ public class OrderHistoryPage extends AbstractBasePage {
         return this;
     }
 
-    public OrderHistoryPage setMessageText(String message) {
-        driverWait().until(ExpectedConditions.visibilityOf(messageInput))
-                .clear();
-        messageInput.sendKeys(message);
-        return this;
-    }
-
     public OrderHistoryPage clickSendButton() {
         driverWait().until(ExpectedConditions.visibilityOf(sendMessageButton))
                 .click();
@@ -60,6 +53,13 @@ public class OrderHistoryPage extends AbstractBasePage {
     public String getMessageText() {
         return driverWait().until(ExpectedConditions.visibilityOf(sentMessageText))
                 .getText();
+    }
+
+    public OrderHistoryPage setMessageText(String message) {
+        driverWait().until(ExpectedConditions.visibilityOf(messageInput))
+                .clear();
+        messageInput.sendKeys(message);
+        return this;
     }
 
     public OrderHistoryPage selectProductFromDropdownByID(String id) {

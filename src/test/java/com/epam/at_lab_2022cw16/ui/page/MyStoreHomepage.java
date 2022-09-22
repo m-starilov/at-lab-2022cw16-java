@@ -1,4 +1,5 @@
 package com.epam.at_lab_2022cw16.ui.page;
+
 import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -7,6 +8,7 @@ import org.openqa.selenium.support.FindBy;
 
 @Log4j2
 public class MyStoreHomepage extends AbstractBasePage {
+
     private static final String HOMEPAGE = "http://automationpractice.com/index.php";
 
     @FindBy(xpath = "//a[@class='login']")
@@ -17,6 +19,7 @@ public class MyStoreHomepage extends AbstractBasePage {
 
     @FindBy(xpath = "//li[@class]//a[@title='Summer Dresses']")
     private WebElement summerDressesButton;
+
     public MyStoreHomepage(WebDriver driver) {
         super(driver);
     }
@@ -39,9 +42,9 @@ public class MyStoreHomepage extends AbstractBasePage {
         return new AuthenticationPage(driver);
     }
 
-    public CatalogPage openSummerDressesCatalog() {
+    public AbstractCatalogPage openSummerDressesCatalog() {
         new Actions(driver).moveToElement(womenDressesBarButton).build().perform();
         summerDressesButton.click();
-        return new CatalogPage(driver);
+        return new SummerDressesCatalogPage(driver);
     }
 }
