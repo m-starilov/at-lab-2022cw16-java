@@ -1,5 +1,6 @@
 package com.epam.at_lab_2022cw16.ui.tests.manual;
 
+import com.epam.at_lab_2022cw16.annotations.JiraTicketsLink;
 import com.epam.at_lab_2022cw16.ui.constants.ColorHEX;
 import com.epam.at_lab_2022cw16.ui.constants.ColorRGB;
 import com.epam.at_lab_2022cw16.ui.constants.PageTitles;
@@ -13,8 +14,15 @@ import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
+
+@JiraTicketsLink(id = 16307,
+        description = "Test check sorting and filtration on the site",
+        url = "https://jira.epam.com/jira/browse/EPMFARMATS-16307")
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class CatalogTest extends AbstractBaseTest {
