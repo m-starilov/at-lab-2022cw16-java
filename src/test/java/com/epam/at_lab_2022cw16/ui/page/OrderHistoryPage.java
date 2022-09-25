@@ -1,6 +1,5 @@
 package com.epam.at_lab_2022cw16.ui.page;
 
-import com.epam.at_lab_2022cw16.ui.page.pageElements.Alert;
 import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -29,9 +28,6 @@ public class OrderHistoryPage extends AbstractBasePage {
 
     @FindBy(xpath = "//button[@name='submitMessage']")
     private WebElement sendMessageButton;
-
-    @FindBy(xpath = "//*[contains(@class, 'alert')]")
-    private WebElement alert;
 
     @FindBy(xpath = "//select[@name='id_product']")
     private WebElement selectProductDropdown;
@@ -80,10 +76,6 @@ public class OrderHistoryPage extends AbstractBasePage {
                 .click();
         log.info("Trying to send message");
         return this;
-    }
-
-    public Alert getAlert() {
-        return new Alert(alert, driverWait());
     }
 
     public String getMessageText() {

@@ -23,8 +23,7 @@ public class WishlistPageStepDefinitions {
 
     @Then("page with Summer dresses opened")
     public void pageWithSummerDressesOpened() {
-        assertEquals(new SummerDressesCatalogPage(driver).getTitle(), PageTitles.PAGE_WITH_SUMMER_DRESSES_TITLE
-                .getPageTitle());
+        assertEquals(new SummerDressesCatalogPage(driver).getTitle(), PageTitles.SUMMER_DRESSES_CATALOG.getPageTitle());
     }
 
     @And("in \"Add to Wishlist\" link outline heart icon changed to solid")
@@ -71,7 +70,7 @@ public class WishlistPageStepDefinitions {
 
     @Then("page with T-shirts opened")
     public void pageWithTShirtsOpened() {
-        assertEquals(new WishlistPage(driver).getTitle(), PageTitles.PAGE_WITH_T_SHIRTS_TITLE.getPageTitle());
+        assertEquals(new WishlistPage(driver).getTitle(), PageTitles.T_SHIRTS_CATALOG.getPageTitle());
     }
 
     @Then("Displayed {int} added items")

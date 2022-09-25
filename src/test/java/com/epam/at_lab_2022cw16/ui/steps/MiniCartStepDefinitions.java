@@ -71,7 +71,7 @@ public class MiniCartStepDefinitions {
 
     @When("I go to cart page from mini cart by click Check out button")
     public void clickMiniCartCheckOutButton() {
-        new ProductPage(driver).clickMiniCartCheckOutButton();
+        new ProductPage(driver).clickCheckOutButtonInMiniCart();
     }
 
     @Then("Cart page is opened. I see correct {string} title and shopping cart with {string} item and {string} " +

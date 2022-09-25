@@ -22,7 +22,7 @@ public class SaveOrderHistoryStepsDefinitions {
 
     @Then("catalog page is opened. Products are displayed on the page")
     public void catalogPageIsOpenedProductsAreDisplayedOnThePage() {
-        Assertions.assertEquals(new WomenCatalogPage(driver).getTitle(), PageTitles.PAGE_WITH_WOMEN_TITLE.getPageTitle());
+        Assertions.assertEquals(new WomenCatalogPage(driver).getTitle(), PageTitles.WOMEN_CATALOG.getPageTitle());
     }
 
     @When("I put one item {string} in a cart")

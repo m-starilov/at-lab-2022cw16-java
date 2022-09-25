@@ -109,8 +109,14 @@ public abstract class AbstractCatalogPage extends AbstractBasePage {
     @FindBy(xpath = "//span[contains(text(),'Add to cart')]")
     private List<WebElement> addToCartButtons;
 
-    @FindBy(xpath = "//span[@class[contains(.,'continue')]]/span")
+    @FindBy(xpath = "//h2[contains(., 'Product successfully added to your shopping cart')]")
+    private WebElement productAddedTitle;
+
+    @FindBy(xpath = "//span/span[contains(.,'Continue shopping')]")
     private WebElement continueShoppingButton;
+
+    @FindBy(xpath = "//span[contains(.,'Proceed to checkout')]")
+    private WebElement proceedToCheckoutButton;
 
     @FindBy(xpath = "//*[contains(@class,'layer_cart_product')]//h2")
     private WebElement productAddedMessage;
@@ -314,10 +320,27 @@ public abstract class AbstractCatalogPage extends AbstractBasePage {
         scrollTo(available);
         for (int i = 0; i < number; i++) {
             moveTo(productContainers.get(i));
-            addToCartButtons.get(i).click();
+            waitForVisibilityOf(addToCartButtons.get(i)).click();
             waitForVisibilityOf(continueShoppingButton).click();
         }
-        log.info("Added " + number + " item(s) to cart");
+        log.info(format("Added %d item(s) to the cart", number));
+    }
+
+    public void addOneItemToCart() {
+        scrollTo(available);
+        moveTo(productContainers.get(0));
+        waitForVisibilityOf(addToCartButtons.get(0)).click();
+        log.info("Added one item to the cart");
+    }
+
+    public boolean isProductAddedTitleVisible() {
+        log.info("Check is product added title is visible");
+        return waitForVisibilityOf(productAddedTitle).isDisplayed();
+    }
+
+    public OrderSummaryPage proceedToCheckout() {
+        waitForElementClickable(proceedToCheckoutButton).click();
+        return new OrderSummaryPage(driver);
     }
 
     public OrderSummaryPage clickCheckoutButton() {

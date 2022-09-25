@@ -26,6 +26,6 @@ public class MyAccountStepDefinitions {
     @Then("the My account page is opened")
     public void myAccountPageIsOpened() {
         assertThat(new MyAccountPage(driver).getTitle())
-                .isEqualTo(PageTitles.MY_ACCOUNT_PAGE_TITLE.getPageTitle());
+                .isEqualTo(PageTitles.MY_ACCOUNT.getPageTitle());
     }
 }

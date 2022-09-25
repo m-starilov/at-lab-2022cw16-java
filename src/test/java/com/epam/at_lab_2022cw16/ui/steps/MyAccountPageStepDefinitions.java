@@ -15,7 +15,7 @@ public class MyAccountPageStepDefinitions {
 
     @Then("My account page opened")
     public void myAccountPageOpened() {
-        assertEquals(new MyAccountPage(driver).getTitle(), PageTitles.MY_ACCOUNT_PAGE_TITLE.getPageTitle());
+        assertEquals(new MyAccountPage(driver).getTitle(), PageTitles.MY_ACCOUNT.getPageTitle());
     }
 
     @When("I click \"Home\" button")
@@ -25,6 +25,6 @@ public class MyAccountPageStepDefinitions {
 
     @Then("Home page opened")
     public void homePageOpened() {
-        assertEquals(new MyAccountPage(driver).getTitle(), PageTitles.HOMEPAGE_TITLE.getPageTitle());
+        assertEquals(new MyAccountPage(driver).getTitle(), PageTitles.HOME.getPageTitle());
     }
 }

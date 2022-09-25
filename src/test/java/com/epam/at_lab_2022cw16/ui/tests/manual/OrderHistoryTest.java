@@ -35,7 +35,7 @@ public class OrderHistoryTest extends AbstractBaseTest {
     @Test
     void shouldOpenCatalogPage() {
         catalog.openPage();
-        assertEquals(catalog.getTitle(), PageTitles.PAGE_WITH_WOMEN_TITLE.getPageTitle());
+        assertEquals(catalog.getTitle(), PageTitles.WOMEN_CATALOG.getPageTitle());
     }
 
     @Order(2)

@@ -1,7 +1,14 @@
 package com.epam.at_lab_2022cw16.ui.page;
 
+import com.epam.at_lab_2022cw16.ui.page.pageElements.Alert;
 import com.epam.at_lab_2022cw16.ui.utils.EnvironmentUtils;
-import org.openqa.selenium.*;
+import lombok.extern.log4j.Log4j2;
+import org.openqa.selenium.By;
+import org.openqa.selenium.ElementClickInterceptedException;
+import org.openqa.selenium.ElementNotInteractableException;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -13,6 +20,7 @@ import javax.naming.OperationNotSupportedException;
 import java.time.Duration;
 import java.util.List;
 
+@Log4j2
 public abstract class AbstractBasePage {
 
     private static final String MINI_CART_EMPTY_TITLE_XPATH = "//div[@class='shopping_cart']"
@@ -31,14 +39,14 @@ public abstract class AbstractBasePage {
     @FindBy(xpath = "//a[@class='login']")
     protected WebElement signInButton;
 
-    @FindBy(xpath = "//a[@title='Women']")
-    protected WebElement womenDressesBarButton;
-
-    @FindBy(xpath = "//li[@class]//a[@title='Summer Dresses']")
-    protected WebElement summerDressesButton;
+    @FindBy(xpath = "//a[@class='logout']")
+    protected WebElement signOutButton;
 
     @FindBy(xpath = "//a[@title='View my customer account']")
     protected WebElement viewMyAccountButton;
+
+    @FindBy(xpath = "//a[@title='Women']")
+    private WebElement womenCatalogButton;
 
     @FindBy(xpath = "//*[@id='header']//a[@class='account']")
     protected WebElement myAccountButton;
@@ -66,6 +74,9 @@ public abstract class AbstractBasePage {
 
     @FindBy(xpath = "//div[@class='product-name']/a")
     private WebElement miniCartProductName;
+
+    @FindBy(xpath = "//*[contains(@class, 'alert')]")
+    private WebElement alert;
 
     protected AbstractBasePage(WebDriver driver) {
         this.driver = driver;
@@ -104,9 +115,31 @@ public abstract class AbstractBasePage {
         return driver.getTitle();
     }
 
+    public AuthenticationPage clickSignInButton() {
+        signInButton.click();
+        log.info("Go to Authentication Page");
+        return new AuthenticationPage(driver);
+    }
+
+    public void clickSignOutButton() {
+        signOutButton.click();
+        log.info("Sign out button clicked");
+    }
+
     public MyAccountPage openMyAccountPage() {
         viewMyAccountButton.click();
         return new MyAccountPage(driver);
+    }
+
+    public boolean isAccountVisible() {
+        return !findElements(By.className("account")).isEmpty();
+    }
+
+    public WomenCatalogPage clickWomenCatalogButton() {
+        driverWait().until(ExpectedConditions.elementToBeClickable(womenCatalogButton))
+                .click();
+        log.info("Go to Catalog Page");
+        return new WomenCatalogPage(driver);
     }
 
     public FluentWait<WebDriver> getNewFluentWait() {
@@ -133,6 +166,11 @@ public abstract class AbstractBasePage {
         new Actions(driver).moveToElement(element).perform();
     }
 
+    public OrderSummaryPage clickToMiniCart() {
+        miniCart.click();
+        return new OrderSummaryPage(driver);
+    }
+
     public void moveToMiniCart() {
         scrollTo(miniCart);
         moveTo(miniCart);
@@ -149,7 +187,7 @@ public abstract class AbstractBasePage {
         waitForNumberOfElementsToBeLessThan(By.xpath(MINI_CART_ELEMENTS), count);
     }
 
-    public OrderSummaryPage clickMiniCartCheckOutButton() {
+    public OrderSummaryPage clickCheckOutButtonInMiniCart() {
         miniCartCheckOutButton.click();
         return new OrderSummaryPage(driver);
     }
@@ -168,6 +206,10 @@ public abstract class AbstractBasePage {
 
     public String getMiniCartProductTitle() {
         return miniCartProductName.getAttribute("title").trim();
+    }
+
+    public Alert getPageElementAlert() {
+        return new Alert(alert, driverWait());
     }
 
     public String getSummary() {

@@ -22,7 +22,7 @@ public class MyStoreHomepageStepDefinitions {
 
     @Then("the website opens and Home page is displayed")
     public void theWebsiteOpens() {
-        assertEquals(new MyStoreHomepage(driver).getTitle(), PageTitles.HOMEPAGE_TITLE.getPageTitle());
+        assertEquals(new MyStoreHomepage(driver).getTitle(), PageTitles.HOME.getPageTitle());
     }
 
     @When("I sign in with valid credentials")

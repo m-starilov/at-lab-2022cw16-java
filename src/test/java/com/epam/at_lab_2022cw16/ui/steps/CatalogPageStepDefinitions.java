@@ -39,7 +39,7 @@ public class CatalogPageStepDefinitions {
 
     @Then("the WomenCatalogPage opened")
     public void theCatalogPageOpened() {
-        Assertions.assertEquals(PageTitles.PAGE_WITH_WOMEN_TITLE.getPageTitle(), catalog.getTitle());
+        Assertions.assertEquals(PageTitles.WOMEN_CATALOG.getPageTitle(), catalog.getTitle());
     }
 
     @When("the user click on dropdown list Sort by and select sort {string}")
@@ -219,7 +219,7 @@ public class CatalogPageStepDefinitions {
 
     @Then("page with Evening Dresses opened")
     public void pageWithEveningDressesOpened() {
-        assertEquals(new WomenCatalogPage(driver).getTitle(), PageTitles.PAGE_WITH_EVENING_DRESSES_TITLE.getPageTitle());
+        assertEquals(new WomenCatalogPage(driver).getTitle(), PageTitles.EVENING_DRESSES_CATALOG.getPageTitle());
     }
 
 }
