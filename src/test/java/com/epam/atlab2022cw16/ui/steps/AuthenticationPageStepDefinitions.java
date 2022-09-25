@@ -1,6 +1,8 @@
 package com.epam.atlab2022cw16.ui.steps;
 
+import com.epam.atlab2022cw16.ui.application.constants.Constants;
 import com.epam.atlab2022cw16.ui.application.models.User;
+import com.epam.atlab2022cw16.ui.application.modules.Alert;
 import com.epam.atlab2022cw16.ui.application.pages.AuthenticationPage;
 import com.epam.atlab2022cw16.ui.utils.EnvironmentUtils;
 import io.cucumber.java.en.Then;
@@ -55,5 +57,38 @@ public class AuthenticationPageStepDefinitions {
     @When("the user enters validEmail in the “Email address” field and press the “Create an account” button")
     public void theUserEntersValidEmailInTheEmailAddressFieldAndPressTheCreateAnAccountButton() {
         new AuthenticationPage(driver).fillingEmailForm(generateRandomEmail());
+    }
+
+    @Then("I see a create account form")
+    public void iSeeACreateAccountForm() {
+        assertTrue(new AuthenticationPage(driver).isCreateAccountFormVisible());
+    }
+
+    @Then("I see an already registered form")
+    public void iSeeAnAlreadyRegisteredForm() {
+        assertTrue(new AuthenticationPage(driver).isLoginFormVisible());
+    }
+
+
+    @Then("I see An email address required message")
+    public void iSeeAnEmailAddressRequiredMessage() {
+        Alert alert = new AuthenticationPage(driver).getPageElementAlert();
+        assertTrue(alert.isDisplayed());
+        assertTrue(alert.isDanger());
+        assertTrue(alert.getMessage().contains(Constants.AlertMessageTexts.EMAIL_REQUIRED));
+    }
+
+    @Then("I see Authentication failed message")
+    public void iSeeAuthenticationFailedMessage() {
+        Alert alert = new AuthenticationPage(driver).getPageElementAlert();
+        assertTrue(alert.isDisplayed());
+        assertTrue(alert.isDanger());
+        assertTrue(alert.getMessage().contains(Constants.AlertMessageTexts.AUTH_FAIL));
+    }
+
+    @When("I click Proceed to My Account button")
+    public void login() {
+        AuthenticationPage authenticationPage = new AuthenticationPage(driver);
+        authenticationPage.proceedToMyAccountPage();
     }
 }

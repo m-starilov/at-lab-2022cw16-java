@@ -28,7 +28,6 @@ public class CatalogPageStepDefinitions {
 
     private final WebDriver driver = EnvironmentUtils.getDriver();
 
-
     @When("I open WomenCatalogPage")
     public void openCatalogPage() {
         new WomenCatalogPage(driver).openPage();
