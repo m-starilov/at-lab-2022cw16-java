@@ -1,4 +1,6 @@
-Feature: As a user I want to get ability to sort and filter products in the catalog
+  #JiraTicket: id = 16307,  url = "https://jira.epam.com/jira/browse/EPMFARMATS-16307
+
+  Feature: As a user I want to get ability to sort and filter products in the catalog
 
   Scenario: Should be able sort and filter products
     Given the user opens WomenCatalogPage
