@@ -2,9 +2,20 @@ package com.epam.at_lab_2022cw16.ui.tests.manual;
 
 import com.epam.at_lab_2022cw16.annotations.JiraTicketsLink;
 import com.epam.at_lab_2022cw16.ui.constants.PageTitles;
-import com.epam.at_lab_2022cw16.ui.page.*;
+import com.epam.at_lab_2022cw16.ui.page.AuthenticationPage;
+import com.epam.at_lab_2022cw16.ui.page.OrderAddressPage;
+import com.epam.at_lab_2022cw16.ui.page.OrderBankWirePaymentPage;
+import com.epam.at_lab_2022cw16.ui.page.OrderConfirmationPage;
+import com.epam.at_lab_2022cw16.ui.page.OrderPaymentPage;
+import com.epam.at_lab_2022cw16.ui.page.OrderShippingPage;
+import com.epam.at_lab_2022cw16.ui.page.OrderSummaryPage;
+import com.epam.at_lab_2022cw16.ui.page.WomenCatalogPage;
 import com.epam.at_lab_2022cw16.ui.utils.TestListener;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.openqa.selenium.WebDriver;
 
@@ -20,7 +31,7 @@ public class OrderHistoryTest extends AbstractBaseTest {
     private final WebDriver driver = getWebDriver();
     private final WomenCatalogPage catalog = new WomenCatalogPage(driver);
     private static String orderReference;
-    private static String productName = "Faded Short Sleeve T-shirts";
+    private static final String productName = "Faded Short Sleeve T-shirts";
 
     @Order(1)
     @Test
