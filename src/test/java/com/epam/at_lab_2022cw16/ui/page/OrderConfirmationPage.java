@@ -9,6 +9,12 @@ import java.util.List;
 
 public class OrderConfirmationPage extends AbstractOrderPage {
 
+    @FindBy(xpath = "//div[@class='box']")
+    private WebElement confirmationAllText;
+
+    @FindBy(xpath = "//a[@title='Back to orders']")
+    private WebElement backToOrdersButton;
+
     @FindBy(xpath = "//div[@id='center_column']/div/p/strong")
     private WebElement confirmationText;
 
@@ -38,4 +44,20 @@ public class OrderConfirmationPage extends AbstractOrderPage {
         return orderInformation;
     }
 
+    public String getOrderReverence() {
+        String[] strings = confirmationAllText.getText().split("\n");
+        String orderReference = null;
+        for (String str : strings) {
+            if (str.contains("order reference")) {
+                orderReference = (str.replace("- Do","")).replaceAll("[^A-Z]*", "").trim();
+                break;
+            }
+        }
+        return orderReference;
+    }
+
+    public OrderHistoryPage clickBackToOrdersButton() {
+        backToOrdersButton.click();
+        return new OrderHistoryPage(driver);
+    }
 }

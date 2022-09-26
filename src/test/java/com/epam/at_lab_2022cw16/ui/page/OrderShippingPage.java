@@ -11,6 +11,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 public class OrderShippingPage extends AbstractOrderPage {
 
     private final By fancyboxCloseButton = By.xpath("//a[@title='Close']");
+    private final By fancyboxMessage = By.xpath("//p[@class='fancybox-error']");
 
     @FindBy(xpath = "//div[@id='center_column']//button")
     private WebElement proceedToCheckoutButton;
@@ -46,5 +47,11 @@ public class OrderShippingPage extends AbstractOrderPage {
         proceedToCheckoutButton.click();
         log.info("Go to Payment information");
         return new OrderPaymentPage(driver);
+    }
+
+    public String getFancyboxText(){
+        return driverWait()
+                .until(ExpectedConditions.presenceOfElementLocated(fancyboxMessage))
+                .getText();
     }
 }
