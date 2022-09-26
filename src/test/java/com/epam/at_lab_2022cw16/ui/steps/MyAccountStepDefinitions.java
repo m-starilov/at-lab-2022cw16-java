@@ -18,6 +18,11 @@ public class MyAccountStepDefinitions {
         new MyAccountPage(driver).clickWomenCatalogButton();
     }
 
+    @When("I go to Order History page from Catalog Page")
+    public void openOrderHistoryPageFromMyAccount() {
+        new MyAccountPage(driver).clickOrderHistoryButton();
+    }
+
     @Then("the My account page is opened")
     public void myAccountPageIsOpened() {
         assertThat(new MyAccountPage(driver).getTitle())

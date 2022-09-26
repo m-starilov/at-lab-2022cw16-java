@@ -5,13 +5,16 @@ import com.epam.at_lab_2022cw16.ui.page.CreateAnAccountPage;
 import com.epam.at_lab_2022cw16.ui.page.MyRegisteredAccountPage;
 import com.epam.at_lab_2022cw16.ui.page.NewUserRegisterPage;
 import com.epam.at_lab_2022cw16.ui.utils.EnvironmentUtils;
+import com.epam.at_lab_2022cw16.ui.utils.TestListener;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@ExtendWith(TestListener.class)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class NewUserRegistrationTests extends AbstractBaseTest {
     private final String invalidEmail = "kfhvifdjhkf";

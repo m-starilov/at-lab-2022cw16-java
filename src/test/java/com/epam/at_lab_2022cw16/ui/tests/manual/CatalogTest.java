@@ -7,11 +7,13 @@ import com.epam.at_lab_2022cw16.ui.constants.PageTitles;
 import com.epam.at_lab_2022cw16.ui.constants.SortParams;
 import com.epam.at_lab_2022cw16.ui.model.Product;
 import com.epam.at_lab_2022cw16.ui.page.WomenCatalogPage;
+import com.epam.at_lab_2022cw16.ui.utils.TestListener;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -23,6 +25,7 @@ import java.util.stream.Collectors;
         description = "Test check sorting and filtration on the site",
         url = "https://jira.epam.com/jira/browse/EPMFARMATS-16307")
 
+@ExtendWith(TestListener.class)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class CatalogTest extends AbstractBaseTest {
 
