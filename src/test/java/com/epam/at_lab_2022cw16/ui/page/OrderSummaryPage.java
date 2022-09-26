@@ -5,6 +5,10 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Log4j2
 public class OrderSummaryPage extends AbstractOrderPage {
@@ -26,6 +30,9 @@ public class OrderSummaryPage extends AbstractOrderPage {
 
     @FindBy(xpath = "//p[contains(@class, 'alert')]")
     private WebElement alertMessage;
+
+    @FindBy(xpath = "//td/p[@class='product-name']")
+    private List<WebElement> productNames;
 
     public OrderSummaryPage(WebDriver driver) {
         super(driver);
@@ -65,5 +72,16 @@ public class OrderSummaryPage extends AbstractOrderPage {
 
     public String getAlertMessage() {
         return waitForVisibilityOf(alertMessage).getText().trim();
+    }
+
+    public AuthenticationPage clickProceedToCheckoutButtonAsUnauthorizedUser() {
+        driverWait().until(ExpectedConditions.visibilityOf(proceedToCheckoutButton)).click();
+        return new AuthenticationPage(driver);
+    }
+
+    public List<String> getAddedProductNames(){
+        List<String> productNameList = new ArrayList<>();
+        productNames.forEach(element -> productNameList.add(element.getText()));
+        return productNameList;
     }
 }

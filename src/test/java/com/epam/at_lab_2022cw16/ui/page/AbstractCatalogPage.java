@@ -70,8 +70,17 @@ public abstract class AbstractCatalogPage extends AbstractBasePage {
     @FindBy(xpath = "//ul[contains(@class,'product_list')]/li")
     private List<WebElement> productsList;
 
+    @FindBy(xpath = "//span[@class='product-name']")
+    private WebElement addedToCardProductName;
+
     @FindBy(xpath = "//li[contains(@class,'ajax_block_product')]")
     private List<WebElement> products;
+
+    @FindBy(xpath = "//a[@title='Add to cart']")
+    private WebElement addToCartButton;
+
+    @FindBy(xpath = "//a[@title='Proceed to checkout']")
+    private WebElement checkoutButton;
 
     @FindBy(xpath = "//*[@id='layered_price_range']")
     private WebElement priceFilterValue;
@@ -102,6 +111,9 @@ public abstract class AbstractCatalogPage extends AbstractBasePage {
 
     @FindBy(xpath = "//span[@class[contains(.,'continue')]]/span")
     private WebElement continueShoppingButton;
+
+    @FindBy(xpath = "//*[contains(@class,'layer_cart_product')]//h2")
+    private WebElement productAddedMessage;
 
     public AbstractCatalogPage(WebDriver driver) {
         super(driver);
@@ -172,6 +184,28 @@ public abstract class AbstractCatalogPage extends AbstractBasePage {
         return this;
     }
 
+    public AbstractCatalogPage addProductToCart(String productName) {
+        WebElement product = products.stream()
+                .filter(element -> element.findElement(By.xpath(PRODUCT_NAME)).getText().contains(productName))
+                .findFirst()
+                .orElseThrow();
+        new Actions(driver)
+                .moveToElement(product).pause(Duration.ofSeconds(3)).moveToElement(addToCartButton)
+                .click(addToCartButton)
+                .build()
+                .perform();
+        log.info("Add item in cart");
+        return this;
+    }
+
+    public boolean isProductAddedToCart(String productName) {
+        return driverWait().until(ExpectedConditions.visibilityOf(addedToCardProductName)).getText().equals(productName);
+    }
+
+    public String getMessageConfirmAdditionItemToCart() {
+        return driverWait().until(ExpectedConditions.visibilityOf(productAddedMessage)).getText();
+    }
+
     public ComparisonPage clickCompareButton() {
         compareButton.click();
         log.info("Go to Comparison Page");
@@ -181,18 +215,21 @@ public abstract class AbstractCatalogPage extends AbstractBasePage {
     public AbstractCatalogPage sortByType(String sortingType) {
         findElement(By.xpath(SORTING_MENU)).click();
         findElement(By.xpath(format(SORTING_TYPE, SORTING_MENU, sortingType))).click();
+        log.info("Sort items by " + sortingType);
         return this;
     }
 
     public AbstractCatalogPage filterByColor(String color) {
         findElement(By.xpath(format(COLOR_FILTER, color))).click();
         waitCatalogUpload();
+        log.info("Filter items by color " + color);
         return this;
     }
 
     public AbstractCatalogPage filterByPrice() {
         Actions actions = new Actions(driver);
         actions.dragAndDropBy(uiSlider, 20, 0).release().build().perform();
+        log.info("Filter items by price");
         return this;
     }
 
@@ -211,12 +248,14 @@ public abstract class AbstractCatalogPage extends AbstractBasePage {
     public AbstractCatalogPage removePriceFilter() {
         Actions actions = new Actions(driver);
         actions.dragAndDropBy(uiSlider, -20, 0).release().build().perform();
+        log.info("Remove filter by price");
         return this;
     }
 
     public AbstractCatalogPage removeAllFilters() {
         waitCatalogUpload();
         filterDeleteButton.forEach(WebElement::click);
+        log.info("Remove all filters accept by price");
         return this;
     }
 
@@ -279,5 +318,11 @@ public abstract class AbstractCatalogPage extends AbstractBasePage {
             waitForVisibilityOf(continueShoppingButton).click();
         }
         log.info("Added " + number + " item(s) to cart");
+    }
+
+    public OrderSummaryPage clickCheckoutButton() {
+        driverWait().until(ExpectedConditions.visibilityOf(checkoutButton)).click();
+        log.info("Go to cart page");
+        return new OrderSummaryPage(driver);
     }
 }

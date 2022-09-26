@@ -8,6 +8,8 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 
+import java.util.List;
+
 @Log4j2
 public class OrderHistoryPage extends AbstractBasePage {
 
@@ -28,6 +30,9 @@ public class OrderHistoryPage extends AbstractBasePage {
 
     @FindBy(xpath = "//h3[text()='Messages']/following-sibling::div[@class='table_block']//tr/td[2]")
     private WebElement sentMessageText;
+
+    @FindBy(xpath = "//*[@id='order-list']//a[@class='color-myaccount']")
+    private List<WebElement> orderReferenceInHistory;
 
     public OrderHistoryPage(WebDriver driver) {
         super(driver);
@@ -67,5 +72,13 @@ public class OrderHistoryPage extends AbstractBasePage {
         select.selectByValue(id);
         log.info("Product with ID=" + id + " is selected");
         return this;
+    }
+
+    public boolean hasOrderInOrderHistory(String orderReference) {
+        return driverWait()
+                .until(ExpectedConditions.visibilityOfAllElements(orderReferenceInHistory))
+                .stream()
+                .anyMatch(element -> element.getText().contains(orderReference));
+
     }
 }

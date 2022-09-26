@@ -30,6 +30,9 @@ public abstract class AbstractBasePage {
 
     protected WebDriver driver;
 
+    @FindBy(xpath = "//h1")
+    protected WebElement summary;
+
     @FindBy(xpath = "//a[@class='login']")
     protected WebElement signInButton;
 
@@ -164,5 +167,9 @@ public abstract class AbstractBasePage {
 
     public String getMiniCartProductTitle() {
         return miniCartProductName.getAttribute("title").trim();
+    }
+
+    public String getSummary(){
+        return summary.getText();
     }
 }

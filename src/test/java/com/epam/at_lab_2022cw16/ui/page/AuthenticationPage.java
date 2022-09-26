@@ -47,4 +47,9 @@ public class AuthenticationPage extends AbstractBasePage {
         log.info("Sign In button is pressed");
         return new MyAccountPage(driver);
     }
+
+    public OrderAddressPage proceedToOrderAddressPage() {
+        signInButton.click();
+        return new OrderAddressPage(driver);
+    }
 }
