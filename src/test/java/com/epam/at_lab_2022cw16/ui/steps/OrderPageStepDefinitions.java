@@ -96,4 +96,9 @@ public class OrderPageStepDefinitions {
         assertThat(new OrderConfirmationPage(driver).getBankAccountInformation())
                 .isEqualTo(bankAccountInformation);
     }
+
+    @When("I proceed to My Account page")
+    public void proceedToMyAccountPage() {
+        new OrderConfirmationPage(driver).openMyAccountPage();
+    }
 }

@@ -1,5 +1,7 @@
 package com.epam.at_lab_2022cw16.ui.tests.manual;
 
+import com.epam.at_lab_2022cw16.annotations.JiraTicketsLink;
+import com.epam.at_lab_2022cw16.ui.constants.AlertMessageTexts;
 import com.epam.at_lab_2022cw16.ui.constants.PageTitles;
 import com.epam.at_lab_2022cw16.ui.model.User;
 import com.epam.at_lab_2022cw16.ui.page.AuthenticationPage;
@@ -23,19 +25,21 @@ import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.openqa.selenium.WebDriver;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@JiraTicketsLink(id = {16299, 16331},
+        description = "Test check authorization,, adding to comparison, creating order and adding comment to order",
+        url = {"https://jira.epam.com/jira/browse/EPMFARMATS-16299#", "https://jira.epam.com/jira/browse/EPMFARMATS" +
+                "-16331"})
 @ExtendWith(TestListener.class)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class CompareAndBuyingWithBankWireAndCommentInOrderHistoryTest extends AbstractBaseTest {
 
     private static final String TOTAL_ORDER_PRICE = "$59.96";
     private static final String USER_MESSAGE = "Please, send me photo of it!";
-    private static final String ALERT_DANGER_MESSAGE = "The message cannot be blank.";
-    private static final String ALERT_SUCCESS_MESSAGE = "Message successfully sent";
     private final WebDriver driver = getWebDriver();
 
     @Test
@@ -87,12 +91,15 @@ public class CompareAndBuyingWithBankWireAndCommentInOrderHistoryTest extends Ab
         OrderSummaryPage orderSummaryPage = new ComparisonPage(driver).clickViewSoppingCartButton();
         assertThat(orderSummaryPage.getSummaryProductsQuantity())
                 .isEqualTo("1 Product");
+
         orderSummaryPage.setProductQuantity("qwe");
         assertThat(orderSummaryPage.getSummaryProductsQuantity())
                 .isEqualTo("1 Product");
+
         orderSummaryPage.setProductQuantity("-9");
         assertThat(orderSummaryPage.getSummaryProductsQuantity())
                 .isEqualTo("1 Product");
+
         orderSummaryPage.setProductQuantity("2");
         assertThat(orderSummaryPage.getSummaryProductsQuantity())
                 .isEqualTo("2 Products");
@@ -106,6 +113,7 @@ public class CompareAndBuyingWithBankWireAndCommentInOrderHistoryTest extends Ab
         orderShippingPage.clickProceedToCheckoutButton();
         assertThat(orderShippingPage.isFancyboxDisplayed())
                 .isTrue();
+
         orderShippingPage.closeFancybox();
         orderShippingPage.changingCheckboxState();
     }
@@ -131,9 +139,7 @@ public class CompareAndBuyingWithBankWireAndCommentInOrderHistoryTest extends Ab
     @Test
     @Order(9)
     public void orderConfirmationPageTest() {
-        List<String> bankAccountInformation = new ArrayList<>(
-                List.of("Pradeep Macharla", "xyz", "RTP")
-        );
+        List<String> bankAccountInformation = Arrays.asList("Pradeep Macharla", "xyz", "RTP");
         OrderConfirmationPage orderConfirmationPage =
                 new OrderBankWirePaymentPage(driver).clickPaymentIConfirmMyOrderButton();
         assertThat(orderConfirmationPage.getNavigationPageTitle())
@@ -152,9 +158,11 @@ public class CompareAndBuyingWithBankWireAndCommentInOrderHistoryTest extends Ab
         MyAccountPage myAccountPage = new OrderConfirmationPage(driver).openMyAccountPage();
         assertThat(myAccountPage.getTitle())
                 .isEqualTo(PageTitles.MY_ACCOUNT_PAGE_TITLE.getPageTitle());
+
         OrderHistoryPage ordersHistoryPage = myAccountPage.clickOrderHistoryButton();
         assertThat(ordersHistoryPage.getTitle())
                 .isEqualTo(PageTitles.ORDER_HISTORY_PAGE_TITLE.getPageTitle());
+
         ordersHistoryPage.showLastOrderDetails();
         ordersHistoryPage.clickSendButton();
         Alert alert = ordersHistoryPage.getAlert();
@@ -163,7 +171,7 @@ public class CompareAndBuyingWithBankWireAndCommentInOrderHistoryTest extends Ab
         assertThat(alert.isDanger())
                 .isTrue();
         assertThat(alert.getMessage())
-                .contains(ALERT_DANGER_MESSAGE);
+                .contains(AlertMessageTexts.ORDER_HISTORY_PAGE_DANGER_MESSAGE.getAlertMessageText());
     }
 
     @Test
@@ -179,7 +187,7 @@ public class CompareAndBuyingWithBankWireAndCommentInOrderHistoryTest extends Ab
         assertThat(alert.isSuccess())
                 .isTrue();
         assertThat(alert.getMessage())
-                .contains(ALERT_SUCCESS_MESSAGE);
+                .contains(AlertMessageTexts.ORDER_HISTORY_PAGE_SUCCESS_MESSAGE.getAlertMessageText());
         assertThat(ordersHistoryPage.getMessageText())
                 .isEqualTo(USER_MESSAGE);
     }
