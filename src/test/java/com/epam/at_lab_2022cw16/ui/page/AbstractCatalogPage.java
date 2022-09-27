@@ -100,9 +100,6 @@ public abstract class AbstractCatalogPage extends AbstractBasePage {
     @FindBy(xpath = "//form[@class='compare-form']/button[@type='submit']")
     private WebElement compareButton;
 
-    @FindBy(xpath = "//*[contains(@class,'layer_cart_product')]//h2")
-    private WebElement productAddedMessage;
-
     @FindBy(xpath = "//div[@class='product-container']")
     private List<WebElement> productContainers;
 
@@ -114,6 +111,9 @@ public abstract class AbstractCatalogPage extends AbstractBasePage {
 
     @FindBy(xpath = "//span[@class[contains(.,'continue')]]/span")
     private WebElement continueShoppingButton;
+
+    @FindBy(xpath = "//*[contains(@class,'layer_cart_product')]//h2")
+    private WebElement productAddedMessage;
 
     public AbstractCatalogPage(WebDriver driver) {
         super(driver);

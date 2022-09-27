@@ -1,12 +1,13 @@
 package com.epam.at_lab_2022cw16.ui.page;
 
+import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 import java.util.ArrayList;
 import java.util.List;
-
+@Log4j2
 public class OrderConfirmationPage extends AbstractOrderPage {
 
     @FindBy(xpath = "//div[@class='box']")
@@ -23,6 +24,9 @@ public class OrderConfirmationPage extends AbstractOrderPage {
 
     @FindBy(xpath = "//div[@class='box']/strong")
     private List<WebElement> bankAccountInformation;
+
+    @FindBy(xpath = "//*[@id='header']//a[contains(text(),'Sign out')]")
+    private WebElement signOutButton;
 
     public OrderConfirmationPage(WebDriver driver) {
         super(driver);
@@ -59,5 +63,10 @@ public class OrderConfirmationPage extends AbstractOrderPage {
     public OrderHistoryPage clickBackToOrdersButton() {
         backToOrdersButton.click();
         return new OrderHistoryPage(driver);
+    }
+
+    public void clickSignOut(){
+        signOutButton.click();
+        log.info("Sign out");
     }
 }

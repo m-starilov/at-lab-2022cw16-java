@@ -7,8 +7,8 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Log4j2
 public class OrderSummaryPage extends AbstractOrderPage {
@@ -34,6 +34,9 @@ public class OrderSummaryPage extends AbstractOrderPage {
     @FindBy(xpath = "//td/p[@class='product-name']")
     private List<WebElement> productNames;
 
+    @FindBy(xpath = "//tr//p[@class='product-name']/a")
+    private List<WebElement> productNameList;
+
     public OrderSummaryPage(WebDriver driver) {
         super(driver);
     }
@@ -46,6 +49,10 @@ public class OrderSummaryPage extends AbstractOrderPage {
 
     public String getSummaryProductsQuantity() {
         return summaryProductsQuantity.getText();
+    }
+
+    public int getSummaryProductsQuantityAsInt() {
+        return Integer.parseInt(summaryProductsQuantity.getText().replaceAll("\\D*","").trim());
     }
 
     public String getTotalPrice() {
@@ -80,8 +87,6 @@ public class OrderSummaryPage extends AbstractOrderPage {
     }
 
     public List<String> getAddedProductNames(){
-        List<String> productNameList = new ArrayList<>();
-        productNames.forEach(element -> productNameList.add(element.getText()));
-        return productNameList;
+        return productNames.stream().map(WebElement::getText).collect(Collectors.toList());
     }
 }
