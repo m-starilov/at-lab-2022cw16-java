@@ -217,7 +217,7 @@ public abstract class AbstractBasePage {
     }
 
     public MyAccountPage clickMyAccountButton() {
-        myAccountButton.click();
+        driverWait().until(ExpectedConditions.elementToBeClickable(myAccountButton)).click();
         return new MyAccountPage(driver);
     }
 

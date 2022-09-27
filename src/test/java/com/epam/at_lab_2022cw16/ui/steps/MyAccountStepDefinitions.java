@@ -28,4 +28,14 @@ public class MyAccountStepDefinitions {
         assertThat(new MyAccountPage(driver).getTitle())
                 .isEqualTo(PageTitles.MY_ACCOUNT.getPageTitle());
     }
+
+    @Then("My account {string} page opened")
+    public void myAccountPageOpened(String summary) {
+        assertThat(new MyAccountPage(driver).getSummary()).isEqualTo(summary);
+    }
+
+    @When("I press Order history and details button")
+    public void iPressOrderHistoryAndDetailsButton() {
+        new MyAccountPage(driver).clickOrderHistoryButton();
+    }
 }

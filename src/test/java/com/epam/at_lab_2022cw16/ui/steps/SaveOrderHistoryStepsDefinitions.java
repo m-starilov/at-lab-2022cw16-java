@@ -11,9 +11,13 @@ import org.openqa.selenium.WebDriver;
 
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 public class SaveOrderHistoryStepsDefinitions {
     private final WebDriver driver = EnvironmentUtils.getDriver();
     private String orderReference = null;
+    static ThreadLocal<List<String>> listThreadLocal = new ThreadLocal<>();
 
     @When("I open catalog page")
     public void openCatalogPage() {
@@ -41,7 +45,7 @@ public class SaveOrderHistoryStepsDefinitions {
     }
 
     @When("I press Proceed to checkout button")
-    public void iPressProceedToCheckoutButton() {
+    public void pressProceedToCheckoutButton() {
         new WomenCatalogPage(driver).clickCheckoutButton();
     }
 
@@ -102,10 +106,14 @@ public class SaveOrderHistoryStepsDefinitions {
         Assertions.assertTrue(new OrderShippingPage(driver).isFancyboxDisplayed());
     }
 
-    @When("I click checkbox Terms of service and press Proceed to checkout button")
+    @When("I close fancybox")
+    public void iCloseFancybox() {
+        new OrderShippingPage(driver).closeFancybox();
+    }
+
+    @When("I click checkbox Terms of service and press Proceed to checkout button on the Shipping page")
     public void iClickCheckboxTermsOfServiceAndPressProceedToCheckoutButton() {
         new OrderShippingPage(driver)
-                .closeFancybox()
                 .changingCheckboxState()
                 .clickProceedToCheckoutButton();
     }
@@ -127,7 +135,7 @@ public class SaveOrderHistoryStepsDefinitions {
     }
 
     @When("I press I confirm my order button")
-    public void iPressIConfirmMyOrderButton() {
+    public void pressIConfirmMyOrderButton() {
         new OrderBankWirePaymentPage(driver).clickPaymentIConfirmMyOrderButton();
     }
 
@@ -137,7 +145,7 @@ public class SaveOrderHistoryStepsDefinitions {
     }
 
     @And("A message {string}  displayed")
-    public void aMessageDisplayed(String message) {
+    public void isDisplayedMessage(String message) {
         Assertions.assertEquals(message, new OrderConfirmationPage(driver).getConfirmationText());
     }
 
@@ -148,13 +156,51 @@ public class SaveOrderHistoryStepsDefinitions {
     }
 
     @When("I press Back to orders")
-    public void iPressBackToOrders() {
+    public void pressBackToOrders() {
         new OrderConfirmationPage(driver).clickBackToOrdersButton();
     }
 
 
     @Then("Order history page opened. The list of orders contains an order with the current order number.")
-    public void orderHistoryPageOpenedTheListOfOrdersContainsAnOrderWithTheCurrentOrderNumber() {
+    public void isOpenedOrderHistoryPageListOfOrdersContainsAnOrderWithTheCurrentOrderNumber() {
         Assertions.assertTrue(new OrderHistoryPage(driver).hasOrderInOrderHistory(orderReference));
+    }
+
+    @Then("Order history {string} page opened.")
+    public void isOpenedOrderHistory(String summary) {
+        Assertions.assertEquals(summary, new OrderHistoryPage(driver).getSummary());
+    }
+
+    @When("I click Details button")
+    public void clickDetailsButton() {
+
+        new OrderHistoryPage(driver).showOrderDetails(orderReference);
+    }
+
+    @Then("order information is displayed at the bottom of the page \\(expected product name {string} and quantity {int})")
+    public void isDisplayedOrderInformationAtBottomPage(String productName, int quantity) {
+        OrderHistoryPage orderHistoryPage = new OrderHistoryPage(driver);
+        assertTrue(orderHistoryPage.showOrderDetails(orderReference).isDisplayedDetailsBlock());
+
+        List<String> productsFromOldOrder = orderHistoryPage.getProductsNameFromOldOrder();
+        listThreadLocal.set(productsFromOldOrder);
+
+        assertTrue(productsFromOldOrder.stream().anyMatch(name -> name.contains(productName)));
+        assertEquals(quantity, orderHistoryPage.getProductsQuantityFromOldOrder());
+        assertTrue(new OrderHistoryPage(driver).isDisplayedDetailsBlock());
+    }
+
+    @When("I press Reorder button in the block with information about the order")
+    public void pressReorderButtonInTheBlockWithInformationAboutTheOrder() {
+        OrderHistoryPage orderHistoryPage = new OrderHistoryPage(driver);
+        orderHistoryPage.reorderOldOrderByButtonFromDetails();
+    }
+
+    @When("I press Reorder button in block with list of orders")
+    public void pressReorderButtonInBlockWithListOfOrders() {
+        OrderHistoryPage orderHistoryPage = new OrderHistoryPage(driver);
+        orderHistoryPage.showLastOrderDetails().isDisplayedDetailsBlock();
+        listThreadLocal.set(orderHistoryPage.getProductsNameFromOldOrder());
+        orderHistoryPage.reorderOldOrderByButtonFromOrderList();
     }
 }
