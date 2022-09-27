@@ -9,7 +9,8 @@ public enum PageTitles {
     PAGE_WITH_SUMMER_DRESSES_TITLE("Summer Dresses - My Store"),
     PAGE_WITH_T_SHIRTS_TITLE("T-shirts - My Store"),
     PAGE_WITH_EVENING_DRESSES_TITLE("Evening Dresses - My Store"),
-    ORDER_HISTORY_PAGE_TITLE("Order history - My Store");
+    ORDER_HISTORY_PAGE_TITLE("Order history - My Store"),
+    CONTACT_US_PAGE_TITLE("Contact us - My Store");
 
     private final String pageTitle;
 
@@ -20,4 +21,5 @@ public enum PageTitles {
     public String getPageTitle() {
         return pageTitle;
     }
+
 }
