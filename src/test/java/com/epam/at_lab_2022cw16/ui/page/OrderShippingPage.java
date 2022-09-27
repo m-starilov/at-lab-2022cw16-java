@@ -49,7 +49,7 @@ public class OrderShippingPage extends AbstractOrderPage {
         return new OrderPaymentPage(driver);
     }
 
-    public String getFancyboxText(){
+    public String getFancyboxText() {
         return driverWait()
                 .until(ExpectedConditions.presenceOfElementLocated(fancyboxMessage))
                 .getText();

@@ -7,6 +7,7 @@ import org.openqa.selenium.support.FindBy;
 
 import java.util.ArrayList;
 import java.util.List;
+
 @Log4j2
 public class OrderConfirmationPage extends AbstractOrderPage {
 
@@ -53,7 +54,7 @@ public class OrderConfirmationPage extends AbstractOrderPage {
         String orderReference = null;
         for (String str : strings) {
             if (str.contains("order reference")) {
-                orderReference = (str.replace("- Do","")).replaceAll("[^A-Z]*", "").trim();
+                orderReference = (str.replace("- Do", "")).replaceAll("[^A-Z]*", "").trim();
                 break;
             }
         }
@@ -65,7 +66,7 @@ public class OrderConfirmationPage extends AbstractOrderPage {
         return new OrderHistoryPage(driver);
     }
 
-    public void clickSignOut(){
+    public void clickSignOut() {
         signOutButton.click();
         log.info("Sign out");
     }

@@ -1,9 +1,11 @@
 package com.epam.at_lab_2022cw16.ui.page.pageElements;
 
+import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+@Log4j2
 public class Alert {
 
     private final WebElement element;
@@ -15,10 +17,12 @@ public class Alert {
     }
 
     public boolean isSuccess() {
+        log.info("Success message displayed");
         return wait.until(ExpectedConditions.attributeContains(element, "class", "alert-success"));
     }
 
     public boolean isDanger() {
+        log.info("Failure message displayed");
         return wait.until(ExpectedConditions.attributeContains(element, "class", "alert-danger"));
     }
 

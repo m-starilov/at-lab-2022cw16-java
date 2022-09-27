@@ -1,15 +1,7 @@
 package com.epam.at_lab_2022cw16.ui.steps;
 
 import com.epam.at_lab_2022cw16.ui.constants.PageTitles;
-import com.epam.at_lab_2022cw16.ui.page.AuthenticationPage;
-import com.epam.at_lab_2022cw16.ui.page.OrderAddressPage;
-import com.epam.at_lab_2022cw16.ui.page.OrderBankWirePaymentPage;
-import com.epam.at_lab_2022cw16.ui.page.OrderConfirmationPage;
-import com.epam.at_lab_2022cw16.ui.page.OrderHistoryPage;
-import com.epam.at_lab_2022cw16.ui.page.OrderPaymentPage;
-import com.epam.at_lab_2022cw16.ui.page.OrderShippingPage;
-import com.epam.at_lab_2022cw16.ui.page.OrderSummaryPage;
-import com.epam.at_lab_2022cw16.ui.page.WomenCatalogPage;
+import com.epam.at_lab_2022cw16.ui.page.*;
 import com.epam.at_lab_2022cw16.ui.utils.EnvironmentUtils;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
@@ -36,7 +28,7 @@ public class SaveOrderHistoryStepsDefinitions {
     @When("I put one item {string} in a cart")
     public void putOneItemInACart(String productName) {
         new WomenCatalogPage(driver).addProductToCart(productName);
-        }
+    }
 
     @Then("alert is displayed with a message {string}")
     public void alertIsDisplayedWithAMessage(String message) {
@@ -58,6 +50,7 @@ public class SaveOrderHistoryStepsDefinitions {
         Assertions.assertTrue(new OrderSummaryPage(driver).getSummary().contains(h1));
 
     }
+
     @And("added product {string} displayed on the page")
     public void addedProductDisplayedOnThePage(String productName) {
         List<String> addedProductNames = new OrderSummaryPage(driver).getAddedProductNames();

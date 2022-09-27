@@ -1,12 +1,7 @@
 package com.epam.at_lab_2022cw16.ui.page;
 
 import com.epam.at_lab_2022cw16.ui.utils.EnvironmentUtils;
-import org.openqa.selenium.By;
-import org.openqa.selenium.ElementClickInterceptedException;
-import org.openqa.selenium.ElementNotInteractableException;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -172,11 +167,11 @@ public abstract class AbstractBasePage {
         return miniCartProductName.getAttribute("title").trim();
     }
 
-    public String getSummary(){
+    public String getSummary() {
         return summary.getText();
     }
 
-    public MyAccountPage clickMyAccountButton(){
+    public MyAccountPage clickMyAccountButton() {
         myAccountButton.click();
         return new MyAccountPage(driver);
     }
