@@ -27,11 +27,13 @@ public class MyAccountPage extends AbstractBasePage {
 
     public WishlistPage proceedToWishlist() {
         myWishListsButton.click();
+        log.info("My wishlist page is opened");
         return new WishlistPage(driver);
     }
 
     public MyStoreHomepage proceedToHomepage() {
         mainLogo.click();
+        log.info("Homepage is opened");
         return new MyStoreHomepage(driver);
     }
 
