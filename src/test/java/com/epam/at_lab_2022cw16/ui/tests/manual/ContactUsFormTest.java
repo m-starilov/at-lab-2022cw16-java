@@ -38,7 +38,7 @@ public class ContactUsFormTest extends AbstractBaseTest {
     public void openHomepageTest() {
         MyStoreHomepage homepage = new MyStoreHomepage(driver).openPage();
         assertThat(homepage.getTitle())
-                .isEqualTo(PageTitles.HOMEPAGE_TITLE.getPageTitle());
+                .isEqualTo(PageTitles.HOME.getPageTitle());
     }
 
     @Test
@@ -46,7 +46,7 @@ public class ContactUsFormTest extends AbstractBaseTest {
     public void openContactUsPageTest() {
         ContactUsPage contactUsPage = new MyStoreHomepage(driver).openContactUsPage();
         assertThat(contactUsPage.getTitle())
-                .isEqualTo(PageTitles.CONTACT_US_PAGE_TITLE.getPageTitle());
+                .isEqualTo(PageTitles.CONTACT_US.getPageTitle());
     }
 
     @Test
@@ -116,7 +116,7 @@ public class ContactUsFormTest extends AbstractBaseTest {
         authenticationPage.inputPassword(user.getPassword());
         MyAccountPage myAccountPage = authenticationPage.proceedToMyAccountPage();
         assertThat(myAccountPage.getTitle())
-                .isEqualTo(PageTitles.MY_ACCOUNT_PAGE_TITLE.getPageTitle());
+                .isEqualTo(PageTitles.MY_ACCOUNT.getPageTitle());
     }
 
     @Test
@@ -124,7 +124,7 @@ public class ContactUsFormTest extends AbstractBaseTest {
     public void openContactUsPageAsAuthorizedUserTest() {
         ContactUsPage contactUsPage = new MyAccountPage(driver).openContactUsPage();
         assertThat(contactUsPage.getTitle())
-                .isEqualTo(PageTitles.CONTACT_US_PAGE_TITLE.getPageTitle());
+                .isEqualTo(PageTitles.CONTACT_US.getPageTitle());
     }
 
     @Test

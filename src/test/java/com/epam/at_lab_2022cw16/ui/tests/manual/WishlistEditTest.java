@@ -29,20 +29,20 @@ public class WishlistEditTest extends AbstractBaseTest {
     public void userOpenHomepage() {
         MyStoreHomepage myStoreHomepage = new MyStoreHomepage(driver);
         myStoreHomepage.openPage();
-        assertEquals(myStoreHomepage.getTitle(), PageTitles.HOMEPAGE_TITLE.getPageTitle());
+        assertEquals(myStoreHomepage.getTitle(), PageTitles.HOME.getPageTitle());
     }
 
     @Order(2)
     @Test
     public void userLogIn() {
         MyStoreHomepage myStoreHomepage = new MyStoreHomepage(driver);
-        myStoreHomepage.pressSignInButton();
+        myStoreHomepage.clickSignInButton();
         User user = new User("mikalay.murashko@gmail.com", "12345");
         AuthenticationPage authenticationPage = new AuthenticationPage(driver);
         authenticationPage.inputEmail(user.getUsername())
                 .inputPassword(user.getPassword())
                 .proceedToMyAccountPage();
-        assertEquals(authenticationPage.getTitle(), PageTitles.MY_ACCOUNT_PAGE_TITLE.getPageTitle());
+        assertEquals(authenticationPage.getTitle(), PageTitles.MY_ACCOUNT.getPageTitle());
     }
 
     @Order(3)
@@ -50,7 +50,7 @@ public class WishlistEditTest extends AbstractBaseTest {
     public void userProceedToHomepage() {
         MyAccountPage myAccountPage = new MyAccountPage(driver);
         myAccountPage.proceedToHomepage();
-        assertEquals(myAccountPage.getTitle(), PageTitles.HOMEPAGE_TITLE.getPageTitle());
+        assertEquals(myAccountPage.getTitle(), PageTitles.HOME.getPageTitle());
     }
 
     @Order(4)
@@ -59,7 +59,7 @@ public class WishlistEditTest extends AbstractBaseTest {
         MyStoreHomepage myStoreHomepage = new MyStoreHomepage(driver);
         myStoreHomepage.openSummerDressesCatalog();
         MyAccountPage myAccountPage = new MyAccountPage(driver);
-        assertEquals(myAccountPage.getTitle(), PageTitles.PAGE_WITH_SUMMER_DRESSES_TITLE.getPageTitle());
+        assertEquals(myAccountPage.getTitle(), PageTitles.SUMMER_DRESSES_CATALOG.getPageTitle());
     }
 
     @Order(5)
@@ -126,7 +126,7 @@ public class WishlistEditTest extends AbstractBaseTest {
     public void userProceedToTShirtsCatalog() {
         WishlistPage wishlistPage = new WishlistPage(driver);
         wishlistPage.proceedToTShirtsCatalogPage();
-        assertEquals(wishlistPage.getTitle(), PageTitles.PAGE_WITH_T_SHIRTS_TITLE.getPageTitle());
+        assertEquals(wishlistPage.getTitle(), PageTitles.T_SHIRTS_CATALOG.getPageTitle());
     }
 
     @Order(11)
@@ -144,7 +144,7 @@ public class WishlistEditTest extends AbstractBaseTest {
     public void userProceedToEveningDressesCatalog() {
         WomenCatalogPage womenCatalogPage = new WomenCatalogPage(driver);
         womenCatalogPage.proceedToEveningDressesPage();
-        assertEquals(womenCatalogPage.getTitle(), PageTitles.PAGE_WITH_EVENING_DRESSES_TITLE.getPageTitle());
+        assertEquals(womenCatalogPage.getTitle(), PageTitles.EVENING_DRESSES_CATALOG.getPageTitle());
     }
 
     @Order(13)

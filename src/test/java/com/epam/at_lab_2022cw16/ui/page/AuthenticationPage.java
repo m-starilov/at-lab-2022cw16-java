@@ -5,6 +5,11 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
+import java.util.List;
+
+import static com.epam.at_lab_2022cw16.ui.constants.PageTitles.ALREADY_REGISTERED;
+import static com.epam.at_lab_2022cw16.ui.constants.PageTitles.CREATE_AN_ACCOUNT;
+
 @Log4j2
 public class AuthenticationPage extends AbstractBasePage {
 
@@ -19,6 +24,18 @@ public class AuthenticationPage extends AbstractBasePage {
 
     @FindBy(xpath = "//button[@id='SubmitLogin']")
     private WebElement signInButton;
+
+    @FindBy(xpath = "//form[@id='create-account_form']")
+    private List<WebElement> createAccountForm;
+
+    @FindBy(xpath = "//form[@id='create-account_form']/h3")
+    private WebElement createAccountFormTitle;
+
+    @FindBy(xpath = "//form[@id='login_form']")
+    private List<WebElement> loginForm;
+
+    @FindBy(xpath = "//form[@id='login_form']/h3")
+    private WebElement loginFormTitle;
 
     public AuthenticationPage(WebDriver driver) {
         super(driver);
@@ -48,6 +65,16 @@ public class AuthenticationPage extends AbstractBasePage {
         signInButton.click();
         log.info("Sign In button is pressed");
         return new MyAccountPage(driver);
+    }
+
+    public boolean isCreateAccountFormVisible() {
+        return waitForVisibilityOf(createAccountForm.get(0)).isDisplayed()
+                && createAccountFormTitle.getText().equals(CREATE_AN_ACCOUNT.getPageTitle());
+    }
+
+    public boolean isLoginFormVisible() {
+        return waitForVisibilityOf(loginForm.get(0)).isDisplayed()
+                && loginFormTitle.getText().equals(ALREADY_REGISTERED.getPageTitle());
     }
 
     public OrderAddressPage proceedToOrderAddressPage() {

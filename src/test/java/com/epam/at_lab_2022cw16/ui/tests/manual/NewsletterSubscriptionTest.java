@@ -29,7 +29,7 @@ public class NewsletterSubscriptionTest extends AbstractBaseTest {
         MyStoreHomepage myStoreHomepage = new MyStoreHomepage(driver);
         myStoreHomepage.openPage();
         assertThat(myStoreHomepage.getTitle())
-                .contains(PageTitles.HOMEPAGE_TITLE.getPageTitle());
+                .contains(PageTitles.HOME.getPageTitle());
     }
 
     @Test

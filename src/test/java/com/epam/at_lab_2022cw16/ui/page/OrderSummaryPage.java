@@ -25,17 +25,14 @@ public class OrderSummaryPage extends AbstractOrderPage {
     @FindBy(xpath = "//td[contains(@class, 'cart_quantity')]/input[@type='hidden']")
     private WebElement productQuantityHiddenInput;
 
-    @FindBy(xpath = "//span[@id='total_price']")
-    private WebElement totalOrderPrice;
-
     @FindBy(xpath = "//p[contains(@class, 'alert')]")
     private WebElement alertMessage;
 
+    @FindBy(xpath = "//table//tr[@id]")
+    private WebElement productInTable;
+
     @FindBy(xpath = "//td/p[@class='product-name']")
     private List<WebElement> productNames;
-
-    @FindBy(xpath = "//tr//p[@class='product-name']/a")
-    private List<WebElement> productNameList;
 
     public OrderSummaryPage(WebDriver driver) {
         super(driver);
@@ -53,10 +50,6 @@ public class OrderSummaryPage extends AbstractOrderPage {
 
     public int getSummaryProductsQuantityAsInt() {
         return Integer.parseInt(summaryProductsQuantity.getText().replaceAll("\\D*", "").trim());
-    }
-
-    public String getTotalPrice() {
-        return totalOrderPrice.getText();
     }
 
     public String getProductQuantity() {
@@ -79,6 +72,10 @@ public class OrderSummaryPage extends AbstractOrderPage {
 
     public String getAlertMessage() {
         return waitForVisibilityOf(alertMessage).getText().trim();
+    }
+
+    public boolean isProductVisible() {
+        return waitForVisibilityOf(productInTable).isDisplayed();
     }
 
     public AuthenticationPage clickProceedToCheckoutButtonAsUnauthorizedUser() {

@@ -26,7 +26,7 @@ public class OrderHistoryPageStepDefinitions {
 
     @Then("I see Alert-Danger message at Order History page")
     public void checkDangerMessage() {
-        Alert alert = new OrderHistoryPage(driver).getAlert();
+        Alert alert = new OrderHistoryPage(driver).getPageElementAlert();
         assertThat(alert.isDisplayed())
                 .isTrue();
         assertThat(alert.isDanger())
@@ -47,7 +47,7 @@ public class OrderHistoryPageStepDefinitions {
 
     @Then("I see Alert-Success message at Order History page")
     public void checkSuccessMessage() {
-        Alert alert = new OrderHistoryPage(driver).getAlert();
+        Alert alert = new OrderHistoryPage(driver).getPageElementAlert();
         assertThat(alert.isDisplayed())
                 .isTrue();
         assertThat(alert.isSuccess())

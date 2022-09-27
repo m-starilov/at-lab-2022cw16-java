@@ -2,15 +2,19 @@ package com.epam.at_lab_2022cw16.ui.constants;
 
 public enum PageTitles {
 
-    HOMEPAGE_TITLE("My Store"),
-    MY_ACCOUNT_PAGE_TITLE("My account - My Store"),
-    PAGE_WITH_ORDER_TITLE("Order - My Store"),
-    PAGE_WITH_WOMEN_TITLE("Women - My Store"),
-    PAGE_WITH_SUMMER_DRESSES_TITLE("Summer Dresses - My Store"),
-    PAGE_WITH_T_SHIRTS_TITLE("T-shirts - My Store"),
-    PAGE_WITH_EVENING_DRESSES_TITLE("Evening Dresses - My Store"),
-    ORDER_HISTORY_PAGE_TITLE("Order history - My Store"),
-    CONTACT_US_PAGE_TITLE("Contact us - My Store");
+    HOME("My Store"),
+    LOGIN("Login - My Store"),
+    MY_ACCOUNT("My account - My Store"),
+    ORDER("Order - My Store"),
+    WOMEN_CATALOG("Women - My Store"),
+    SUMMER_DRESSES_CATALOG("Summer Dresses - My Store"),
+    T_SHIRTS_CATALOG("T-shirts - My Store"),
+    EVENING_DRESSES_CATALOG("Evening Dresses - My Store"),
+    ORDER_HISTORY("Order history - My Store"),
+    YOUR_CART("Your shopping cart"),
+    CREATE_AN_ACCOUNT("CREATE AN ACCOUNT"),
+    ALREADY_REGISTERED("ALREADY REGISTERED?"),
+    CONTACT_US("Contact us - My Store");
 
     private final String pageTitle;
 

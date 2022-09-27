@@ -36,7 +36,7 @@ public class CompareAndBuyingWithBankWireAndCommentInOrderHistoryTest extends Ab
     public void openHomepageTest() {
         MyStoreHomepage homepage = new MyStoreHomepage(driver).openPage();
         assertThat(homepage.getTitle())
-                .isEqualTo(PageTitles.HOMEPAGE_TITLE.getPageTitle());
+                .isEqualTo(PageTitles.HOME.getPageTitle());
     }
 
     @Test
@@ -48,7 +48,7 @@ public class CompareAndBuyingWithBankWireAndCommentInOrderHistoryTest extends Ab
         authenticationPage.inputPassword(user.getPassword());
         MyAccountPage myAccountPage = authenticationPage.proceedToMyAccountPage();
         assertThat(myAccountPage.getTitle())
-                .isEqualTo(PageTitles.MY_ACCOUNT_PAGE_TITLE.getPageTitle());
+                .isEqualTo(PageTitles.MY_ACCOUNT.getPageTitle());
     }
 
     @Test
@@ -146,15 +146,15 @@ public class CompareAndBuyingWithBankWireAndCommentInOrderHistoryTest extends Ab
     public void emptyCommentMessageTest() {
         MyAccountPage myAccountPage = new OrderConfirmationPage(driver).openMyAccountPage();
         assertThat(myAccountPage.getTitle())
-                .isEqualTo(PageTitles.MY_ACCOUNT_PAGE_TITLE.getPageTitle());
+                .isEqualTo(PageTitles.MY_ACCOUNT.getPageTitle());
 
         OrderHistoryPage ordersHistoryPage = myAccountPage.clickOrderHistoryButton();
         assertThat(ordersHistoryPage.getTitle())
-                .isEqualTo(PageTitles.ORDER_HISTORY_PAGE_TITLE.getPageTitle());
+                .isEqualTo(PageTitles.ORDER_HISTORY.getPageTitle());
 
         ordersHistoryPage.showLastOrderDetails();
         ordersHistoryPage.clickSendButton();
-        Alert alert = ordersHistoryPage.getAlert();
+        Alert alert = ordersHistoryPage.getPageElementAlert();
         assertThat(alert.isDisplayed())
                 .isTrue();
         assertThat(alert.isDanger())
@@ -170,7 +170,7 @@ public class CompareAndBuyingWithBankWireAndCommentInOrderHistoryTest extends Ab
         ordersHistoryPage.selectProductFromDropdownByID("5");
         ordersHistoryPage.setMessageText(USER_MESSAGE);
         ordersHistoryPage.clickSendButton();
-        Alert alert = ordersHistoryPage.getAlert();
+        Alert alert = ordersHistoryPage.getPageElementAlert();
         assertThat(alert.isDisplayed())
                 .isTrue();
         assertThat(alert.isSuccess())
