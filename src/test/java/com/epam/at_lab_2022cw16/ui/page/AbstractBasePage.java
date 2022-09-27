@@ -45,6 +45,9 @@ public abstract class AbstractBasePage {
     @FindBy(xpath = "//a[@title='View my customer account']")
     protected WebElement viewMyAccountButton;
 
+    @FindBy(xpath = "//*[@id='header']//a[@class='account']")
+    protected WebElement myAccountButton;
+
     @FindBy(xpath = "//div[@class='shopping_cart']/a")
     private WebElement miniCart;
 
@@ -172,4 +175,10 @@ public abstract class AbstractBasePage {
     public String getSummary(){
         return summary.getText();
     }
+
+    public MyAccountPage clickMyAccountButton(){
+        myAccountButton.click();
+        return new MyAccountPage(driver);
+    }
+
 }

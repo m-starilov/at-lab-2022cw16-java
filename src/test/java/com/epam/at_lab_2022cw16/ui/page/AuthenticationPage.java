@@ -52,6 +52,7 @@ public class AuthenticationPage extends AbstractBasePage {
 
     public OrderAddressPage proceedToOrderAddressPage() {
         signInButton.click();
+        log.info("Sign In button is pressed");
         return new OrderAddressPage(driver);
     }
 }

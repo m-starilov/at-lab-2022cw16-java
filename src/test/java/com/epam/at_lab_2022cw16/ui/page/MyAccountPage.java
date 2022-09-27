@@ -44,9 +44,9 @@ public class MyAccountPage extends AbstractBasePage {
         return new WomenCatalogPage(driver);
     }
 
-    public OrderHistoryPage clickOrderHistoryButton() {
-        orderHistoryButton.click();
-        log.info("Go to Order History Page");
+    public OrderHistoryPage clickOrderHistoryButton(){
+        driverWait().until(ExpectedConditions.elementToBeClickable(orderHistoryButton)).click();
+        log.info("Go to Order History page");
         return new OrderHistoryPage(driver);
     }
 }
