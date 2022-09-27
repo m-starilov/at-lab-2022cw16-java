@@ -2,17 +2,7 @@ package com.epam.at_lab_2022cw16.ui.tests.manual;
 
 import com.epam.at_lab_2022cw16.annotations.JiraTicketsLink;
 import com.epam.at_lab_2022cw16.ui.constants.PageTitles;
-import com.epam.at_lab_2022cw16.ui.page.AuthenticationPage;
-import com.epam.at_lab_2022cw16.ui.page.MyAccountPage;
-import com.epam.at_lab_2022cw16.ui.page.MyStoreHomepage;
-import com.epam.at_lab_2022cw16.ui.page.OrderAddressPage;
-import com.epam.at_lab_2022cw16.ui.page.OrderBankWirePaymentPage;
-import com.epam.at_lab_2022cw16.ui.page.OrderConfirmationPage;
-import com.epam.at_lab_2022cw16.ui.page.OrderHistoryPage;
-import com.epam.at_lab_2022cw16.ui.page.OrderPaymentPage;
-import com.epam.at_lab_2022cw16.ui.page.OrderShippingPage;
-import com.epam.at_lab_2022cw16.ui.page.OrderSummaryPage;
-import com.epam.at_lab_2022cw16.ui.page.WomenCatalogPage;
+import com.epam.at_lab_2022cw16.ui.page.*;
 import com.epam.at_lab_2022cw16.ui.utils.TestListener;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;

@@ -8,11 +8,7 @@ import com.epam.at_lab_2022cw16.ui.constants.SortParams;
 import com.epam.at_lab_2022cw16.ui.model.Product;
 import com.epam.at_lab_2022cw16.ui.page.WomenCatalogPage;
 import com.epam.at_lab_2022cw16.ui.utils.TestListener;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.MethodOrderer;
-import org.junit.jupiter.api.Order;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.util.ArrayList;

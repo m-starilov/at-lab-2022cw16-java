@@ -52,7 +52,7 @@ public class OrderSummaryPage extends AbstractOrderPage {
     }
 
     public int getSummaryProductsQuantityAsInt() {
-        return Integer.parseInt(summaryProductsQuantity.getText().replaceAll("\\D*","").trim());
+        return Integer.parseInt(summaryProductsQuantity.getText().replaceAll("\\D*", "").trim());
     }
 
     public String getTotalPrice() {
@@ -86,7 +86,7 @@ public class OrderSummaryPage extends AbstractOrderPage {
         return new AuthenticationPage(driver);
     }
 
-    public List<String> getAddedProductNames(){
+    public List<String> getAddedProductNames() {
         return productNames.stream().map(WebElement::getText).collect(Collectors.toList());
     }
 }

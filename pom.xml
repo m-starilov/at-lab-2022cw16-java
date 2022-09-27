@@ -109,6 +109,11 @@
             <version>${cucumber.version}</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>com.devskiller</groupId>
+            <artifactId>jfairy</artifactId>
+            <version>0.6.5</version>
+        </dependency>
     </dependencies>
 
 </project>
