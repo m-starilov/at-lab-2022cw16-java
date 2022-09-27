@@ -33,12 +33,14 @@ public class AuthenticationPage extends AbstractBasePage {
     public AuthenticationPage inputEmail(String email) {
         emailField.clear();
         emailField.sendKeys(email);
+        log.info("Input email");
         return this;
     }
 
     public AuthenticationPage inputPassword(String password) {
         passwordField.clear();
         passwordField.sendKeys(password);
+        log.info("Input password");
         return this;
     }
 

@@ -39,12 +39,14 @@ public class MyStoreHomepage extends AbstractBasePage {
 
     public AuthenticationPage pressSignInButton() {
         signInButton.click();
+        log.info("Press Sign in button");
         return new AuthenticationPage(driver);
     }
 
     public AbstractCatalogPage openSummerDressesCatalog() {
         new Actions(driver).moveToElement(womenDressesBarButton).build().perform();
         summerDressesButton.click();
+        log.info("Press Summer dresses catalog button");
         return new SummerDressesCatalogPage(driver);
     }
 }

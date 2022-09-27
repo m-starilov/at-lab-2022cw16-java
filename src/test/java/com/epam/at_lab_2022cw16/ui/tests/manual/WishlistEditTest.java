@@ -193,6 +193,6 @@ public class WishlistEditTest extends AbstractBaseTest {
     @Test
     public void userSeeNoWishlists() {
         WishlistPage wishlistPage = new WishlistPage(driver);
-        assertEquals(wishlistPage.isWishListTableDisplayed().size(), 0);
+        assertTrue(wishlistPage.isWishListTableNotVisible());
     }
 }

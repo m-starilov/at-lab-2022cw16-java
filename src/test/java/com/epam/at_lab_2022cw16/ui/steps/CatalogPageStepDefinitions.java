@@ -4,12 +4,15 @@ import com.epam.at_lab_2022cw16.ui.constants.ColorHEX;
 import com.epam.at_lab_2022cw16.ui.constants.ColorRGB;
 import com.epam.at_lab_2022cw16.ui.constants.PageTitles;
 import com.epam.at_lab_2022cw16.ui.model.Product;
+import com.epam.at_lab_2022cw16.ui.page.SummerDressesCatalogPage;
 import com.epam.at_lab_2022cw16.ui.page.WomenCatalogPage;
+import com.epam.at_lab_2022cw16.ui.page.pageElements.ProductBlock;
 import com.epam.at_lab_2022cw16.ui.utils.EnvironmentUtils;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.WebDriver;
 
@@ -18,6 +21,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+@Log4j2
 public class CatalogPageStepDefinitions {
 
     private final WebDriver driver = EnvironmentUtils.getDriver();
@@ -146,6 +153,73 @@ public class CatalogPageStepDefinitions {
             isEquals = expectedProductsPrices.equals(actualProductsPrices);
         }
         return isEquals;
+    }
+
+    @When("I change items view to List")
+    public void userChangeItemsViewToList() {
+        new SummerDressesCatalogPage(driver).switchToListView();
+        log.info("Items view changed to list");
+    }
+
+    @Then("items displayed in List view with \"Add to cart\", \"More\" buttons and \"Add to Wishlist\", \"Add to compare\" links")
+    public void itemsDisplayedInListViewWithButtonsAndLinks() {
+        SummerDressesCatalogPage summerDressesCatalogPage = new SummerDressesCatalogPage(driver);
+        List<ProductBlock> productList = summerDressesCatalogPage.getProductsList();
+        assertTrue(productList.size() > 0);
+        assertEquals(productList.size(), summerDressesCatalogPage.getListOfAddToCartButtonsNumberValue());
+        assertEquals(productList.size(), summerDressesCatalogPage.getMoreButtonsNumberValue());
+        assertEquals(productList.size(), summerDressesCatalogPage.getAddToWishListButtonsNumberValue());
+        assertEquals(productList.size(), summerDressesCatalogPage.getAddToCompareButtonsValue());
+    }
+
+    @When("I add item {int} to Wishlist")
+    public void userAddItemsToWishlist(int numberOfItem) {
+        SummerDressesCatalogPage catalogPage = new SummerDressesCatalogPage(driver);
+        List<ProductBlock> productList = catalogPage.getProductsList();
+        productList.get(numberOfItem - 1).addToWishListButtonClick();
+    }
+
+    @And("in {int} link outline heart icon changed to solid")
+    public void inLinkOutlineHeartIconChangedToSolid(int number) {
+        List<ProductBlock> productList = new SummerDressesCatalogPage(driver).getProductsList();
+        assertTrue(productList.get(number - 1).isAddToWishlistSolidButtonDisplayed());
+    }
+
+    @When("I go to Wishlist page (My account>My Wishlists)")
+    public void userGoToWishlistPage() {
+        new SummerDressesCatalogPage(driver).proceedToMyAccountPage()
+                .proceedToWishlist();
+    }
+
+    @Then("infobox is displayed")
+    public void infoboxIsDisplayed() {
+        assertTrue(new SummerDressesCatalogPage(driver).infoBoxIsDisplayed());
+    }
+
+    @When("I close infobox")
+    public void userCloseInfobox() {
+        new SummerDressesCatalogPage(driver).closeInfoBox();
+    }
+
+    @When("I go to Wishlist page \\(My account>My Wishlists)")
+    public void userGoToWishlistPageFromCatalog() {
+        new SummerDressesCatalogPage(driver).proceedToMyAccountPage().proceedToWishlist();
+    }
+
+    @When("I chose \"Evening Dresses\" from site top menu \\(Women>Dresses>Evening Dresses)")
+    public void userChoseFromSiteTopMenuEveningDresses() {
+        new WomenCatalogPage(driver).proceedToEveningDressesPage();
+    }
+
+    @And("in \"Add to Wishlist\" link outline heart icon for item {int} changed to solid")
+    public void inLinkOutlineHeartIconForItemChangedToSolid(int numberOfItem) {
+        List<ProductBlock> productList = new SummerDressesCatalogPage(driver).getProductsList();
+        assertTrue(productList.get(numberOfItem - 1).isAddToWishlistSolidButtonDisplayed());
+    }
+
+    @Then("page with Evening Dresses opened")
+    public void pageWithEveningDressesOpened() {
+        assertEquals(new WomenCatalogPage(driver).getTitle(), PageTitles.PAGE_WITH_EVENING_DRESSES_TITLE.getPageTitle());
     }
 
 }
