@@ -43,6 +43,9 @@ public abstract class AbstractBasePage {
     @FindBy(xpath = "//*[@id='header']//a[@class='account']")
     protected WebElement myAccountButton;
 
+    @FindBy(xpath = "//a[@title='Contact Us']")
+    protected WebElement contactUsButton;
+
     @FindBy(xpath = "//div[@class='shopping_cart']/a")
     private WebElement miniCart;
 
@@ -176,4 +179,8 @@ public abstract class AbstractBasePage {
         return new MyAccountPage(driver);
     }
 
+    public ContactUsPage openContactUsPage() {
+        contactUsButton.click();
+        return new ContactUsPage(driver);
+    }
 }
