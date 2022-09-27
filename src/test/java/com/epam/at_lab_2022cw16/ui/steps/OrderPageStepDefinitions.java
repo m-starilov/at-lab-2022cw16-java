@@ -2,6 +2,7 @@ package com.epam.at_lab_2022cw16.ui.steps;
 
 import com.epam.at_lab_2022cw16.ui.page.*;
 import com.epam.at_lab_2022cw16.ui.utils.EnvironmentUtils;
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.openqa.selenium.WebDriver;
@@ -10,6 +11,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class OrderPageStepDefinitions {
 
@@ -95,5 +97,32 @@ public class OrderPageStepDefinitions {
     @When("I proceed to My Account page")
     public void proceedToMyAccountPage() {
         new OrderConfirmationPage(driver).openMyAccountPage();
+    }
+
+    @And("The {int} reordered item is in the cart")
+    public void isReorderedItemsInTheCart(int quantity) {
+        OrderSummaryPage orderSummaryPage = new OrderSummaryPage(driver);
+        List<String> itemsFromOldOrder = SaveOrderHistoryStepsDefinitions.listThreadLocal.get();
+        List<String> itemsFromCurrentOrder = orderSummaryPage.getAddedProductNames();
+        assertThat(itemsFromOldOrder).containsAll(itemsFromCurrentOrder);
+        assertEquals(quantity, orderSummaryPage.getSummaryProductsQuantityAsInt());
+    }
+
+
+    @And("Previews items is deleted")
+    public void isDeletedPreviewsItems() {
+        assertThat(new OrderSummaryPage(driver).getAddedProductNames().size())
+                .isEqualTo(SaveOrderHistoryStepsDefinitions.listThreadLocal.get().size());
+    }
+
+    @When("I return to Order history page")
+    public void returnToOrderHistoryPage() {
+        new OrderSummaryPage(driver).clickMyAccountButton().clickOrderHistoryButton();
+    }
+
+    @When("I press Proceed to checkout button on the Cart page")
+    public void pressProceedToCheckoutButtonOnTheCartPage() {
+        new OrderSummaryPage(driver)
+                .clickProceedToCheckoutButton();
     }
 }

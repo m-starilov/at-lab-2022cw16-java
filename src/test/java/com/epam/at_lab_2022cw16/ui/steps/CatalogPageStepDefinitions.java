@@ -38,38 +38,33 @@ public class CatalogPageStepDefinitions {
     }
 
     @Then("the WomenCatalogPage opened")
-    public void theCatalogPageOpened() {
+    public void isOpenedCatalogPage() {
         Assertions.assertEquals(PageTitles.WOMEN_CATALOG.getPageTitle(), catalog.getTitle());
     }
 
     @When("the user click on dropdown list Sort by and select sort {string}")
-    public void theUserClickOnDropdownListSortByAndSelectSort(String param) {
+    public void sortCatalogByParam(String param) {
         catalog.sortByType(param);
     }
 
     @Then("all products are displayed on the page according sort {string}")
-    public void allProductsAreDisplayedOnThePageAccordingSort(String param) {
+    public void isDisplaySortedProductList(String param) {
         Assertions.assertTrue(sortByParam(param, catalog));
     }
 
-    @When("the catalog sorted by {string}")
-    public void theCatalogSortedBy(String sortParam) {
-        catalog.sortByType(sortParam);
-    }
-
     @When("the user apply {string} filter")
-    public void theUserApplyFilter(String colorFilter) {
+    public void applyFilter(String colorFilter) {
         catalog.filterByColor(ColorHEX.valueOf(colorFilter).getColorHex());
     }
 
     @Then("applied {string} filter marked in the filter block by {string} red color.")
-    public void appliedFilterMarkedInTheFilterBlockByRedColor(String filterColor, String borderColor) {
+    public void isChangedBorderColor(String filterColor, String borderColor) {
         String actualColor = catalog.getBorderColorFilterByColor(ColorHEX.valueOf(filterColor).getColorHex());
         Assertions.assertEquals(ColorRGB.valueOf(borderColor).getColorRGB(), actualColor);
     }
 
     @Then("all products filtered by {string} color")
-    public void allProductsFilteredByColor(String colorFilter) {
+    public void isFilteredByColor(String colorFilter) {
         List<List<String>> productsColors = catalog.getProducts().stream().map(Product::getProductColor).collect(Collectors.toList());
         Assertions.assertTrue(productsColors.stream().allMatch(colorList -> {
             boolean isContained = false;
@@ -84,26 +79,26 @@ public class CatalogPageStepDefinitions {
     }
 
     @Then("the breadcrumbs on the filter page contains the name of the applied {string} filter.")
-    public void theBreadcrumbsOnTheFilterPageContainsTheNameOfTheAppliedFilter(String filterName) {
+    public void isContainedTheNameOfTheAppliedFilterInBreadcrumbs(String filterName) {
         List<String> breadCrumbsLevels = Arrays.asList(catalog.getBreadCrumbs());
         String nameFilter = ColorHEX.valueOf(filterName).name();
         Assertions.assertTrue(breadCrumbsLevels.stream().anyMatch(p -> p.contains(nameFilter)));
     }
 
     @When("the user apply another one price filter")
-    public void theUserApplyAnotherOnePriceFilter() {
+    public void applyAnotherOnePriceFilter() {
         catalog.filterByPrice();
     }
 
     @Then("the page displays products that match the price filter")
-    public void thePageDisplaysProductsThatMatchThePriceFilter() {
+    public void shouldDisplayProductsThatMatchThePriceFilter() {
         List<Double> minMaxPrice = catalog.getMinMaxPrice();
         List<Double> productsPrice = catalog.getProducts().stream().map(Product::getProductPrice).collect(Collectors.toList());
         Assertions.assertEquals(productsPrice.size(), (productsPrice.stream().filter(p -> p > minMaxPrice.get(0) && p < minMaxPrice.get(1)).count()));
     }
 
     @And("filters type {string}, {string} and filters name are displayed in the Enabled filters: on the left side of the page.")
-    public void filtersTypeAndFiltersNameAreDisplayedInTheEnabledFiltersOnTheLeftSideOfThePage(String price, String color) {
+    public void shouldDisplayFiltersTypeAndFiltersName(String price, String color) {
         List<String> selectedFilters = new ArrayList<>();
         selectedFilters.add(price + (catalog.getPriceFilterRange().trim()));
         selectedFilters.add(color);
@@ -112,12 +107,12 @@ public class CatalogPageStepDefinitions {
     }
 
     @When("the user remove all filters")
-    public void theUserRemoveAllFilters() {
+    public void removeAllFilters() {
         catalog.removeAllFilters().removePriceFilter();
     }
 
     @Then("the page displays products sorted by the condition from first step {string}.")
-    public void thePageDisplaysProductsSortedByTheConditionFromFirstStep(String param) {
+    public void displayProductsSortedByTheConditionFromFirstStep(String param) {
         Assertions.assertTrue(sortByParam(param, catalog));
     }
 

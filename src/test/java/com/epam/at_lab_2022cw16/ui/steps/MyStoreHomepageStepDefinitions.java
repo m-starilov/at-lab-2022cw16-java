@@ -58,7 +58,7 @@ public class MyStoreHomepageStepDefinitions {
     @Then("Website opened")
     public void websiteOpened() {
         assertThat(new MyStoreHomepage(driver).getTitle())
-                .contains(PageTitles.HOMEPAGE_TITLE.getPageTitle());
+                .contains(PageTitles.HOME.getPageTitle());
     }
 
     @When("User find field Newsletter, send email and press confirm key")
