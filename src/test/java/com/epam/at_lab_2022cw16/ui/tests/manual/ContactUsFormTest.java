@@ -11,7 +11,6 @@ import com.epam.at_lab_2022cw16.ui.page.MyAccountPage;
 import com.epam.at_lab_2022cw16.ui.page.MyStoreHomepage;
 import com.epam.at_lab_2022cw16.ui.page.pageElements.Alert;
 import com.epam.at_lab_2022cw16.ui.utils.TestListener;
-
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
