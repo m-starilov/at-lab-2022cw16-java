@@ -54,18 +54,17 @@ public class NewUserRegistrationTests extends AbstractBaseTest {
     @Order(4)
     public void registerWithInvalidFields() {
         CreateAnAccountPage createAnAccountPage = new CreateAnAccountPage(EnvironmentUtils.getDriver());
-        User invalidUser = new User();
-        invalidUser.setFirstName("123-dfd");
-        invalidUser.setLastName("Sark-isy@an");
-        invalidUser.setBirthMonth("05");
-        invalidUser.setBirthDay("12");
-        invalidUser.setBirthYear("2005");
-        invalidUser.setPassword("-------");
-        invalidUser.setAddress("dfdfdfds");
-        invalidUser.setCity("fdfdgfd");
-        invalidUser.setPostalCode("3423");
-        invalidUser.setMobilePhone("er4q2");
-
+        User invalidUser = User.create()
+                .setFirstName("123-dfd")
+                .setLastName("Sark-isy@an")
+                .setBirthMonth("05")
+                .setBirthDay("12")
+                .setBirthYear("2005")
+                .setPassword("-------")
+                .setAddress("dfdfdfds")
+                .setCity("fdfdgfd")
+                .setPostalCode("3423")
+                .setMobilePhone("er4q2").build();
         createAnAccountPage.fillingRegisterForm(invalidUser);
         assertThat(createAnAccountPage.getBorderColor()).isEqualTo(Constants.Color.RED_ALERT.getColorHex());
         createAnAccountPage.clickRegisterButton();
@@ -81,17 +80,17 @@ public class NewUserRegistrationTests extends AbstractBaseTest {
     public void registerWithValidFields() {
         CreateAnAccountPage createAnAccountPage = new CreateAnAccountPage(EnvironmentUtils.getDriver());
         MyAccountPage myRegisteredAccountPage = new MyAccountPage(EnvironmentUtils.getDriver());
-        User validUser = new User();
-        validUser.setFirstName("Josslen");
-        validUser.setLastName("Bomond");
-        validUser.setBirthDay("14");
-        validUser.setBirthMonth("07");
-        validUser.setBirthYear("1999");
-        validUser.setPassword("0123456789");
-        validUser.setAddress("Freedom str,12");
-        validUser.setCity("Alabama");
-        validUser.setPostalCode("00056");
-        validUser.setMobilePhone("012345346");
+        User validUser = User.create()
+                .setFirstName("Josslen")
+                .setLastName("Bomond")
+                .setBirthDay("14")
+                .setBirthMonth("07")
+                .setBirthYear("1999")
+                .setPassword("0123456789")
+                .setAddress("Freedom str,12")
+                .setCity("Alabama")
+                .setPostalCode("00056")
+                .setMobilePhone("012345346").build();
 
         createAnAccountPage.fillingRegisterForm(validUser);
         createAnAccountPage.clickRegisterButton();

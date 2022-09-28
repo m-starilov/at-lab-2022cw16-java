@@ -44,9 +44,9 @@ public class WishlistEditTest extends AbstractBaseTest {
     public void userLogIn() {
         MyStoreHomepage myStoreHomepage = new MyStoreHomepage(driver);
         myStoreHomepage.clickSignInButton();
-        User user = new User("mikalay.murashko@gmail.com", "12345");
+        User user = User.create().setEmail("mikalay.murashko@gmail.com").setPassword("12345").build();
         MyAccountPage myAccountPage = new AuthenticationPage(driver)
-                .inputEmail(user.getUsername())
+                .inputEmail(user.getEmail())
                 .inputPassword(user.getPassword())
                 .proceedToMyAccountPage();
         assertTrue(myAccountPage.isPageTitleValid());

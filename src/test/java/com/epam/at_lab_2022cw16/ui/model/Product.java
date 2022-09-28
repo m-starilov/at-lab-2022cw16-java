@@ -8,31 +8,63 @@ public class Product {
     private Double productPrice;
     private List<String> productColor;
 
-    public Product() {
+    public static class Builder {
+        private String productName;
+        private Double productPrice;
+        private List<String> productColor;
+
+        private Builder() {}
+
+        private Builder(Product product) {
+            this.productName = product.productName;
+            this.productPrice = product.productPrice;
+            this.productColor = product.productColor;
+        }
+
+        public Builder setProductName(String productName) {
+            this.productName = productName;
+            return this;
+        }
+
+        public Builder setProductPrice(Double productPrice) {
+            this.productPrice = productPrice;
+            return this;
+        }
+
+        public Builder setProductColor(List<String> productColor) {
+            this.productColor = productColor;
+            return this;
+        }
+
+        public Product build() {
+            Product product = new Product();
+            product.setProductName(productName);
+            product.setProductPrice(productPrice);
+            product.setProductColor(productColor);
+            return product;
+        }
+
+    }
+
+    public Builder edit() {
+        return new Builder(this);
+    }
+
+    public static Builder create()
+    {
+        return new Builder();
     }
 
     public String getProductName() {
         return productName;
     }
 
-    public void setProductName(String productName) {
-        this.productName = productName;
-    }
-
     public Double getProductPrice() {
         return productPrice;
     }
 
-    public void setProductPrice(Double productPrice) {
-        this.productPrice = productPrice;
-    }
-
     public List<String> getProductColor() {
         return productColor;
-    }
-
-    public void setProductColor(List<String> productColor) {
-        this.productColor = productColor;
     }
 
     @Override
@@ -55,6 +87,18 @@ public class Product {
                 ", productPrice='" + productPrice + '\'' +
                 ", productColor=" + productColor.toString() +
                 '}';
+    }
+
+    void setProductName(String productName) {
+        this.productName = productName;
+    }
+
+    void setProductPrice(Double productPrice) {
+        this.productPrice = productPrice;
+    }
+
+    void setProductColor(List<String> productColor) {
+        this.productColor = productColor;
     }
 
 }

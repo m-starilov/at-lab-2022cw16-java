@@ -27,7 +27,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class ShoppingCartSignOutTest extends AbstractBaseTest {
 
     private final WebDriver driver = getWebDriver();
-    private final User validUser = new User("rescue-rangers@mail.com", "010203");
+    private static User user;
 
     @Test
     @Order(1)
@@ -59,9 +59,9 @@ public class ShoppingCartSignOutTest extends AbstractBaseTest {
     @Test
     @Order(4)
     public void signInWithNotRegisteredEmailTest() {
-        User user = new User("rescuerangers@mail.com", "010203");
+        user = User.create().setEmail("rescuerangers@mail.com").setPassword("0102030").build();
         AuthenticationPage authPage = new AuthenticationPage(driver);
-        authPage.inputEmail(user.getUsername());
+        authPage.inputEmail(user.getEmail());
         authPage.inputPassword(user.getPassword());
         authPage.proceedToMyAccountPage();
         Alert alert = authPage.getPageElementAlert();
@@ -73,9 +73,9 @@ public class ShoppingCartSignOutTest extends AbstractBaseTest {
     @Test
     @Order(5)
     public void signInWithWrongPassTest() {
-        User user = new User("rescue-rangers@mail.com", "0102030");
+        user = user.edit().setEmail("rescue-rangers@mail.com").build();
         AuthenticationPage authPage = new AuthenticationPage(driver);
-        authPage.inputEmail(user.getUsername());
+        authPage.inputEmail(user.getEmail());
         authPage.inputPassword(user.getPassword());
         authPage.proceedToMyAccountPage();
         Alert alert = authPage.getPageElementAlert();
@@ -87,9 +87,10 @@ public class ShoppingCartSignOutTest extends AbstractBaseTest {
     @Test
     @Order(6)
     public void signInTest() {
+        user = user.edit().setPassword("010203").build();
         AuthenticationPage authPage = new AuthenticationPage(driver);
-        authPage.inputEmail(validUser.getUsername());
-        authPage.inputPassword(validUser.getPassword());
+        authPage.inputEmail(user.getEmail());
+        authPage.inputPassword(user.getPassword());
         MyAccountPage myAccountPage = authPage.proceedToMyAccountPage();
         assertThat(myAccountPage.isPageTitleValid()).isTrue();
     }
@@ -126,8 +127,8 @@ public class ShoppingCartSignOutTest extends AbstractBaseTest {
     public void signInAfterSignOutTest() {
         OrderSummaryPage orderSummaryPage = new OrderSummaryPage(driver);
         AuthenticationPage authPage = orderSummaryPage.clickSignInButton();
-        authPage.inputEmail(validUser.getUsername());
-        authPage.inputPassword(validUser.getPassword());
+        authPage.inputEmail(user.getEmail());
+        authPage.inputPassword(user.getPassword());
         MyAccountPage myAccountPage = authPage.proceedToMyAccountPage();
         assertThat(myAccountPage.isPageTitleValid()).isTrue();
     }
