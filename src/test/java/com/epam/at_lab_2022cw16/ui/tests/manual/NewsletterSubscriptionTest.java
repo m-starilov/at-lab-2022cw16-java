@@ -1,5 +1,6 @@
 package com.epam.at_lab_2022cw16.ui.tests.manual;
 
+import com.epam.at_lab_2022cw16.annotations.JiraTicketsLink;
 import com.epam.at_lab_2022cw16.ui.constants.Constants.AlertMessageTexts;
 import com.epam.at_lab_2022cw16.ui.page.MyStoreHomepage;
 import com.epam.at_lab_2022cw16.ui.page.pageElements.Alert;
@@ -15,6 +16,9 @@ import org.openqa.selenium.WebDriver;
 import static com.epam.at_lab_2022cw16.ui.utils.RandomEmailCreator.generateRandomEmail;
 import static org.assertj.core.api.Assertions.assertThat;
 
+@JiraTicketsLink(id = 16322,
+        description = "Checking the possibility to subscribe to the newsletter twice",
+        url = "https://jira.epam.com/jira/browse/EPMFARMATS-16322")
 @ExtendWith(TestListener.class)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class NewsletterSubscriptionTest extends AbstractBaseTest {

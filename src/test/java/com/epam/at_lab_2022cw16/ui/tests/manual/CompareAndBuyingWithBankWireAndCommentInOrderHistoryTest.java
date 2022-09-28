@@ -29,9 +29,9 @@ import static com.epam.at_lab_2022cw16.ui.constants.Constants.AlertMessageTexts.
 import static org.assertj.core.api.Assertions.assertThat;
 
 @JiraTicketsLink(id = {16299, 16331},
-        description = "Test check authorization,, adding to comparison, creating order and adding comment to order",
-        url = {"https://jira.epam.com/jira/browse/EPMFARMATS-16299#", "https://jira.epam.com/jira/browse/EPMFARMATS" +
-                "-16331"})
+        description = "Test check authorization, adding to comparison, creating order and adding comment to order",
+        url = {"https://jira.epam.com/jira/browse/EPMFARMATS-16299#",
+                "https://jira.epam.com/jira/browse/EPMFARMATS-16331"})
 @ExtendWith(TestListener.class)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class CompareAndBuyingWithBankWireAndCommentInOrderHistoryTest extends AbstractBaseTest {

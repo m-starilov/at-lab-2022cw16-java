@@ -24,7 +24,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @JiraTicketsLink(id = 16307,
         description = "Test checks sorting and filtration on the site",
         url = "https://jira.epam.com/jira/browse/EPMFARMATS-16307")
-
 @ExtendWith(TestListener.class)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class CatalogTest extends AbstractBaseTest {

@@ -1,5 +1,6 @@
 package com.epam.at_lab_2022cw16.ui.tests.manual;
 
+import com.epam.at_lab_2022cw16.annotations.JiraTicketsLink;
 import com.epam.at_lab_2022cw16.ui.constants.Constants;
 import com.epam.at_lab_2022cw16.ui.model.User;
 import com.epam.at_lab_2022cw16.ui.page.AuthenticationPage;
@@ -22,6 +23,9 @@ import static com.epam.at_lab_2022cw16.ui.constants.Constants.AlertMessageTexts.
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+@JiraTicketsLink(id = 16319,
+        description = "Edit user's Wishlist test",
+        url = "https://jira.epam.com/jira/browse/EPMFARMATS-16319")
 @ExtendWith(TestListener.class)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class WishlistEditTest extends AbstractBaseTest {

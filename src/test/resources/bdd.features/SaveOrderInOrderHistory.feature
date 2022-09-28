@@ -1,4 +1,6 @@
-#JiraTicketsLink(id = 16356,1637 url = https://jira.epam.com/jira/browse/EPMFARMATS-16356, https://jira.epam.com/jira/browse/EPMFARMATS-16357)
+#JiraTicketsLink(id = 16356,1637
+#url = https://jira.epam.com/jira/browse/EPMFARMATS-16356, https://jira.epam.com/jira/browse/EPMFARMATS-16357)
+
 Feature: As a user I want to get ability to store order info in order history
 
   Scenario: Should store order info in order history

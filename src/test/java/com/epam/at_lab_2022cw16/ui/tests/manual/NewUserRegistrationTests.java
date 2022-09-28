@@ -1,5 +1,6 @@
 package com.epam.at_lab_2022cw16.ui.tests.manual;
 
+import com.epam.at_lab_2022cw16.annotations.JiraTicketsLink;
 import com.epam.at_lab_2022cw16.ui.constants.Constants.Color;
 import com.epam.at_lab_2022cw16.ui.constants.Constants;
 import com.epam.at_lab_2022cw16.ui.model.User;
@@ -17,6 +18,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import static com.epam.at_lab_2022cw16.ui.utils.RandomEmailCreator.generateRandomEmail;
 import static org.assertj.core.api.Assertions.assertThat;
 
+@JiraTicketsLink(id = 16292,
+        description = "New user registration test (requested fields only)",
+        url = "https://jira.epam.com/jira/browse/EPMFARMATS-16292")
 @ExtendWith(TestListener.class)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class NewUserRegistrationTests extends AbstractBaseTest {

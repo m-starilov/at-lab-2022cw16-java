@@ -83,7 +83,7 @@ public abstract class AbstractBasePage {
     public static boolean isDisplayed(By by) {
         try {
             return EnvironmentUtils.getDriver().findElement(by).isDisplayed();
-        } catch (NoSuchElementException nsee) {
+        } catch (NoSuchElementException e) {
             return false;
         }
     }
