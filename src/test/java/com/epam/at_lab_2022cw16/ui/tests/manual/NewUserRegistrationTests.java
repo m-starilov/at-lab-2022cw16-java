@@ -12,13 +12,14 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.extension.ExtendWith;
 
+import static com.epam.at_lab_2022cw16.ui.utils.RandomEmailCreator.generateRandomEmail;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(TestListener.class)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class NewUserRegistrationTests extends AbstractBaseTest {
     private final String invalidEmail = "kfhvifdjhkf";
-    private final String validEmail = "priffujautrezau-6876@yopmail.com";
+    private static String validEmail;
     private final String expectedNumberOfErrorsAlertMessage = "There are 8 errors";
     private final String invalidLastName = "lastname is invalid.";
     private final String invalidFirstName = "firstname is invalid.";
@@ -39,6 +40,7 @@ public class NewUserRegistrationTests extends AbstractBaseTest {
     public void createAccountWithValidEmail() {
         NewUserRegisterPage newUserRegistrationTests = new NewUserRegisterPage(EnvironmentUtils.getDriver());
         CreateAnAccountPage createAnAccountPage = new CreateAnAccountPage(EnvironmentUtils.getDriver());
+        validEmail = generateRandomEmail();
         newUserRegistrationTests.fillingEmailForm(validEmail);
         assertThat(createAnAccountPage.isCreateAccountHeaderVisible()).isTrue();
     }
