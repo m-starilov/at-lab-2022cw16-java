@@ -10,6 +10,10 @@ public class EnvironmentUtils {
         return BrowserName.fromString(System.getProperty("browser", "chrome"));
     }
 
+    public static int getParallelTestCount() {
+        return Integer.parseInt(System.getProperty("project.tests.parallel.count", "1"));
+    }
+
     public static WebDriver getDriver() {
         return localDriver.get();
     }
