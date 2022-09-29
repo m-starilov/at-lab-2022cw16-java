@@ -8,7 +8,7 @@ Feature: Compare And Buying With BankWire, Comment In Order History
     When I open Home Page
     And I click to Sign in button
     And I log in with email "mofrekoiquemma-6157@yopmail.com" and password "12345"
-    Then the My account page is opened
+    Then I see "My Account" page title
 
     When I go to Catalog page
     And I add to Compare product with id 5
@@ -37,10 +37,10 @@ Feature: Compare And Buying With BankWire, Comment In Order History
     Then I see "2 Products" in cart
 
     When I click Proceed to checkout button at Summary page
-    Then I see "Addresses" navigation page title
+    Then I see "Addresses" page title
 
     When I click Proceed to checkout button at Address page
-    Then I see "Shipping" navigation page title
+    Then I see "Shipping" page title
 
     When I click Proceed to checkout button at Shipping page
     Then I see modal window is displayed
@@ -48,21 +48,21 @@ Feature: Compare And Buying With BankWire, Comment In Order History
     When I close modal window
     And I change checkbox state
     And I click Proceed to checkout button at Shipping page
-    Then I see "Your payment method" navigation page title
+    Then I see "Order Payment" page title
 
     When I choose Pay by bank wire method
-    Then I see "Bank-wire payment." navigation page title
+    Then I see "Bank wire payment" page title
 
     When I click I confirm my order button
-    Then I see "Order confirmation" navigation page title
+    Then I see "Confirmation page" page title
     And I see "Your order on My Store is complete." text is displayed
     And I see amount "$59.96"
     And I see correct bank information
 
     When I proceed to My Account page
-    Then the My account page is opened
+    Then I see "My Account" page title
 
-    When I go to Order History page from Catalog Page
+    When I go to Order History page from My Account Page
     And I open details of last order
     And I click Send button
     Then I see Alert-Danger message at Order History page

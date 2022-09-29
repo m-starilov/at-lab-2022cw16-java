@@ -9,6 +9,9 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 @Log4j2
 public class MyAccountPage extends AbstractBasePage {
 
+    private static final String PAGE_TITLE = "MY ACCOUNT";
+
+
     @FindBy(xpath = "//a[@title='Women']")
     private WebElement womenCatalogButton;
 
@@ -23,6 +26,11 @@ public class MyAccountPage extends AbstractBasePage {
 
     public MyAccountPage(WebDriver driver) {
         super(driver);
+    }
+
+    @Override
+    public boolean verifyPageTitle() {
+        return summary.getText().equals(PAGE_TITLE);
     }
 
     public WishlistPage proceedToWishlist() {

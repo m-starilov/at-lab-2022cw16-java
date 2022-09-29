@@ -1,9 +1,10 @@
 package com.epam.at_lab_2022cw16.ui.tests.manual;
 
+import com.epam.at_lab_2022cw16.ui.constants.Constants.Color;
 import com.epam.at_lab_2022cw16.ui.model.User;
+import com.epam.at_lab_2022cw16.ui.page.AuthenticationPage;
 import com.epam.at_lab_2022cw16.ui.page.CreateAnAccountPage;
-import com.epam.at_lab_2022cw16.ui.page.MyRegisteredAccountPage;
-import com.epam.at_lab_2022cw16.ui.page.NewUserRegisterPage;
+import com.epam.at_lab_2022cw16.ui.page.MyAccountPage;
 import com.epam.at_lab_2022cw16.ui.utils.EnvironmentUtils;
 import com.epam.at_lab_2022cw16.ui.utils.TestListener;
 import org.junit.jupiter.api.MethodOrderer;
@@ -17,19 +18,19 @@ import static org.assertj.core.api.Assertions.assertThat;
 @ExtendWith(TestListener.class)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class NewUserRegistrationTests extends AbstractBaseTest {
-    private final String invalidEmail = "kfhvifdjhkf";
-    private final String validEmail = "priffujautrezau-6876@yopmail.com";
-    private final String expectedNumberOfErrorsAlertMessage = "There are 8 errors";
-    private final String invalidLastName = "lastname is invalid.";
-    private final String invalidFirstName = "firstname is invalid.";
-    private final String invalidMobile = "phone_mobile is invalid.";
-    private final String invalidZip = "The Zip/Postal code you've entered is invalid. It must follow this format: 00000";
-    private final String hexColor = "#f13340";
+    private static final String invalidEmail = "kfhvifdjhkf";
+    private static final String validEmail = "priffujautrezau-6876@yopmail.com";
+    private static final String expectedNumberOfErrorsAlertMessage = "There are 8 errors";
+    private static final String invalidLastName = "lastname is invalid.";
+    private static final String invalidFirstName = "firstname is invalid.";
+    private static final String invalidMobile = "phone_mobile is invalid.";
+    private static final String invalidZip = "The Zip/Postal code you've entered is invalid. It must follow this format: 00000";
+
 
     @Test
     @Order(1)
     public void createAccountWithInvalidEmail() {
-        NewUserRegisterPage newUserRegistrationTests = new NewUserRegisterPage(EnvironmentUtils.getDriver());
+        AuthenticationPage newUserRegistrationTests = new AuthenticationPage(EnvironmentUtils.getDriver());
         newUserRegistrationTests.openPage().fillingEmailForm(invalidEmail);
         assertThat(newUserRegistrationTests.isErrorMessageVisible()).isTrue();
     }
@@ -37,10 +38,10 @@ public class NewUserRegistrationTests extends AbstractBaseTest {
     @Test
     @Order(2)
     public void createAccountWithValidEmail() {
-        NewUserRegisterPage newUserRegistrationTests = new NewUserRegisterPage(EnvironmentUtils.getDriver());
+        AuthenticationPage newUserRegistrationTests = new AuthenticationPage(EnvironmentUtils.getDriver());
         CreateAnAccountPage createAnAccountPage = new CreateAnAccountPage(EnvironmentUtils.getDriver());
         newUserRegistrationTests.fillingEmailForm(validEmail);
-        assertThat(createAnAccountPage.isCreateAccountHeaderVisible()).isTrue();
+        assertThat(createAnAccountPage.verifyPageTitle()).isTrue();
     }
 
     @Test
@@ -68,7 +69,7 @@ public class NewUserRegistrationTests extends AbstractBaseTest {
         invalidUser.setMobilePhone("er4q2");
 
         createAnAccountPage.fillingRegisterForm(invalidUser);
-        assertThat(createAnAccountPage.getBorderColor()).isEqualTo(hexColor);
+        assertThat(createAnAccountPage.getBorderColor()).isEqualTo(Color.RED_ALERT.getColorHex());
         createAnAccountPage.clickRegisterButton();
         assertThat(createAnAccountPage.isAlertMessageVisible()).isTrue();
         assertThat(createAnAccountPage.invalidLastNameText()).isEqualTo(invalidLastName);
@@ -81,7 +82,7 @@ public class NewUserRegistrationTests extends AbstractBaseTest {
     @Order(5)
     public void registerWithValidFields() {
         CreateAnAccountPage createAnAccountPage = new CreateAnAccountPage(EnvironmentUtils.getDriver());
-        MyRegisteredAccountPage myRegisteredAccountPage = new MyRegisteredAccountPage(EnvironmentUtils.getDriver());
+        MyAccountPage myRegisteredAccountPage = new MyAccountPage(EnvironmentUtils.getDriver());
         User validUser = new User();
         validUser.setFirstName("Josslen");
         validUser.setLastName("Bomond");
@@ -96,7 +97,8 @@ public class NewUserRegistrationTests extends AbstractBaseTest {
 
         createAnAccountPage.fillingRegisterForm(validUser);
         createAnAccountPage.clickRegisterButton();
-        assertThat(myRegisteredAccountPage.isPageOpened()).isTrue();
+        assertThat(myRegisteredAccountPage.verifyPageTitle())
+                .isTrue();
     }
 }
 

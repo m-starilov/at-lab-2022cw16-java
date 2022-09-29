@@ -3,6 +3,7 @@ package com.epam.at_lab_2022cw16.ui.page;
 import org.openqa.selenium.WebDriver;
 
 public class SummerDressesCatalogPage extends AbstractCatalogPage {
+    private static final String PAGE_TITLE = "SUMMER DRESSES";
 
     private static final String BASE_URL = "http://automationpractice.com/index.php?id_category=11&controller=category";
 
@@ -14,5 +15,10 @@ public class SummerDressesCatalogPage extends AbstractCatalogPage {
     public SummerDressesCatalogPage openPage() {
         driver.get(BASE_URL);
         return this;
+    }
+
+    @Override
+    public boolean verifyPageTitle() {
+        return getSummary().equals(PAGE_TITLE);
     }
 }

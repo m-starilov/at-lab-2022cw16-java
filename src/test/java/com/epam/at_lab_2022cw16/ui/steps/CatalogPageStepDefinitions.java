@@ -1,15 +1,14 @@
 package com.epam.at_lab_2022cw16.ui.steps;
 
-import com.epam.at_lab_2022cw16.ui.constants.ColorHEX;
-import com.epam.at_lab_2022cw16.ui.constants.ColorRGB;
-import com.epam.at_lab_2022cw16.ui.constants.PageTitles;
+import com.epam.at_lab_2022cw16.ui.constants.Constants.Color;
 import com.epam.at_lab_2022cw16.ui.model.Product;
+import com.epam.at_lab_2022cw16.ui.page.EveningDressesCatalogPage;
 import com.epam.at_lab_2022cw16.ui.page.SummerDressesCatalogPage;
+import com.epam.at_lab_2022cw16.ui.page.TShirtsCatalogPage;
 import com.epam.at_lab_2022cw16.ui.page.WomenCatalogPage;
 import com.epam.at_lab_2022cw16.ui.page.pageElements.ProductBlock;
 import com.epam.at_lab_2022cw16.ui.utils.EnvironmentUtils;
 import io.cucumber.java.en.And;
-import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import lombok.extern.log4j.Log4j2;
@@ -31,15 +30,15 @@ public class CatalogPageStepDefinitions {
 
     private WomenCatalogPage catalog;
 
-    @Given("the user opens WomenCatalogPage")
+    @When("the user opens WomenCatalogPage")
     public void openCatalog() {
         catalog = new WomenCatalogPage(driver);
         catalog.openPage();
     }
 
-    @Then("the WomenCatalogPage opened")
-    public void isOpenedCatalogPage() {
-        Assertions.assertEquals(PageTitles.WOMEN_CATALOG.getPageTitle(), catalog.getTitle());
+    @When("I open WomenCatalogPage")
+    public void openCatalogPage() {
+        new WomenCatalogPage(driver).openPage();
     }
 
     @When("the user click on dropdown list Sort by and select sort {string}")
@@ -54,22 +53,22 @@ public class CatalogPageStepDefinitions {
 
     @When("the user apply {string} filter")
     public void applyFilter(String colorFilter) {
-        catalog.filterByColor(ColorHEX.valueOf(colorFilter).getColorHex());
+        catalog.filterByColor(Color.valueOf(colorFilter).getColorHex());
     }
 
     @Then("applied {string} filter marked in the filter block by {string} red color.")
     public void isChangedBorderColor(String filterColor, String borderColor) {
-        String actualColor = catalog.getBorderColorFilterByColor(ColorHEX.valueOf(filterColor).getColorHex());
-        Assertions.assertEquals(ColorRGB.valueOf(borderColor).getColorRGB(), actualColor);
+        String actualColor = catalog.getBorderColorFilterByColor(Color.valueOf(filterColor).getColorHex());
+        Assertions.assertEquals(Color.valueOf(borderColor).getColorRGB(), actualColor);
     }
 
     @Then("all products filtered by {string} color")
     public void isFilteredByColor(String colorFilter) {
-        List<List<String>> productsColors = catalog.getProducts().stream().map(Product::getProductColor).collect(Collectors.toList());
+        List<List<String>> productsColors = catalog.getItemsInCatalog().stream().map(Product::getProductColor).collect(Collectors.toList());
         Assertions.assertTrue(productsColors.stream().allMatch(colorList -> {
             boolean isContained = false;
             for (String color : colorList) {
-                isContained = color.contains(ColorRGB.valueOf(colorFilter).getColorRGB());
+                isContained = color.contains(Color.valueOf(colorFilter).getColorRGB());
                 if (isContained) {
                     break;
                 }
@@ -81,7 +80,7 @@ public class CatalogPageStepDefinitions {
     @Then("the breadcrumbs on the filter page contains the name of the applied {string} filter.")
     public void isContainedTheNameOfTheAppliedFilterInBreadcrumbs(String filterName) {
         List<String> breadCrumbsLevels = Arrays.asList(catalog.getBreadCrumbs());
-        String nameFilter = ColorHEX.valueOf(filterName).name();
+        String nameFilter = Color.valueOf(filterName).name();
         Assertions.assertTrue(breadCrumbsLevels.stream().anyMatch(p -> p.contains(nameFilter)));
     }
 
@@ -93,7 +92,7 @@ public class CatalogPageStepDefinitions {
     @Then("the page displays products that match the price filter")
     public void shouldDisplayProductsThatMatchThePriceFilter() {
         List<Double> minMaxPrice = catalog.getMinMaxPrice();
-        List<Double> productsPrice = catalog.getProducts().stream().map(Product::getProductPrice).collect(Collectors.toList());
+        List<Double> productsPrice = catalog.getItemsInCatalog().stream().map(Product::getProductPrice).collect(Collectors.toList());
         Assertions.assertEquals(productsPrice.size(), (productsPrice.stream().filter(p -> p > minMaxPrice.get(0) && p < minMaxPrice.get(1)).count()));
     }
 
@@ -124,30 +123,6 @@ public class CatalogPageStepDefinitions {
     @When("I click to Compare button")
     public void clickToCompareButton() {
         new WomenCatalogPage(driver).clickCompareButton();
-    }
-
-    private static boolean sortByParam(String param, WomenCatalogPage catalog) {
-        boolean isEquals;
-        if (param.contains("name")) {
-            List<String> actualProductsNames = catalog.getProducts().stream().map(Product::getProductName).collect(Collectors.toList());
-            List<String> expectedProductsNames;
-            if (param.contains("desc")) {
-                expectedProductsNames = Arrays.asList("Printed Summer Dress", "Printed Summer Dress", "Printed Dress", "Printed Dress", "Printed Chiffon Dress", "Faded Short Sleeve T-shirts", "Blouse");
-            } else {
-                expectedProductsNames = Arrays.asList("Blouse", "Faded Short Sleeve T-shirts", "Printed Chiffon Dress", "Printed Dress", "Printed Dress", "Printed Summer Dress", "Printed Summer Dress");
-            }
-            isEquals = expectedProductsNames.equals(actualProductsNames);
-        } else {
-            List<Double> actualProductsPrices = catalog.getProducts().stream().map(Product::getProductPrice).collect(Collectors.toList());
-            List<Double> expectedProductsPrices;
-            if (param.contains("desc")) {
-                expectedProductsPrices = Arrays.asList(50.99, 30.5, 28.98, 27.0, 26.0, 16.51, 16.4);
-            } else {
-                expectedProductsPrices = Arrays.asList(16.4, 16.51, 26.0, 27.0, 28.98, 30.5, 50.99);
-            }
-            isEquals = expectedProductsPrices.equals(actualProductsPrices);
-        }
-        return isEquals;
     }
 
     @When("I change items view to List")
@@ -214,7 +189,67 @@ public class CatalogPageStepDefinitions {
 
     @Then("page with Evening Dresses opened")
     public void pageWithEveningDressesOpened() {
-        assertEquals(new WomenCatalogPage(driver).getTitle(), PageTitles.EVENING_DRESSES_CATALOG.getPageTitle());
+        assertTrue(new EveningDressesCatalogPage(driver).verifyPageTitle());
+    }
+
+    @When("I put one item {string} in a cart")
+    public void putOneItemInACart(String productName) {
+        new WomenCatalogPage(driver).addProductToCart(productName);
+    }
+
+    @Then("alert is displayed with a message {string}")
+    public void alertIsDisplayedWithAMessage(String message) {
+        assertTrue(new WomenCatalogPage(driver).isProductAddedTitleVisible());
+    }
+
+    @And("item  {string} displayed in a cart")
+    public void itemDisplayedInACart(String productName) {
+        assertTrue(new WomenCatalogPage(driver).isProductAddedToCart(productName));
+    }
+
+    @When("I press Proceed to checkout button to Order Summary Page")
+    public void pressProceedToCheckoutButton() {
+        new WomenCatalogPage(driver).proceedToCheckout();
+    }
+
+    @Then("page with Summer dresses opened")
+    public void pageWithSummerDressesOpened() {
+        assertTrue(new SummerDressesCatalogPage(driver).verifyPageTitle());
+    }
+
+    @And("in \"Add to Wishlist\" link outline heart icon changed to solid")
+    public void inLinkOutlineHeartIconChangedToSolid() {
+        List<ProductBlock> productList = new WomenCatalogPage(driver).getProductsList();
+        assertTrue(productList.get(0).isAddToWishlistSolidButtonDisplayed());
+    }
+
+    @Then("page with T-shirts opened")
+    public void pageWithTShirtsOpened() {
+        assertTrue(new TShirtsCatalogPage(driver).verifyPageTitle());
+    }
+
+    private static boolean sortByParam(String param, WomenCatalogPage catalog) {
+        boolean isEquals;
+        if (param.contains("name")) {
+            List<String> actualProductsNames = catalog.getItemsInCatalog().stream().map(Product::getProductName).collect(Collectors.toList());
+            List<String> expectedProductsNames;
+            if (param.contains("desc")) {
+                expectedProductsNames = Arrays.asList("Printed Summer Dress", "Printed Summer Dress", "Printed Dress", "Printed Dress", "Printed Chiffon Dress", "Faded Short Sleeve T-shirts", "Blouse");
+            } else {
+                expectedProductsNames = Arrays.asList("Blouse", "Faded Short Sleeve T-shirts", "Printed Chiffon Dress", "Printed Dress", "Printed Dress", "Printed Summer Dress", "Printed Summer Dress");
+            }
+            isEquals = expectedProductsNames.equals(actualProductsNames);
+        } else {
+            List<Double> actualProductsPrices = catalog.getItemsInCatalog().stream().map(Product::getProductPrice).collect(Collectors.toList());
+            List<Double> expectedProductsPrices;
+            if (param.contains("desc")) {
+                expectedProductsPrices = Arrays.asList(50.99, 30.5, 28.98, 27.0, 26.0, 16.51, 16.4);
+            } else {
+                expectedProductsPrices = Arrays.asList(16.4, 16.51, 26.0, 27.0, 28.98, 30.5, 50.99);
+            }
+            isEquals = expectedProductsPrices.equals(actualProductsPrices);
+        }
+        return isEquals;
     }
 
 }

@@ -1,8 +1,17 @@
 package com.epam.at_lab_2022cw16.ui.tests.manual;
 
 import com.epam.at_lab_2022cw16.annotations.JiraTicketsLink;
-import com.epam.at_lab_2022cw16.ui.constants.PageTitles;
-import com.epam.at_lab_2022cw16.ui.page.*;
+import com.epam.at_lab_2022cw16.ui.page.AuthenticationPage;
+import com.epam.at_lab_2022cw16.ui.page.MyAccountPage;
+import com.epam.at_lab_2022cw16.ui.page.MyStoreHomepage;
+import com.epam.at_lab_2022cw16.ui.page.OrderAddressPage;
+import com.epam.at_lab_2022cw16.ui.page.OrderBankWirePaymentPage;
+import com.epam.at_lab_2022cw16.ui.page.OrderConfirmationPage;
+import com.epam.at_lab_2022cw16.ui.page.OrderHistoryPage;
+import com.epam.at_lab_2022cw16.ui.page.OrderPaymentPage;
+import com.epam.at_lab_2022cw16.ui.page.OrderShippingPage;
+import com.epam.at_lab_2022cw16.ui.page.OrderSummaryPage;
+import com.epam.at_lab_2022cw16.ui.page.WomenCatalogPage;
 import com.epam.at_lab_2022cw16.ui.utils.TestListener;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
@@ -34,8 +43,7 @@ public class OrderHistoryTest extends AbstractBaseTest {
     @Order(1)
     @Test
     void shouldOpenCatalogPage() {
-        catalog.openPage();
-        assertEquals(catalog.getTitle(), PageTitles.WOMEN_CATALOG.getPageTitle());
+        assertTrue(catalog.openPage().verifyPageTitle());
     }
 
     @Order(2)
@@ -47,25 +55,24 @@ public class OrderHistoryTest extends AbstractBaseTest {
     @Order(3)
     @Test
     void shouldDisplayMessageConfirmAdditionItemToCart() {
-        String confirmMessage = "Product successfully added to your shopping cart";
-        assertEquals(confirmMessage, catalog.getMessageConfirmAdditionItemToCart());
+        assertTrue(catalog.isProductAddedTitleVisible());
     }
 
     @Order(4)
     @Test
     void shouldBeOpenedCartWithAddedItem() {
-        OrderSummaryPage orderSummaryPage = catalog.clickCheckoutButton();
+        OrderSummaryPage orderSummaryPage = catalog.proceedToCheckout();
         List<String> addedProductNames = orderSummaryPage.getAddedProductNames();
         assertEquals(1, addedProductNames.size());
         assertTrue(addedProductNames.contains(productName));
-        assertTrue(orderSummaryPage.getSummary().contains("SHOPPING-CART SUMMARY"));
+        assertTrue(orderSummaryPage.verifyPageTitle());
     }
 
     @Order(5)
     @Test
     void shouldOpenAuthenticationPage() {
-        AuthenticationPage authenticationPage = new OrderSummaryPage(driver).clickProceedToCheckoutButtonAsUnauthorizedUser();
-        assertEquals("AUTHENTICATION", authenticationPage.getSummary());
+        new OrderSummaryPage(driver).clickProceedToCheckoutButtonCommon();
+        assertTrue(new AuthenticationPage(driver).verifyPageTitle());
     }
 
     @Order(6)
@@ -75,21 +82,21 @@ public class OrderHistoryTest extends AbstractBaseTest {
                 .inputEmail("e1@gh.com")
                 .inputPassword("22222222")
                 .proceedToOrderAddressPage();
-        assertEquals("ADDRESSES", addressPage.getSummary());
+        assertTrue(addressPage.verifyPageTitle());
     }
 
     @Order(7)
     @Test
     void shouldOpenShippingPageFirstTest() {
-        OrderShippingPage shippingPage = new OrderAddressPage(driver).clickProceedToCheckoutButton();
-        assertEquals("SHIPPING", shippingPage.getSummary());
+        new OrderAddressPage(driver).clickProceedToCheckoutButtonCommon();
+        assertTrue(new OrderShippingPage(driver).verifyPageTitle());
     }
 
     @Order(8)
     @Test
     void shouldDisplayAlertWithAgreement() {
         OrderShippingPage shippingPage = new OrderShippingPage(driver);
-        shippingPage.clickProceedToCheckoutButton();
+        shippingPage.clickProceedToCheckoutButtonCommon();
         assertTrue(shippingPage.isFancyboxDisplayed());
         assertEquals("You must agree to the terms of service before continuing.", shippingPage.getFancyboxText());
     }
@@ -97,17 +104,19 @@ public class OrderHistoryTest extends AbstractBaseTest {
     @Order(9)
     @Test
     void shouldOpenPaymentPageFirstTest() {
-        OrderPaymentPage paymentPage = new OrderShippingPage(driver)
+        new OrderShippingPage(driver)
                 .closeFancybox()
                 .changingCheckboxState()
-                .clickProceedToCheckoutButton();
-        assertEquals("PLEASE CHOOSE YOUR PAYMENT METHOD", paymentPage.getSummary());
+                .clickProceedToCheckoutButtonCommon();
+        assertTrue(new OrderPaymentPage(driver).verifyPageTitle());
     }
 
     @Order(10)
     @Test
     void shouldOpenBankWirePaymentPage() {
-        assertEquals("ORDER SUMMARY", new OrderPaymentPage(driver).chooseBankWirePayment().getSummary());
+        assertTrue(new OrderPaymentPage(driver)
+                .chooseBankWirePayment()
+                .verifyPageTitle());
     }
 
     @Order(11)
@@ -115,7 +124,7 @@ public class OrderHistoryTest extends AbstractBaseTest {
     void shouldOpenConfirmationPageAndDisplayMessage() {
         OrderConfirmationPage confirmationPage = new OrderBankWirePaymentPage(driver).clickPaymentIConfirmMyOrderButton();
         orderReference = confirmationPage.getOrderReverence();
-        assertEquals("ORDER CONFIRMATION", confirmationPage.getSummary());
+        assertTrue(confirmationPage.verifyPageTitle());
         assertEquals("Your order on My Store is complete.", new OrderConfirmationPage(driver).getConfirmationText());
         assertEquals(9, orderReference.length());
     }
@@ -129,18 +138,18 @@ public class OrderHistoryTest extends AbstractBaseTest {
     @Order(13)
     @Test
     void shouldLoginAndOpenMyAccountPage() {
-        String summary = new MyStoreHomepage(driver)
+        assertTrue(new MyStoreHomepage(driver)
                 .openPage()
-                .clickMyAccountButton()
-                .getSummary();
-        assertEquals("MY ACCOUNT", summary);
+                .openMyAccountPage()
+                .verifyPageTitle());
     }
 
     @Order(14)
     @Test
     void shouldOpenOrderHistoryPageFromMyAccountPage() {
-        String summary = new MyAccountPage(driver).clickOrderHistoryButton().getSummary();
-        assertEquals("ORDER HISTORY", summary);
+        assertTrue(new MyAccountPage(driver)
+                .clickOrderHistoryButton()
+                .verifyPageTitle());
     }
 
     @Order(15)
@@ -158,7 +167,7 @@ public class OrderHistoryTest extends AbstractBaseTest {
     @Test
     void shouldAddReorderedItemInCart() {
         OrderSummaryPage summaryPage = new OrderHistoryPage(driver).reorderOldOrderByButtonFromDetails();
-        assertTrue(summaryPage.getSummary().contains("SHOPPING-CART SUMMARY"));
+        assertTrue(summaryPage.verifyPageTitle());
 
         List<String> productsFromCurrentOrder = summaryPage.getAddedProductNames();
         assertTrue(productsFromOldOrder.containsAll(productsFromCurrentOrder));
@@ -167,8 +176,10 @@ public class OrderHistoryTest extends AbstractBaseTest {
     @Order(17)
     @Test
     void shouldOpenOrderHistoryPage() {
-        String summary = new OrderSummaryPage(driver).clickMyAccountButton().clickOrderHistoryButton().getSummary();
-        assertEquals("ORDER HISTORY", summary);
+        assertTrue(new OrderSummaryPage(driver)
+                .openMyAccountPage()
+                .clickOrderHistoryButton()
+                .verifyPageTitle());
     }
 
     @Order(18)
@@ -177,7 +188,7 @@ public class OrderHistoryTest extends AbstractBaseTest {
         OrderSummaryPage summaryPage = new OrderHistoryPage(driver)
                 .showOrderDetails(orderReference)
                 .reorderOldOrderByButtonFromOrderList();
-        assertTrue(summaryPage.getSummary().contains("SHOPPING-CART SUMMARY"));
+        assertTrue(summaryPage.verifyPageTitle());
 
         List<String> productsFromCurrentOrder = summaryPage.getAddedProductNames();
         assertEquals(productQuantity, summaryPage.getSummaryProductsQuantityAsInt());
@@ -188,38 +199,42 @@ public class OrderHistoryTest extends AbstractBaseTest {
     @Order(19)
     @Test
     void shouldOpenAddressInformationPage() {
-        assertEquals("ADDRESSES", new OrderSummaryPage(driver)
-                .clickProceedToCheckoutButton()
-                .getSummary());
+        new OrderSummaryPage(driver)
+                .clickProceedToCheckoutButtonCommon();
+        assertTrue(new OrderAddressPage(driver).verifyPageTitle());
     }
 
     @Order(20)
     @Test
     void shouldOpenShippingPage() {
-        OrderShippingPage shippingPage = new OrderAddressPage(driver).clickProceedToCheckoutButton();
-        assertEquals("SHIPPING", shippingPage.getSummary());
+        new OrderAddressPage(driver)
+                .clickProceedToCheckoutButtonCommon();
+        assertTrue(new OrderShippingPage(driver).verifyPageTitle());
     }
 
     @Order(21)
     @Test
     void shouldOpenPaymentMethodPage() {
-        OrderPaymentPage paymentPage = new OrderShippingPage(driver)
+        new OrderShippingPage(driver)
                 .changingCheckboxState()
-                .clickProceedToCheckoutButton();
-        assertEquals("PLEASE CHOOSE YOUR PAYMENT METHOD", paymentPage.getSummary());
+                .clickProceedToCheckoutButtonCommon();
+        assertTrue(new OrderPaymentPage(driver)
+                .verifyPageTitle());
     }
 
     @Order(22)
     @Test
     void shouldOpenPaymentPage() {
-        assertEquals("ORDER SUMMARY", new OrderPaymentPage(driver).chooseBankWirePayment().getSummary());
+        assertTrue(new OrderPaymentPage(driver)
+                .chooseBankWirePayment()
+                .verifyPageTitle());
     }
 
     @Order(23)
     @Test
     void shouldOpenConfirmationPageAndDisplayConfirmMessage() {
         OrderConfirmationPage confirmationPage = new OrderBankWirePaymentPage(driver).clickPaymentIConfirmMyOrderButton();
-        assertEquals("ORDER CONFIRMATION", confirmationPage.getSummary());
+        assertTrue(confirmationPage.verifyPageTitle());
         assertEquals("Your order on My Store is complete.", confirmationPage.getConfirmationText());
 
     }

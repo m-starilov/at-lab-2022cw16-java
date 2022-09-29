@@ -1,10 +1,12 @@
 package com.epam.at_lab_2022cw16.ui.tests.manual;
 
-import com.epam.at_lab_2022cw16.ui.constants.AlertMessageTexts;
-import com.epam.at_lab_2022cw16.ui.constants.ObjectNames;
-import com.epam.at_lab_2022cw16.ui.constants.PageTitles;
+import com.epam.at_lab_2022cw16.ui.constants.Constants;
 import com.epam.at_lab_2022cw16.ui.model.User;
-import com.epam.at_lab_2022cw16.ui.page.*;
+import com.epam.at_lab_2022cw16.ui.page.AuthenticationPage;
+import com.epam.at_lab_2022cw16.ui.page.MyAccountPage;
+import com.epam.at_lab_2022cw16.ui.page.MyStoreHomepage;
+import com.epam.at_lab_2022cw16.ui.page.WishlistPage;
+import com.epam.at_lab_2022cw16.ui.page.WomenCatalogPage;
 import com.epam.at_lab_2022cw16.ui.page.pageElements.ProductBlock;
 import com.epam.at_lab_2022cw16.ui.utils.TestListener;
 import org.junit.jupiter.api.MethodOrderer;
@@ -16,6 +18,7 @@ import org.openqa.selenium.WebDriver;
 
 import java.util.List;
 
+import static com.epam.at_lab_2022cw16.ui.constants.Constants.AlertMessageTexts.WISHLIST_DELETE_TEXT;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -29,7 +32,7 @@ public class WishlistEditTest extends AbstractBaseTest {
     public void userOpenHomepage() {
         MyStoreHomepage myStoreHomepage = new MyStoreHomepage(driver);
         myStoreHomepage.openPage();
-        assertEquals(myStoreHomepage.getTitle(), PageTitles.HOME.getPageTitle());
+        assertTrue(myStoreHomepage.verifyPageTitle());
     }
 
     @Order(2)
@@ -38,28 +41,25 @@ public class WishlistEditTest extends AbstractBaseTest {
         MyStoreHomepage myStoreHomepage = new MyStoreHomepage(driver);
         myStoreHomepage.clickSignInButton();
         User user = new User("mikalay.murashko@gmail.com", "12345");
-        AuthenticationPage authenticationPage = new AuthenticationPage(driver);
-        authenticationPage.inputEmail(user.getUsername())
+        MyAccountPage myAccountPage = new AuthenticationPage(driver)
+                .inputEmail(user.getUsername())
                 .inputPassword(user.getPassword())
                 .proceedToMyAccountPage();
-        assertEquals(authenticationPage.getTitle(), PageTitles.MY_ACCOUNT.getPageTitle());
+        assertTrue(myAccountPage.verifyPageTitle());
     }
 
     @Order(3)
     @Test
     public void userProceedToHomepage() {
-        MyAccountPage myAccountPage = new MyAccountPage(driver);
-        myAccountPage.proceedToHomepage();
-        assertEquals(myAccountPage.getTitle(), PageTitles.HOME.getPageTitle());
+        assertTrue(new MyAccountPage(driver).proceedToHomepage().verifyPageTitle());
     }
 
     @Order(4)
     @Test
     public void userProceedToSummerDressCatalog() {
-        MyStoreHomepage myStoreHomepage = new MyStoreHomepage(driver);
-        myStoreHomepage.openSummerDressesCatalog();
-        MyAccountPage myAccountPage = new MyAccountPage(driver);
-        assertEquals(myAccountPage.getTitle(), PageTitles.SUMMER_DRESSES_CATALOG.getPageTitle());
+        assertTrue(new MyStoreHomepage(driver)
+                .openSummerDressesCatalog()
+                .verifyPageTitle());
     }
 
     @Order(5)
@@ -67,12 +67,12 @@ public class WishlistEditTest extends AbstractBaseTest {
     public void userSwitchToListView() {
         WomenCatalogPage womenCatalogPage = new WomenCatalogPage(driver);
         womenCatalogPage.switchToListView();
-        List<ProductBlock> products = womenCatalogPage.getProductsList();
-        assertTrue(products.size() > 0);
-        assertEquals(products.size(), womenCatalogPage.getListOfAddToCartButtonsNumberValue());
-        assertEquals(products.size(), womenCatalogPage.getMoreButtonsNumberValue());
-        assertEquals(products.size(), womenCatalogPage.getAddToWishListButtonsNumberValue());
-        assertEquals(products.size(), womenCatalogPage.getAddToCompareButtonsValue());
+        int productsListSize = womenCatalogPage.getProductsList().size();
+        assertTrue(productsListSize > 0);
+        assertEquals(productsListSize, womenCatalogPage.getListOfAddToCartButtonsNumberValue());
+        assertEquals(productsListSize, womenCatalogPage.getMoreButtonsNumberValue());
+        assertEquals(productsListSize, womenCatalogPage.getAddToWishListButtonsNumberValue());
+        assertEquals(productsListSize, womenCatalogPage.getAddToCompareButtonsValue());
     }
 
     @Order(6)
@@ -97,44 +97,45 @@ public class WishlistEditTest extends AbstractBaseTest {
     @Order(7)
     @Test
     public void userProceedToWishlistAndCheckWishlistNameAndCounter() {
-        WomenCatalogPage womenCatalogPage = new WomenCatalogPage(driver);
-        womenCatalogPage.proceedToMyAccountPage()
+        WishlistPage wishlistPage = new WomenCatalogPage(driver)
+                .proceedToMyAccountPage()
                 .proceedToWishlist();
-        WishlistPage wishlistPage = new WishlistPage(driver);
-        assertEquals(wishlistPage.getWishlistName(), ObjectNames.MY_WISHLIST_NAME.getObjectName());
-        assertEquals(wishlistPage.getItemsInWishlistCounterValue(), 3);
+        assertEquals(wishlistPage.getWishlistName(), Constants.MY_WISHLIST_NAME);
+        assertEquals(3, wishlistPage.getItemsInWishlistCounterValue());
     }
 
     @Order(8)
     @Test
     public void userPressViewWishlistButton() {
-        WishlistPage wishlistPage = new WishlistPage(driver);
-        wishlistPage.pressViewWishlistButton();
-        assertEquals(wishlistPage.getWishlistRowSize(), 3);
+        WishlistPage wishlistPage = new WishlistPage(driver)
+                .pressViewWishlistButton();
+        assertEquals(3, wishlistPage.getWishlistRowSize());
     }
 
     @Order(9)
     @Test
     public void userRemoveFirstDressFromCart() {
-        WishlistPage wishlistPage = new WishlistPage(driver);
-        wishlistPage.removeFirstDressFromCart();
-        assertEquals(wishlistPage.getWishlistRowSize(), 2);
+        WishlistPage wishlistPage = new WishlistPage(driver)
+                .removeFirstDressFromCart();
+        assertEquals(2, wishlistPage.getWishlistRowSize());
     }
 
     @Order(10)
     @Test
     public void userProceedToTShirtsCatalog() {
-        WishlistPage wishlistPage = new WishlistPage(driver);
-        wishlistPage.proceedToTShirtsCatalogPage();
-        assertEquals(wishlistPage.getTitle(), PageTitles.T_SHIRTS_CATALOG.getPageTitle());
+        assertTrue(new WishlistPage(driver)
+                .proceedToTShirtsCatalogPage()
+                .verifyPageTitle());
     }
 
     @Order(11)
     @Test
     public void userAddTShirtToWishlist() {
         WomenCatalogPage womenCatalogPage = new WomenCatalogPage(driver);
-        womenCatalogPage.getProductsList().get(0).addToWishListButtonClick();
+        womenCatalogPage.getProductsList().get(0)
+                .addToWishListButtonClick();
         assertTrue(womenCatalogPage.infoBoxIsDisplayed());
+
         womenCatalogPage.closeInfoBox();
         assertTrue(womenCatalogPage.getProductsList().get(0).isAddToWishlistSolidButtonDisplayed());
     }
@@ -142,30 +143,31 @@ public class WishlistEditTest extends AbstractBaseTest {
     @Order(12)
     @Test
     public void userProceedToEveningDressesCatalog() {
-        WomenCatalogPage womenCatalogPage = new WomenCatalogPage(driver);
-        womenCatalogPage.proceedToEveningDressesPage();
-        assertEquals(womenCatalogPage.getTitle(), PageTitles.EVENING_DRESSES_CATALOG.getPageTitle());
+        assertTrue(new WomenCatalogPage(driver)
+                .proceedToEveningDressesPage()
+                .verifyPageTitle());
     }
 
     @Order(13)
     @Test
     public void userAddEveningDressToWishlist() {
         WomenCatalogPage womenCatalogPage = new WomenCatalogPage(driver);
-        womenCatalogPage.getProductsList().get(0).addToWishListButtonClick();
+        ProductBlock product = womenCatalogPage.getProductsList().get(0);
+        product.addToWishListButtonClick();
         assertTrue(womenCatalogPage.infoBoxIsDisplayed());
+
         womenCatalogPage.closeInfoBox();
-        assertTrue(womenCatalogPage.getProductsList().get(0).isAddToWishlistSolidButtonDisplayed());
+        assertTrue(product.isAddToWishlistSolidButtonDisplayed());
     }
 
     @Order(14)
     @Test
     public void userProceedToWishlistPage() {
-        WomenCatalogPage womenCatalogPage = new WomenCatalogPage(driver);
-        womenCatalogPage.proceedToMyAccountPage()
+        WishlistPage wishlistPage = new WomenCatalogPage(driver)
+                .proceedToMyAccountPage()
                 .proceedToWishlist();
-        WishlistPage wishlistPage = new WishlistPage(driver);
-        assertEquals(wishlistPage.getWishlistName(), ObjectNames.MY_WISHLIST_NAME.getObjectName());
-        assertEquals(wishlistPage.getItemsInWishlistCounterValue(), 4);
+        assertEquals(wishlistPage.getWishlistName(), Constants.MY_WISHLIST_NAME);
+        assertEquals(4, wishlistPage.getItemsInWishlistCounterValue());
     }
 
     @Order(15)
@@ -173,7 +175,7 @@ public class WishlistEditTest extends AbstractBaseTest {
     public void userOpenMyWishlistAndCheckItsSize() {
         WishlistPage wishlistPage = new WishlistPage(driver);
         wishlistPage.pressViewWishlistButton();
-        assertEquals(wishlistPage.getWishlistRowSize(), 4);
+        assertEquals(4, wishlistPage.getWishlistRowSize());
     }
 
     @Order(16)
@@ -181,7 +183,7 @@ public class WishlistEditTest extends AbstractBaseTest {
     public void userDeleteWishlist() {
         WishlistPage wishlistPage = new WishlistPage(driver);
         wishlistPage.pressDeleteWishlistButton();
-        assertEquals(driver.switchTo().alert().getText(), AlertMessageTexts.WISHLIST_DELETE_TEXT.getAlertMessageText());
+        assertEquals(driver.switchTo().alert().getText(), WISHLIST_DELETE_TEXT);
         wishlistPage.acceptAlertMessage();
     }
 

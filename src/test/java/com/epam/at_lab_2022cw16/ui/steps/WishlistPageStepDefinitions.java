@@ -1,36 +1,18 @@
 package com.epam.at_lab_2022cw16.ui.steps;
 
-import com.epam.at_lab_2022cw16.ui.constants.AlertMessageTexts;
-import com.epam.at_lab_2022cw16.ui.constants.PageTitles;
-import com.epam.at_lab_2022cw16.ui.page.SummerDressesCatalogPage;
 import com.epam.at_lab_2022cw16.ui.page.WishlistPage;
-import com.epam.at_lab_2022cw16.ui.page.WomenCatalogPage;
-import com.epam.at_lab_2022cw16.ui.page.pageElements.ProductBlock;
 import com.epam.at_lab_2022cw16.ui.utils.EnvironmentUtils;
-import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.openqa.selenium.WebDriver;
 
-import java.util.List;
-
+import static com.epam.at_lab_2022cw16.ui.constants.Constants.AlertMessageTexts.WISHLIST_DELETE_TEXT;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class WishlistPageStepDefinitions {
 
     private final WebDriver driver = EnvironmentUtils.getDriver();
-
-    @Then("page with Summer dresses opened")
-    public void pageWithSummerDressesOpened() {
-        assertEquals(new SummerDressesCatalogPage(driver).getTitle(), PageTitles.SUMMER_DRESSES_CATALOG.getPageTitle());
-    }
-
-    @And("in \"Add to Wishlist\" link outline heart icon changed to solid")
-    public void inLinkOutlineHeartIconChangedToSolid() {
-        List<ProductBlock> productList = new WomenCatalogPage(driver).getProductsList();
-        assertTrue(productList.get(0).isAddToWishlistSolidButtonDisplayed());
-    }
 
     @When("I chose \"T-shirts\" from site top menu \\(Women>Dresses>T-shirts)")
     public void userChoseFromSiteTopMenuTShirts() {
@@ -45,7 +27,7 @@ public class WishlistPageStepDefinitions {
 
     @Then("confirmation message with request \\(OK and Cancel) displayed")
     public void confirmationMessageWithRequestOKAndCancelDisplayed() {
-        assertEquals(driver.switchTo().alert().getText(), AlertMessageTexts.WISHLIST_DELETE_TEXT.getAlertMessageText());
+        assertEquals(driver.switchTo().alert().getText(), WISHLIST_DELETE_TEXT);
     }
 
     @When("I click \"OK\" button")
@@ -66,11 +48,6 @@ public class WishlistPageStepDefinitions {
     @When("I click \"View\" link")
     public void userClickViewWishlistLink() {
         new WishlistPage(driver).pressViewWishlistButton();
-    }
-
-    @Then("page with T-shirts opened")
-    public void pageWithTShirtsOpened() {
-        assertEquals(new WishlistPage(driver).getTitle(), PageTitles.T_SHIRTS_CATALOG.getPageTitle());
     }
 
     @Then("Displayed {int} added items")

@@ -1,13 +1,9 @@
 package com.epam.at_lab_2022cw16.ui.steps;
 
-import com.epam.at_lab_2022cw16.ui.constants.PageTitles;
 import com.epam.at_lab_2022cw16.ui.page.MyAccountPage;
 import com.epam.at_lab_2022cw16.ui.utils.EnvironmentUtils;
-import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.openqa.selenium.WebDriver;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 public class MyAccountStepDefinitions {
 
@@ -18,24 +14,13 @@ public class MyAccountStepDefinitions {
         new MyAccountPage(driver).clickWomenCatalogButton();
     }
 
-    @When("I go to Order History page from Catalog Page")
+    @When("I go to Order History page from My Account Page")
     public void openOrderHistoryPageFromMyAccount() {
         new MyAccountPage(driver).clickOrderHistoryButton();
     }
 
-    @Then("the My account page is opened")
-    public void myAccountPageIsOpened() {
-        assertThat(new MyAccountPage(driver).getTitle())
-                .isEqualTo(PageTitles.MY_ACCOUNT.getPageTitle());
-    }
-
-    @Then("My account {string} page opened")
-    public void myAccountPageOpened(String summary) {
-        assertThat(new MyAccountPage(driver).getSummary()).isEqualTo(summary);
-    }
-
-    @When("I press Order history and details button")
-    public void iPressOrderHistoryAndDetailsButton() {
-        new MyAccountPage(driver).clickOrderHistoryButton();
+    @When("I click \"Home\" button")
+    public void userClickHomeButton() {
+        new MyAccountPage(driver).proceedToHomepage();
     }
 }

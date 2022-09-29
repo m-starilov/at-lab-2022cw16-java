@@ -48,9 +48,6 @@ public abstract class AbstractBasePage {
     @FindBy(xpath = "//a[@title='Women']")
     private WebElement womenCatalogButton;
 
-    @FindBy(xpath = "//*[@id='header']//a[@class='account']")
-    protected WebElement myAccountButton;
-
     @FindBy(xpath = "//a[@title='Contact Us']")
     protected WebElement contactUsButton;
 
@@ -91,6 +88,14 @@ public abstract class AbstractBasePage {
         }
     }
 
+    public static boolean isDisplayed(WebElement element) {
+        try {
+            return element.isDisplayed();
+        } catch (NoSuchElementException nsee) {
+            return false;
+        }
+    }
+
     protected WebDriverWait driverWait() {
         return new WebDriverWait(driver, Duration.ofSeconds(WAIT_TIMEOUT_SECONDS));
     }
@@ -109,10 +114,6 @@ public abstract class AbstractBasePage {
 
     public AbstractBasePage openPage() throws OperationNotSupportedException {
         throw new OperationNotSupportedException("Opening the page directly is not possible");
-    }
-
-    public String getTitle() {
-        return driver.getTitle();
     }
 
     public AuthenticationPage clickSignInButton() {
@@ -152,6 +153,11 @@ public abstract class AbstractBasePage {
 
     public WebElement waitForVisibilityOf(WebElement element) {
         return getNewFluentWait().ignoring(ElementNotInteractableException.class).until(ExpectedConditions.visibilityOf(element));
+    }
+
+    public void waitForPresenceOfElement(String locator) {
+        getNewFluentWait()
+                .until(ExpectedConditions.presenceOfElementLocated(By.xpath(locator)));
     }
 
     public void waitForNumberOfElementsToBeLessThan(By locator, Integer number) {
@@ -212,17 +218,17 @@ public abstract class AbstractBasePage {
         return new Alert(alert, driverWait());
     }
 
-    public String getSummary() {
-        return summary.getText();
-    }
-
-    public MyAccountPage clickMyAccountButton() {
-        driverWait().until(ExpectedConditions.elementToBeClickable(myAccountButton)).click();
-        return new MyAccountPage(driver);
-    }
-
     public ContactUsPage openContactUsPage() {
         contactUsButton.click();
         return new ContactUsPage(driver);
     }
+
+    public boolean verifyPageTitle()throws OperationNotSupportedException {
+        throw new OperationNotSupportedException("Opening the page directly is not possible");
+    }
+
+    protected String getSummary(){
+        return summary.getText().replaceAll("\n.*", "").trim();
+    }
+
 }

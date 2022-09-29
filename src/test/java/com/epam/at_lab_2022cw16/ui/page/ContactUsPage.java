@@ -12,9 +12,9 @@ import org.openqa.selenium.support.ui.Select;
 @Log4j2
 public class ContactUsPage extends AbstractBasePage {
 
+    private static final String PAGE_TITLE = "CUSTOMER SERVICE - CONTACT US";
     private static final String BASE_URL = "http://automationpractice.com/index.php?controller=contact";
-
-    private final String productDropdown = "//div[@id='uniform-%s_order_products']";
+    private static final String productDropdown = "//div[@id='uniform-%s_order_products']";
     private String orderValue;
 
     @FindBy(xpath = "//button[@id='submitMessage']")
@@ -44,6 +44,11 @@ public class ContactUsPage extends AbstractBasePage {
         driver.get(BASE_URL);
         log.info("Contact Us page is opened");
         return this;
+    }
+
+    @Override
+    public boolean verifyPageTitle() {
+        return summary.getText().equals(PAGE_TITLE);
     }
 
     public ContactUsPage clickSendMessageButton() {

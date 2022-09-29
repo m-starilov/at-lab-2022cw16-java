@@ -1,7 +1,6 @@
 package com.epam.at_lab_2022cw16.ui.tests.manual;
 
-import com.epam.at_lab_2022cw16.ui.constants.AlertMessageTexts;
-import com.epam.at_lab_2022cw16.ui.constants.PageTitles;
+import com.epam.at_lab_2022cw16.ui.constants.Constants.AlertMessageTexts;
 import com.epam.at_lab_2022cw16.ui.model.User;
 import com.epam.at_lab_2022cw16.ui.page.AuthenticationPage;
 import com.epam.at_lab_2022cw16.ui.page.MyAccountPage;
@@ -30,14 +29,14 @@ public class ShoppingCartSignOutTest extends AbstractBaseTest {
     @Order(1)
     public void openHomePageTest() {
         MyStoreHomepage homePage = new MyStoreHomepage(driver).openPage();
-        assertThat(homePage.getTitle()).isEqualTo(PageTitles.HOME.getPageTitle());
+        assertThat(homePage.verifyPageTitle()).isTrue();
     }
 
     @Test
     @Order(2)
     public void openAuthenticationPageTest() {
         AuthenticationPage authPage = new MyStoreHomepage(driver).clickSignInButton();
-        assertThat(authPage.getTitle()).isEqualTo(PageTitles.LOGIN.getPageTitle());
+        assertThat(authPage.verifyPageTitle()).isTrue();
         assertThat(authPage.isCreateAccountFormVisible()).isTrue();
         assertThat(authPage.isLoginFormVisible()).isTrue();
     }
@@ -50,7 +49,7 @@ public class ShoppingCartSignOutTest extends AbstractBaseTest {
         Alert alert = authPage.getPageElementAlert();
         assertThat(alert.isDisplayed()).isTrue();
         assertThat(alert.isDanger()).isTrue();
-        assertThat(alert.getMessage()).contains(AlertMessageTexts.EMAIL_REQUIRED.getAlertMessageText());
+        assertThat(alert.getMessage()).contains(AlertMessageTexts.EMAIL_REQUIRED);
     }
 
     @Test
@@ -64,7 +63,7 @@ public class ShoppingCartSignOutTest extends AbstractBaseTest {
         Alert alert = authPage.getPageElementAlert();
         assertThat(alert.isDisplayed()).isTrue();
         assertThat(alert.isDanger()).isTrue();
-        assertThat(alert.getMessage()).contains(AlertMessageTexts.AUTH_FAIL.getAlertMessageText());
+        assertThat(alert.getMessage()).contains(AlertMessageTexts.AUTH_FAIL);
     }
 
     @Test
@@ -78,7 +77,7 @@ public class ShoppingCartSignOutTest extends AbstractBaseTest {
         Alert alert = authPage.getPageElementAlert();
         assertThat(alert.isDisplayed()).isTrue();
         assertThat(alert.isDanger()).isTrue();
-        assertThat(alert.getMessage()).contains(AlertMessageTexts.AUTH_FAIL.getAlertMessageText());
+        assertThat(alert.getMessage()).contains(AlertMessageTexts.AUTH_FAIL);
     }
 
     @Test
@@ -88,7 +87,7 @@ public class ShoppingCartSignOutTest extends AbstractBaseTest {
         authPage.inputEmail(validUser.getUsername());
         authPage.inputPassword(validUser.getPassword());
         MyAccountPage myAccountPage = authPage.proceedToMyAccountPage();
-        assertThat(myAccountPage.getTitle()).isEqualTo(PageTitles.MY_ACCOUNT.getPageTitle());
+        assertThat(myAccountPage.verifyPageTitle()).isTrue();
     }
 
     @Test
@@ -104,7 +103,7 @@ public class ShoppingCartSignOutTest extends AbstractBaseTest {
     public void openTheCartTest() {
         WomenCatalogPage womenCatalogPage = new WomenCatalogPage(driver);
         OrderSummaryPage orderSummaryPage = womenCatalogPage.proceedToCheckout();
-        assertThat(orderSummaryPage.getNavigationPageTitle()).isEqualTo(PageTitles.YOUR_CART.getPageTitle());
+        assertThat(orderSummaryPage.verifyPageTitle()).isTrue();
         assertThat(orderSummaryPage.isProductVisible()).isTrue();
     }
 
@@ -114,7 +113,7 @@ public class ShoppingCartSignOutTest extends AbstractBaseTest {
         OrderSummaryPage orderSummaryPage = new OrderSummaryPage(driver);
         orderSummaryPage.clickSignOutButton();
         assertThat(orderSummaryPage.getAlertMessage())
-                .isEqualTo(AlertMessageTexts.EMPTY_CART_TEXT.getAlertMessageText());
+                .isEqualTo(AlertMessageTexts.EMPTY_CART_TEXT);
         assertThat(orderSummaryPage.isAccountVisible()).isFalse();
     }
 
@@ -126,7 +125,7 @@ public class ShoppingCartSignOutTest extends AbstractBaseTest {
         authPage.inputEmail(validUser.getUsername());
         authPage.inputPassword(validUser.getPassword());
         MyAccountPage myAccountPage = authPage.proceedToMyAccountPage();
-        assertThat(myAccountPage.getTitle()).isEqualTo(PageTitles.MY_ACCOUNT.getPageTitle());
+        assertThat(myAccountPage.verifyPageTitle()).isTrue();
     }
 
     @Test
@@ -136,6 +135,6 @@ public class ShoppingCartSignOutTest extends AbstractBaseTest {
         assertThat(myAccountPage.isMiniCartEmpty()).isTrue();
         OrderSummaryPage orderSummaryPage = myAccountPage.clickToMiniCart();
         assertThat(orderSummaryPage.getAlertMessage())
-                .isEqualTo(AlertMessageTexts.EMPTY_CART_TEXT.getAlertMessageText());
+                .isEqualTo(AlertMessageTexts.EMPTY_CART_TEXT);
     }
 }

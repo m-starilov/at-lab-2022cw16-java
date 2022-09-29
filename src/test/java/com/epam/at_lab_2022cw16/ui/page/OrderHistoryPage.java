@@ -8,7 +8,6 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
@@ -18,6 +17,7 @@ import static java.lang.String.format;
 
 @Log4j2
 public class OrderHistoryPage extends AbstractBasePage {
+    private static final String PAGE_TITLE = "ORDER HISTORY";
 
     private static final String orderInOrderList = "//a[contains(text(),'%s')]";
 
@@ -35,9 +35,6 @@ public class OrderHistoryPage extends AbstractBasePage {
 
     @FindBy(xpath = "//h3[text()='Messages']/following-sibling::div[@class='table_block']//tr/td[2]")
     private WebElement sentMessageText;
-
-    @FindBy(xpath = "//a[@class='btn btn-default button button-small']")
-    private List<WebElement> detailsButtons;
 
     @FindBy(xpath = "//*[@id='order-list']//a[@class='color-myaccount']")
     private List<WebElement> orderReferenceInHistory;
@@ -59,6 +56,11 @@ public class OrderHistoryPage extends AbstractBasePage {
 
     public OrderHistoryPage(WebDriver driver) {
         super(driver);
+    }
+
+    @Override
+    public boolean verifyPageTitle() {
+        return summary.getText().equals(PAGE_TITLE);
     }
 
     public OrderHistoryPage showLastOrderDetails() {

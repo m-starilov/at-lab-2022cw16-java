@@ -9,18 +9,21 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 
 @Log4j2
 public class OrderShippingPage extends AbstractOrderPage {
+    private static final String PAGE_TITLE = "SHIPPING";
 
     private final By fancyboxCloseButton = By.xpath("//a[@title='Close']");
     private final By fancyboxMessage = By.xpath("//p[@class='fancybox-error']");
-
-    @FindBy(xpath = "//div[@id='center_column']//button")
-    private WebElement proceedToCheckoutButton;
 
     @FindBy(xpath = "//input[@id='cgv']")
     private WebElement agreeToTheTermsCheckbox;
 
     public OrderShippingPage(WebDriver driver) {
         super(driver);
+    }
+
+    @Override
+    public boolean verifyPageTitle() {
+        return summary.getText().equals(PAGE_TITLE);
     }
 
     public OrderShippingPage changingCheckboxState() {
@@ -41,12 +44,6 @@ public class OrderShippingPage extends AbstractOrderPage {
             log.info("Modal message You must agree to the terms of service before continuing. is closed");
         }
         return this;
-    }
-
-    public OrderPaymentPage clickProceedToCheckoutButton() {
-        proceedToCheckoutButton.click();
-        log.info("Go to Payment information");
-        return new OrderPaymentPage(driver);
     }
 
     public String getFancyboxText() {
