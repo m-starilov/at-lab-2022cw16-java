@@ -12,9 +12,7 @@ public class OrderAddressPage extends AbstractOrderPage {
     }
 
     @Override
-    public boolean verifyPageTitle() {
-        System.out.println("exp : " + PAGE_TITLE);
-        System.out.println("actual : " + summary.getText());
+    public boolean isPageTitleValid() {
         return summary.getText().equals(PAGE_TITLE);
     }
 }

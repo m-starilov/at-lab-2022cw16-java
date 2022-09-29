@@ -31,7 +31,7 @@ public class NewsletterSubscriptionTest extends AbstractBaseTest {
     public void openHomepage() {
         MyStoreHomepage myStoreHomepage = new MyStoreHomepage(driver);
         myStoreHomepage.openPage();
-        assertThat(myStoreHomepage.verifyPageTitle()).isTrue();
+        assertThat(myStoreHomepage.isPageTitleValid()).isTrue();
     }
 
     @Test

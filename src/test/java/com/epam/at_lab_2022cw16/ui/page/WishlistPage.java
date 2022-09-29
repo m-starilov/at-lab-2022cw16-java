@@ -46,7 +46,7 @@ public class WishlistPage extends AbstractBasePage {
     }
 
     @Override
-    public boolean verifyPageTitle() {
+    public boolean isPageTitleValid() {
         return getSummary().equals(PAGE_TITLE);
     }
 

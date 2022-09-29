@@ -43,7 +43,7 @@ public class OrderHistoryTest extends AbstractBaseTest {
     @Order(1)
     @Test
     void shouldOpenCatalogPage() {
-        assertTrue(catalog.openPage().verifyPageTitle());
+        assertTrue(catalog.openPage().isPageTitleValid());
     }
 
     @Order(2)
@@ -65,14 +65,14 @@ public class OrderHistoryTest extends AbstractBaseTest {
         List<String> addedProductNames = orderSummaryPage.getAddedProductNames();
         assertEquals(1, addedProductNames.size());
         assertTrue(addedProductNames.contains(productName));
-        assertTrue(orderSummaryPage.verifyPageTitle());
+        assertTrue(orderSummaryPage.isPageTitleValid());
     }
 
     @Order(5)
     @Test
     void shouldOpenAuthenticationPage() {
         new OrderSummaryPage(driver).clickProceedToCheckoutButtonCommon();
-        assertTrue(new AuthenticationPage(driver).verifyPageTitle());
+        assertTrue(new AuthenticationPage(driver).isPageTitleValid());
     }
 
     @Order(6)
@@ -82,14 +82,14 @@ public class OrderHistoryTest extends AbstractBaseTest {
                 .inputEmail("e1@gh.com")
                 .inputPassword("22222222")
                 .proceedToOrderAddressPage();
-        assertTrue(addressPage.verifyPageTitle());
+        assertTrue(addressPage.isPageTitleValid());
     }
 
     @Order(7)
     @Test
     void shouldOpenShippingPageFirstTest() {
         new OrderAddressPage(driver).clickProceedToCheckoutButtonCommon();
-        assertTrue(new OrderShippingPage(driver).verifyPageTitle());
+        assertTrue(new OrderShippingPage(driver).isPageTitleValid());
     }
 
     @Order(8)
@@ -108,7 +108,7 @@ public class OrderHistoryTest extends AbstractBaseTest {
                 .closeFancybox()
                 .changingCheckboxState()
                 .clickProceedToCheckoutButtonCommon();
-        assertTrue(new OrderPaymentPage(driver).verifyPageTitle());
+        assertTrue(new OrderPaymentPage(driver).isPageTitleValid());
     }
 
     @Order(10)
@@ -116,7 +116,7 @@ public class OrderHistoryTest extends AbstractBaseTest {
     void shouldOpenBankWirePaymentPage() {
         assertTrue(new OrderPaymentPage(driver)
                 .chooseBankWirePayment()
-                .verifyPageTitle());
+                .isPageTitleValid());
     }
 
     @Order(11)
@@ -124,7 +124,7 @@ public class OrderHistoryTest extends AbstractBaseTest {
     void shouldOpenConfirmationPageAndDisplayMessage() {
         OrderConfirmationPage confirmationPage = new OrderBankWirePaymentPage(driver).clickPaymentIConfirmMyOrderButton();
         orderReference = confirmationPage.getOrderReverence();
-        assertTrue(confirmationPage.verifyPageTitle());
+        assertTrue(confirmationPage.isPageTitleValid());
         assertEquals("Your order on My Store is complete.", new OrderConfirmationPage(driver).getConfirmationText());
         assertEquals(9, orderReference.length());
     }
@@ -141,7 +141,7 @@ public class OrderHistoryTest extends AbstractBaseTest {
         assertTrue(new MyStoreHomepage(driver)
                 .openPage()
                 .openMyAccountPage()
-                .verifyPageTitle());
+                .isPageTitleValid());
     }
 
     @Order(14)
@@ -149,7 +149,7 @@ public class OrderHistoryTest extends AbstractBaseTest {
     void shouldOpenOrderHistoryPageFromMyAccountPage() {
         assertTrue(new MyAccountPage(driver)
                 .clickOrderHistoryButton()
-                .verifyPageTitle());
+                .isPageTitleValid());
     }
 
     @Order(15)
@@ -167,7 +167,7 @@ public class OrderHistoryTest extends AbstractBaseTest {
     @Test
     void shouldAddReorderedItemInCart() {
         OrderSummaryPage summaryPage = new OrderHistoryPage(driver).reorderOldOrderByButtonFromDetails();
-        assertTrue(summaryPage.verifyPageTitle());
+        assertTrue(summaryPage.isPageTitleValid());
 
         List<String> productsFromCurrentOrder = summaryPage.getAddedProductNames();
         assertTrue(productsFromOldOrder.containsAll(productsFromCurrentOrder));
@@ -179,7 +179,7 @@ public class OrderHistoryTest extends AbstractBaseTest {
         assertTrue(new OrderSummaryPage(driver)
                 .openMyAccountPage()
                 .clickOrderHistoryButton()
-                .verifyPageTitle());
+                .isPageTitleValid());
     }
 
     @Order(18)
@@ -188,7 +188,7 @@ public class OrderHistoryTest extends AbstractBaseTest {
         OrderSummaryPage summaryPage = new OrderHistoryPage(driver)
                 .showOrderDetails(orderReference)
                 .reorderOldOrderByButtonFromOrderList();
-        assertTrue(summaryPage.verifyPageTitle());
+        assertTrue(summaryPage.isPageTitleValid());
 
         List<String> productsFromCurrentOrder = summaryPage.getAddedProductNames();
         assertEquals(productQuantity, summaryPage.getSummaryProductsQuantityAsInt());
@@ -201,7 +201,7 @@ public class OrderHistoryTest extends AbstractBaseTest {
     void shouldOpenAddressInformationPage() {
         new OrderSummaryPage(driver)
                 .clickProceedToCheckoutButtonCommon();
-        assertTrue(new OrderAddressPage(driver).verifyPageTitle());
+        assertTrue(new OrderAddressPage(driver).isPageTitleValid());
     }
 
     @Order(20)
@@ -209,7 +209,7 @@ public class OrderHistoryTest extends AbstractBaseTest {
     void shouldOpenShippingPage() {
         new OrderAddressPage(driver)
                 .clickProceedToCheckoutButtonCommon();
-        assertTrue(new OrderShippingPage(driver).verifyPageTitle());
+        assertTrue(new OrderShippingPage(driver).isPageTitleValid());
     }
 
     @Order(21)
@@ -219,7 +219,7 @@ public class OrderHistoryTest extends AbstractBaseTest {
                 .changingCheckboxState()
                 .clickProceedToCheckoutButtonCommon();
         assertTrue(new OrderPaymentPage(driver)
-                .verifyPageTitle());
+                .isPageTitleValid());
     }
 
     @Order(22)
@@ -227,14 +227,14 @@ public class OrderHistoryTest extends AbstractBaseTest {
     void shouldOpenPaymentPage() {
         assertTrue(new OrderPaymentPage(driver)
                 .chooseBankWirePayment()
-                .verifyPageTitle());
+                .isPageTitleValid());
     }
 
     @Order(23)
     @Test
     void shouldOpenConfirmationPageAndDisplayConfirmMessage() {
         OrderConfirmationPage confirmationPage = new OrderBankWirePaymentPage(driver).clickPaymentIConfirmMyOrderButton();
-        assertTrue(confirmationPage.verifyPageTitle());
+        assertTrue(confirmationPage.isPageTitleValid());
         assertEquals("Your order on My Store is complete.", confirmationPage.getConfirmationText());
 
     }

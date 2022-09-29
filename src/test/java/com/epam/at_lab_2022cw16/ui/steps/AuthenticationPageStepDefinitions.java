@@ -25,7 +25,7 @@ public class AuthenticationPageStepDefinitions {
 
     @Then("Authentication page is opened")
     public void authenticationPageIsOpenedTitleOfPageIs() {
-        assertTrue(new AuthenticationPage(driver).verifyPageTitle());
+        assertTrue(new AuthenticationPage(driver).isPageTitleValid());
     }
 
     @When("I log in with valid email {string} address and password {string}")

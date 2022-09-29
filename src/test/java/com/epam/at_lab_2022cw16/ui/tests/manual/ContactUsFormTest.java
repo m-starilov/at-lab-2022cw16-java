@@ -34,14 +34,14 @@ public class ContactUsFormTest extends AbstractBaseTest {
     @Order(1)
     public void openHomepageTest() {
         MyStoreHomepage homepage = new MyStoreHomepage(driver).openPage();
-        assertThat(homepage.verifyPageTitle()).isTrue();
+        assertThat(homepage.isPageTitleValid()).isTrue();
     }
 
     @Test
     @Order(2)
     public void openContactUsPageTest() {
         ContactUsPage contactUsPage = new MyStoreHomepage(driver).openContactUsPage();
-        assertThat(contactUsPage.verifyPageTitle()).isTrue();
+        assertThat(contactUsPage.isPageTitleValid()).isTrue();
     }
 
     @Test
@@ -108,14 +108,14 @@ public class ContactUsFormTest extends AbstractBaseTest {
         MyAccountPage myAccountPage = new MyStoreHomepage(driver).clickSignInButton()
                 .inputEmail(user.getUsername())
                 .inputPassword(user.getPassword()).proceedToMyAccountPage();
-        assertThat(myAccountPage.verifyPageTitle()).isTrue();
+        assertThat(myAccountPage.isPageTitleValid()).isTrue();
     }
 
     @Test
     @Order(8)
     public void openContactUsPageAsAuthorizedUserTest() {
         ContactUsPage contactUsPage = new MyAccountPage(driver).openContactUsPage();
-        assertThat(contactUsPage.verifyPageTitle()).isTrue();
+        assertThat(contactUsPage.isPageTitleValid()).isTrue();
     }
 
     @Test

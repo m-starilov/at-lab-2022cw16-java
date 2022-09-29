@@ -20,9 +20,9 @@ public class MiniCartStepDefinitions {
     }
 
     @Then("Catalog page was opened and list of {int} items")
-    public void checkCatalogCategoryName(String categoryName, int quantity) {
+    public void checkCatalogCategoryName(int quantity) {
         SummerDressesCatalogPage summerDressesCatalogPage = new SummerDressesCatalogPage(driver);
-        assertThat(summerDressesCatalogPage.verifyPageTitle()).isTrue();
+        assertThat(summerDressesCatalogPage.isPageTitleValid()).isTrue();
         assertThat(summerDressesCatalogPage.getProductsList().size()).isEqualTo(quantity);
     }
 
@@ -78,7 +78,7 @@ public class MiniCartStepDefinitions {
             "summary products quantity")
     public void checkOrderPageTitleAndQuantity(String quantity, String summary) {
         OrderSummaryPage orderSummaryPage = new OrderSummaryPage(driver);
-        assertThat(orderSummaryPage.verifyPageTitle()).isTrue();
+        assertThat(orderSummaryPage.isPageTitleValid()).isTrue();
         assertThat(orderSummaryPage.getProductQuantity()).isEqualTo(quantity);
         assertThat(orderSummaryPage.getSummaryProductsQuantity()).isEqualTo(summary);
     }

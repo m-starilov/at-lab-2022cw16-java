@@ -38,7 +38,7 @@ public class CatalogTest extends AbstractBaseTest {
     @Test
     void shouldOpenCatalogPage() {
         page.openPage();
-        assertTrue(page.verifyPageTitle());
+        assertTrue(page.isPageTitleValid());
     }
 
     @Order(2)

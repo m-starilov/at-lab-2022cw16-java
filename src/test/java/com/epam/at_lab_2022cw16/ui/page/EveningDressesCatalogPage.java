@@ -11,7 +11,7 @@ public class EveningDressesCatalogPage extends AbstractCatalogPage{
     }
 
     @Override
-    public boolean verifyPageTitle() {
+    public boolean isPageTitleValid() {
         return getSummary().equals(PAGE_TITLE);
     }
 }

@@ -223,7 +223,7 @@ public abstract class AbstractBasePage {
         return new ContactUsPage(driver);
     }
 
-    public boolean verifyPageTitle()throws OperationNotSupportedException {
+    public boolean isPageTitleValid()throws OperationNotSupportedException {
         throw new OperationNotSupportedException("Opening the page directly is not possible");
     }
 

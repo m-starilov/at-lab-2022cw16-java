@@ -59,7 +59,7 @@ public class OrderHistoryPage extends AbstractBasePage {
     }
 
     @Override
-    public boolean verifyPageTitle() {
+    public boolean isPageTitleValid() {
         return summary.getText().equals(PAGE_TITLE);
     }
 
@@ -70,7 +70,7 @@ public class OrderHistoryPage extends AbstractBasePage {
     }
 
     public OrderHistoryPage showOrderDetails(String orderReference) {
-        findElement(By.xpath(format(orderInOrderList, orderReference))).click();
+        waitForVisibilityOf(findElement(By.xpath(format(orderInOrderList, orderReference)))).click();
         return this;
     }
 

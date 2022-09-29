@@ -182,7 +182,7 @@ public class CatalogPageStepDefinitions {
 
     @Then("page with Evening Dresses opened")
     public void pageWithEveningDressesOpened() {
-        assertTrue(new EveningDressesCatalogPage(driver).verifyPageTitle());
+        assertTrue(new EveningDressesCatalogPage(driver).isPageTitleValid());
     }
 
     @When("I put one item {string} in a cart")
@@ -207,7 +207,7 @@ public class CatalogPageStepDefinitions {
 
     @Then("page with Summer dresses opened")
     public void pageWithSummerDressesOpened() {
-        assertTrue(new SummerDressesCatalogPage(driver).verifyPageTitle());
+        assertTrue(new SummerDressesCatalogPage(driver).isPageTitleValid());
     }
 
     @And("in \"Add to Wishlist\" link outline heart icon changed to solid")
@@ -218,7 +218,7 @@ public class CatalogPageStepDefinitions {
 
     @Then("page with T-shirts opened")
     public void pageWithTShirtsOpened() {
-        assertTrue(new TShirtsCatalogPage(driver).verifyPageTitle());
+        assertTrue(new TShirtsCatalogPage(driver).isPageTitleValid());
     }
 
     private static boolean sortByParam(String param, WomenCatalogPage catalog) {

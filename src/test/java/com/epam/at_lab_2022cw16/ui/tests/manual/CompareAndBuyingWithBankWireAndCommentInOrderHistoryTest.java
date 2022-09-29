@@ -44,7 +44,7 @@ public class CompareAndBuyingWithBankWireAndCommentInOrderHistoryTest extends Ab
     @Order(1)
     public void openHomepageTest() {
         MyStoreHomepage homepage = new MyStoreHomepage(driver).openPage();
-        assertThat(homepage.verifyPageTitle()).isTrue();
+        assertThat(homepage.isPageTitleValid()).isTrue();
     }
 
     @Test
@@ -56,7 +56,7 @@ public class CompareAndBuyingWithBankWireAndCommentInOrderHistoryTest extends Ab
                 .inputEmail(user.getUsername())
                 .inputPassword(user.getPassword())
                 .proceedToMyAccountPage();
-        assertThat(myAccountPage.verifyPageTitle())
+        assertThat(myAccountPage.isPageTitleValid())
                 .isTrue();
     }
 
@@ -122,7 +122,7 @@ public class CompareAndBuyingWithBankWireAndCommentInOrderHistoryTest extends Ab
     @Order(7)
     public void paymentMethodTitleTest() {
        new OrderShippingPage(driver).clickProceedToCheckoutButtonCommon();
-        assertThat(new OrderPaymentPage(driver).verifyPageTitle())
+        assertThat(new OrderPaymentPage(driver).isPageTitleValid())
                 .isTrue();
     }
 
@@ -130,7 +130,7 @@ public class CompareAndBuyingWithBankWireAndCommentInOrderHistoryTest extends Ab
     @Order(8)
     public void bankWirePaymentTitleTest() {
         OrderBankWirePaymentPage orderBankWirePaymentPage = new OrderPaymentPage(driver).chooseBankWirePayment();
-        assertThat(orderBankWirePaymentPage.verifyPageTitle())
+        assertThat(orderBankWirePaymentPage.isPageTitleValid())
                 .isTrue();
 
         assertThat(orderBankWirePaymentPage.getTotalPriceInformation())
@@ -143,7 +143,7 @@ public class CompareAndBuyingWithBankWireAndCommentInOrderHistoryTest extends Ab
         List<String> bankAccountInformation = Arrays.asList("Pradeep Macharla", "xyz", "RTP");
         OrderConfirmationPage orderConfirmationPage =
                 new OrderBankWirePaymentPage(driver).clickPaymentIConfirmMyOrderButton();
-        assertThat(orderConfirmationPage.verifyPageTitle())
+        assertThat(orderConfirmationPage.isPageTitleValid())
                 .isTrue();
         assertThat(orderConfirmationPage.getConfirmationText())
                 .isEqualTo("Your order on My Store is complete.");
@@ -157,11 +157,11 @@ public class CompareAndBuyingWithBankWireAndCommentInOrderHistoryTest extends Ab
     @Order(10)
     public void emptyCommentMessageTest() {
         MyAccountPage myAccountPage = new OrderConfirmationPage(driver).openMyAccountPage();
-        assertThat(myAccountPage.verifyPageTitle())
+        assertThat(myAccountPage.isPageTitleValid())
                 .isTrue();
 
         OrderHistoryPage ordersHistoryPage = myAccountPage.clickOrderHistoryButton();
-        assertThat(ordersHistoryPage.verifyPageTitle())
+        assertThat(ordersHistoryPage.isPageTitleValid())
                 .isTrue();
 
         Alert alert = ordersHistoryPage

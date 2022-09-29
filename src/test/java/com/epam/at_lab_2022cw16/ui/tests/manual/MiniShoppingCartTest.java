@@ -24,7 +24,7 @@ public class MiniShoppingCartTest extends AbstractBaseTest {
     public void openSummerDressesPageTest() {
         SummerDressesCatalogPage summerDressesCatalogPage = new SummerDressesCatalogPage(driver);
         summerDressesCatalogPage.openPage();
-        assertThat(summerDressesCatalogPage.verifyPageTitle()).isTrue();
+        assertThat(summerDressesCatalogPage.isPageTitleValid()).isTrue();
         assertThat(summerDressesCatalogPage.getProductsList().size()).isEqualTo(3);
     }
 
@@ -73,7 +73,7 @@ public class MiniShoppingCartTest extends AbstractBaseTest {
     @Order(7)
     public void goToOrderSummaryPageFromMiniCartTest() {
         OrderSummaryPage orderSummaryPage = new OrderSummaryPage(driver).clickCheckOutButtonInMiniCart();
-        assertThat(orderSummaryPage.verifyPageTitle()).isTrue();
+        assertThat(orderSummaryPage.isPageTitleValid()).isTrue();
         assertThat(orderSummaryPage.getProductQuantity()).isEqualTo("1");
         assertThat(orderSummaryPage.getSummaryProductsQuantity()).isEqualTo("1 Product");
     }

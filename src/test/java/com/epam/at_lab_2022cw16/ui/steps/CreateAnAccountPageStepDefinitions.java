@@ -29,7 +29,7 @@ public class CreateAnAccountPageStepDefinitions {
 
     @Then("the email has been verified. “Create an account” page opened.")
     public void createAnAccountPageOpened() {
-        Assertions.assertThat(createAnAccountPage.verifyPageTitle()).isTrue();
+        Assertions.assertThat(createAnAccountPage.isPageTitleValid()).isTrue();
     }
 
     @When("the user clicks register button with empty fields in registration form")

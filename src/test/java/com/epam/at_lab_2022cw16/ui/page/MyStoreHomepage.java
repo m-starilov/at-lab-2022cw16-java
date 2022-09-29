@@ -44,7 +44,7 @@ public class MyStoreHomepage extends AbstractBasePage {
     }
 
     @Override
-    public boolean verifyPageTitle() {
+    public boolean isPageTitleValid() {
         return summary.getText().equals(PAGE_TITLE);
     }
 

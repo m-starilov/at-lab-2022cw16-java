@@ -30,7 +30,6 @@ public abstract class AbstractCatalogPage extends AbstractBasePage {
     private static final String PRODUCT_COLOR_LIST = "./descendant-or-self::*[@class='color_pick']";
     private static final String PRODUCT_NAME = "./descendant-or-self::h5[@itemprop='name']";
     private static final String PRODUCT_PRICE = "./descendant-or-self::*[contains(@class,'right-block')]//*[@itemprop='price']";
-    //одинаковый локатор у вебэлемента. по xpath вейтер, который ожидает присутствия элементов.
     private static final String ADD_TO_CART_BUTTONS = "//span[text()='Add to cart']";
     private static final String MORE_BUTTONS = "//span[text()='More']";
     private static final String ADD_TO_WISH_LIST_BUTTONS = "//a[contains(@class,'addToWishlist wishlistProd')]";

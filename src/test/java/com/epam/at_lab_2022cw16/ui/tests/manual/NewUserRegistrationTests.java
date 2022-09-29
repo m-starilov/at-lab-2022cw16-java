@@ -41,7 +41,7 @@ public class NewUserRegistrationTests extends AbstractBaseTest {
         AuthenticationPage newUserRegistrationTests = new AuthenticationPage(EnvironmentUtils.getDriver());
         CreateAnAccountPage createAnAccountPage = new CreateAnAccountPage(EnvironmentUtils.getDriver());
         newUserRegistrationTests.fillingEmailForm(validEmail);
-        assertThat(createAnAccountPage.verifyPageTitle()).isTrue();
+        assertThat(createAnAccountPage.isPageTitleValid()).isTrue();
     }
 
     @Test
@@ -97,7 +97,7 @@ public class NewUserRegistrationTests extends AbstractBaseTest {
 
         createAnAccountPage.fillingRegisterForm(validUser);
         createAnAccountPage.clickRegisterButton();
-        assertThat(myRegisteredAccountPage.verifyPageTitle())
+        assertThat(myRegisteredAccountPage.isPageTitleValid())
                 .isTrue();
     }
 }

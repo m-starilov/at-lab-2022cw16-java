@@ -18,7 +18,6 @@ public class OrderHistoryPageStepDefinitions {
 
     private final WebDriver driver = EnvironmentUtils.getDriver();
     private final String orderReference = OrderPageStepDefinitions.orderReferenceThreadLocal.get();
-    static ThreadLocal<List<String>> listThreadLocal = new ThreadLocal<>();
 
     @When("I open details of last order")
     public void openDetailsOfLastOrder() {
@@ -83,9 +82,7 @@ public class OrderHistoryPageStepDefinitions {
     public void isDisplayedOrderInformationAtBottomPage(String productName, int quantity) {
         OrderHistoryPage orderHistoryPage = new OrderHistoryPage(driver);
         assertTrue(orderHistoryPage.showOrderDetails(orderReference).isDisplayedDetailsBlock());
-
         List<String> productsFromOldOrder = orderHistoryPage.getProductsNameFromOldOrder();
-        listThreadLocal.set(productsFromOldOrder);
 
         assertTrue(productsFromOldOrder.stream().anyMatch(name -> name.contains(productName)));
         assertEquals(quantity, orderHistoryPage.getProductsQuantityFromOldOrder());
@@ -101,7 +98,6 @@ public class OrderHistoryPageStepDefinitions {
     public void pressReorderButtonInBlockWithListOfOrders() {
         OrderHistoryPage orderHistoryPage = new OrderHistoryPage(driver)
                 .showOrderDetails(orderReference);
-        listThreadLocal.set(orderHistoryPage.getProductsNameFromOldOrder());
         orderHistoryPage.reorderOldOrderByButtonFromOrderList();
     }
 }

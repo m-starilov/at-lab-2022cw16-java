@@ -36,58 +36,58 @@ public class CommonStepDefinitions {
         boolean isTrue = false;
         switch (pageName) {
             case "Authentication":
-                isTrue = new AuthenticationPage(driver).verifyPageTitle();
+                isTrue = new AuthenticationPage(driver).isPageTitleValid();
                 break;
             case "Addresses":
-                isTrue = new OrderAddressPage(driver).verifyPageTitle();
+                isTrue = new OrderAddressPage(driver).isPageTitleValid();
                 break;
             case "Shipping":
-                isTrue = new OrderShippingPage(driver).verifyPageTitle();
+                isTrue = new OrderShippingPage(driver).isPageTitleValid();
                 break;
             case "Comparison":
-                isTrue = new ComparisonPage(driver).verifyPageTitle();
+                isTrue = new ComparisonPage(driver).isPageTitleValid();
                 break;
             case "ContactUs":
-                isTrue = new ContactUsPage(driver).verifyPageTitle();
+                isTrue = new ContactUsPage(driver).isPageTitleValid();
                 break;
             case "CreateAnAccount":
-                isTrue = new CreateAnAccountPage(driver).verifyPageTitle();
+                isTrue = new CreateAnAccountPage(driver).isPageTitleValid();
                 break;
             case "Evening Dresses":
-                isTrue = new EveningDressesCatalogPage(driver).verifyPageTitle();
+                isTrue = new EveningDressesCatalogPage(driver).isPageTitleValid();
                 break;
             case "My Account":
-                isTrue = new MyAccountPage(driver).verifyPageTitle();
+                isTrue = new MyAccountPage(driver).isPageTitleValid();
                 break;
             case "Home page":
-                isTrue = new MyStoreHomepage(driver).verifyPageTitle();
+                isTrue = new MyStoreHomepage(driver).isPageTitleValid();
                 break;
             case "Bank wire payment":
-                isTrue = new OrderBankWirePaymentPage(driver).verifyPageTitle();
+                isTrue = new OrderBankWirePaymentPage(driver).isPageTitleValid();
                 break;
             case "Confirmation page":
-                isTrue = new OrderConfirmationPage(driver).verifyPageTitle();
+                isTrue = new OrderConfirmationPage(driver).isPageTitleValid();
                 break;
             case "Order History":
-                isTrue = new OrderHistoryPage(driver).verifyPageTitle();
+                isTrue = new OrderHistoryPage(driver).isPageTitleValid();
                 break;
             case "Order Payment":
-                isTrue = new OrderPaymentPage(driver).verifyPageTitle();
+                isTrue = new OrderPaymentPage(driver).isPageTitleValid();
                 break;
             case "Shopping Cart":
-                isTrue = new OrderSummaryPage(driver).verifyPageTitle();
+                isTrue = new OrderSummaryPage(driver).isPageTitleValid();
                 break;
             case "Summer Dresses":
-                isTrue = new SummerDressesCatalogPage(driver).verifyPageTitle();
+                isTrue = new SummerDressesCatalogPage(driver).isPageTitleValid();
                 break;
             case "T-Shirt":
-                isTrue = new TShirtsCatalogPage(driver).verifyPageTitle();
+                isTrue = new TShirtsCatalogPage(driver).isPageTitleValid();
                 break;
             case "Wishlist":
-                isTrue = new WishlistPage(driver).verifyPageTitle();
+                isTrue = new WishlistPage(driver).isPageTitleValid();
                 break;
             case "Women":
-                isTrue = new WomenCatalogPage(driver).verifyPageTitle();
+                isTrue = new WomenCatalogPage(driver).isPageTitleValid();
         }
         return isTrue;
     }

@@ -17,7 +17,7 @@ public class OrderPaymentPage extends AbstractOrderPage {
     }
 
     @Override
-    public boolean verifyPageTitle() {
+    public boolean isPageTitleValid() {
         return summary.getText().equals(PAGE_TITLE);
     }
 

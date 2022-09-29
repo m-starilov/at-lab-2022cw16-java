@@ -32,7 +32,7 @@ public class WishlistEditTest extends AbstractBaseTest {
     public void userOpenHomepage() {
         MyStoreHomepage myStoreHomepage = new MyStoreHomepage(driver);
         myStoreHomepage.openPage();
-        assertTrue(myStoreHomepage.verifyPageTitle());
+        assertTrue(myStoreHomepage.isPageTitleValid());
     }
 
     @Order(2)
@@ -45,13 +45,13 @@ public class WishlistEditTest extends AbstractBaseTest {
                 .inputEmail(user.getUsername())
                 .inputPassword(user.getPassword())
                 .proceedToMyAccountPage();
-        assertTrue(myAccountPage.verifyPageTitle());
+        assertTrue(myAccountPage.isPageTitleValid());
     }
 
     @Order(3)
     @Test
     public void userProceedToHomepage() {
-        assertTrue(new MyAccountPage(driver).proceedToHomepage().verifyPageTitle());
+        assertTrue(new MyAccountPage(driver).proceedToHomepage().isPageTitleValid());
     }
 
     @Order(4)
@@ -59,7 +59,7 @@ public class WishlistEditTest extends AbstractBaseTest {
     public void userProceedToSummerDressCatalog() {
         assertTrue(new MyStoreHomepage(driver)
                 .openSummerDressesCatalog()
-                .verifyPageTitle());
+                .isPageTitleValid());
     }
 
     @Order(5)
@@ -125,7 +125,7 @@ public class WishlistEditTest extends AbstractBaseTest {
     public void userProceedToTShirtsCatalog() {
         assertTrue(new WishlistPage(driver)
                 .proceedToTShirtsCatalogPage()
-                .verifyPageTitle());
+                .isPageTitleValid());
     }
 
     @Order(11)
@@ -145,7 +145,7 @@ public class WishlistEditTest extends AbstractBaseTest {
     public void userProceedToEveningDressesCatalog() {
         assertTrue(new WomenCatalogPage(driver)
                 .proceedToEveningDressesPage()
-                .verifyPageTitle());
+                .isPageTitleValid());
     }
 
     @Order(13)

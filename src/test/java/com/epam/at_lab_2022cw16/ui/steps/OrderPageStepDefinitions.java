@@ -25,6 +25,7 @@ public class OrderPageStepDefinitions {
     private final WebDriver driver = EnvironmentUtils.getDriver();
     private final List<String> bankAccountInformation = Arrays.asList("Pradeep Macharla", "xyz", "RTP");
     static ThreadLocal<String> orderReferenceThreadLocal = new ThreadLocal<>();
+    private final static String oldOrderProductName = "Faded Short Sleeve T-shirts";
 
     @Then("I see {string} in cart")
     public void checkNumberOfItemsInCart(String numberOfItems) {
@@ -104,9 +105,8 @@ public class OrderPageStepDefinitions {
     @And("The {int} reordered item is in the cart")
     public void isReorderedItemsInTheCart(int quantity) {
         OrderSummaryPage orderSummaryPage = new OrderSummaryPage(driver);
-        List<String> itemsFromOldOrder = OrderHistoryPageStepDefinitions.listThreadLocal.get();
         List<String> itemsFromCurrentOrder = orderSummaryPage.getAddedProductNames();
-        assertThat(itemsFromOldOrder).containsAll(itemsFromCurrentOrder);
+        assertThat(oldOrderProductName).contains(itemsFromCurrentOrder.get(0));
         assertEquals(quantity, orderSummaryPage.getSummaryProductsQuantityAsInt());
     }
 
@@ -114,7 +114,7 @@ public class OrderPageStepDefinitions {
     @And("Previews items is deleted")
     public void isDeletedPreviewsItems() {
         assertThat(new OrderSummaryPage(driver).getAddedProductNames().size())
-                .isEqualTo(OrderHistoryPageStepDefinitions.listThreadLocal.get().size());
+                .isEqualTo(1);
     }
 
     @When("I return to Order history page")

@@ -29,14 +29,14 @@ public class ShoppingCartSignOutTest extends AbstractBaseTest {
     @Order(1)
     public void openHomePageTest() {
         MyStoreHomepage homePage = new MyStoreHomepage(driver).openPage();
-        assertThat(homePage.verifyPageTitle()).isTrue();
+        assertThat(homePage.isPageTitleValid()).isTrue();
     }
 
     @Test
     @Order(2)
     public void openAuthenticationPageTest() {
         AuthenticationPage authPage = new MyStoreHomepage(driver).clickSignInButton();
-        assertThat(authPage.verifyPageTitle()).isTrue();
+        assertThat(authPage.isPageTitleValid()).isTrue();
         assertThat(authPage.isCreateAccountFormVisible()).isTrue();
         assertThat(authPage.isLoginFormVisible()).isTrue();
     }
@@ -87,7 +87,7 @@ public class ShoppingCartSignOutTest extends AbstractBaseTest {
         authPage.inputEmail(validUser.getUsername());
         authPage.inputPassword(validUser.getPassword());
         MyAccountPage myAccountPage = authPage.proceedToMyAccountPage();
-        assertThat(myAccountPage.verifyPageTitle()).isTrue();
+        assertThat(myAccountPage.isPageTitleValid()).isTrue();
     }
 
     @Test
@@ -103,7 +103,7 @@ public class ShoppingCartSignOutTest extends AbstractBaseTest {
     public void openTheCartTest() {
         WomenCatalogPage womenCatalogPage = new WomenCatalogPage(driver);
         OrderSummaryPage orderSummaryPage = womenCatalogPage.proceedToCheckout();
-        assertThat(orderSummaryPage.verifyPageTitle()).isTrue();
+        assertThat(orderSummaryPage.isPageTitleValid()).isTrue();
         assertThat(orderSummaryPage.isProductVisible()).isTrue();
     }
 
@@ -125,7 +125,7 @@ public class ShoppingCartSignOutTest extends AbstractBaseTest {
         authPage.inputEmail(validUser.getUsername());
         authPage.inputPassword(validUser.getPassword());
         MyAccountPage myAccountPage = authPage.proceedToMyAccountPage();
-        assertThat(myAccountPage.verifyPageTitle()).isTrue();
+        assertThat(myAccountPage.isPageTitleValid()).isTrue();
     }
 
     @Test
