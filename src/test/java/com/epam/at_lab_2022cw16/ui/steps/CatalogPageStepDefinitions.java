@@ -28,13 +28,6 @@ public class CatalogPageStepDefinitions {
 
     private final WebDriver driver = EnvironmentUtils.getDriver();
 
-    private WomenCatalogPage catalog;
-
-    @When("the user opens WomenCatalogPage")
-    public void openCatalog() {
-        catalog = new WomenCatalogPage(driver);
-        catalog.openPage();
-    }
 
     @When("I open WomenCatalogPage")
     public void openCatalogPage() {
@@ -43,28 +36,28 @@ public class CatalogPageStepDefinitions {
 
     @When("the user click on dropdown list Sort by and select sort {string}")
     public void sortCatalogByParam(String param) {
-        catalog.sortByType(param);
+        new WomenCatalogPage(driver).sortByType(param);
     }
 
     @Then("all products are displayed on the page according sort {string}")
     public void isDisplaySortedProductList(String param) {
-        Assertions.assertTrue(sortByParam(param, catalog));
+        Assertions.assertTrue(sortByParam(param, new WomenCatalogPage(driver)));
     }
 
     @When("the user apply {string} filter")
     public void applyFilter(String colorFilter) {
-        catalog.filterByColor(Color.valueOf(colorFilter).getColorHex());
+        new WomenCatalogPage(driver).filterByColor(Color.valueOf(colorFilter).getColorHex());
     }
 
     @Then("applied {string} filter marked in the filter block by {string} red color.")
     public void isChangedBorderColor(String filterColor, String borderColor) {
-        String actualColor = catalog.getBorderColorFilterByColor(Color.valueOf(filterColor).getColorHex());
+        String actualColor = new WomenCatalogPage(driver).getBorderColorFilterByColor(Color.valueOf(filterColor).getColorHex());
         Assertions.assertEquals(Color.valueOf(borderColor).getColorRGB(), actualColor);
     }
 
     @Then("all products filtered by {string} color")
     public void isFilteredByColor(String colorFilter) {
-        List<List<String>> productsColors = catalog.getItemsInCatalog().stream().map(Product::getProductColor).collect(Collectors.toList());
+        List<List<String>> productsColors = new WomenCatalogPage(driver).getItemsInCatalog().stream().map(Product::getProductColor).collect(Collectors.toList());
         Assertions.assertTrue(productsColors.stream().allMatch(colorList -> {
             boolean isContained = false;
             for (String color : colorList) {
@@ -79,40 +72,40 @@ public class CatalogPageStepDefinitions {
 
     @Then("the breadcrumbs on the filter page contains the name of the applied {string} filter.")
     public void isContainedTheNameOfTheAppliedFilterInBreadcrumbs(String filterName) {
-        List<String> breadCrumbsLevels = Arrays.asList(catalog.getBreadCrumbs());
+        List<String> breadCrumbsLevels = Arrays.asList(new WomenCatalogPage(driver).getBreadCrumbs());
         String nameFilter = Color.valueOf(filterName).name();
         Assertions.assertTrue(breadCrumbsLevels.stream().anyMatch(p -> p.contains(nameFilter)));
     }
 
     @When("the user apply another one price filter")
     public void applyAnotherOnePriceFilter() {
-        catalog.filterByPrice();
+        new WomenCatalogPage(driver).filterByPrice();
     }
 
     @Then("the page displays products that match the price filter")
     public void shouldDisplayProductsThatMatchThePriceFilter() {
-        List<Double> minMaxPrice = catalog.getMinMaxPrice();
-        List<Double> productsPrice = catalog.getItemsInCatalog().stream().map(Product::getProductPrice).collect(Collectors.toList());
+        List<Double> minMaxPrice = new WomenCatalogPage(driver).getMinMaxPrice();
+        List<Double> productsPrice = new WomenCatalogPage(driver).getItemsInCatalog().stream().map(Product::getProductPrice).collect(Collectors.toList());
         Assertions.assertEquals(productsPrice.size(), (productsPrice.stream().filter(p -> p > minMaxPrice.get(0) && p < minMaxPrice.get(1)).count()));
     }
 
     @And("filters type {string}, {string} and filters name are displayed in the Enabled filters: on the left side of the page.")
     public void shouldDisplayFiltersTypeAndFiltersName(String price, String color) {
         List<String> selectedFilters = new ArrayList<>();
-        selectedFilters.add(price + (catalog.getPriceFilterRange().trim()));
+        selectedFilters.add(price + (new WomenCatalogPage(driver).getPriceFilterRange().trim()));
         selectedFilters.add(color);
-        List<String> filterNamesFromBlock = catalog.findAppliedFilters();
+        List<String> filterNamesFromBlock = new WomenCatalogPage(driver).findAppliedFilters();
         Assertions.assertTrue(selectedFilters.size() == filterNamesFromBlock.size() && selectedFilters.containsAll(filterNamesFromBlock));
     }
 
     @When("the user remove all filters")
     public void removeAllFilters() {
-        catalog.removeAllFilters().removePriceFilter();
+        new WomenCatalogPage(driver).removeAllFilters().removePriceFilter();
     }
 
     @Then("the page displays products sorted by the condition from first step {string}.")
     public void displayProductsSortedByTheConditionFromFirstStep(String param) {
-        Assertions.assertTrue(sortByParam(param, catalog));
+        Assertions.assertTrue(sortByParam(param, new WomenCatalogPage(driver)));
     }
 
     @When("I add to Compare product with id {int}")
