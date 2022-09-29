@@ -18,20 +18,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 @ExtendWith(TestListener.class)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class NewUserRegistrationTests extends AbstractBaseTest {
-    private final String invalidEmail = "kfhvifdjhkf";
-    private static String validEmail;
-    private final String expectedNumberOfErrorsAlertMessage = "There are 8 errors";
-    private final String invalidLastName = "lastname is invalid.";
-    private final String invalidFirstName = "firstname is invalid.";
-    private final String invalidMobile = "phone_mobile is invalid.";
-    private final String invalidZip = "The Zip/Postal code you've entered is invalid. It must follow this format: 00000";
-    private final String hexColor = "#f13340";
 
     @Test
     @Order(1)
     public void createAccountWithInvalidEmail() {
         NewUserRegisterPage newUserRegistrationTests = new NewUserRegisterPage(EnvironmentUtils.getDriver());
-        newUserRegistrationTests.openPage().fillingEmailForm(invalidEmail);
+        newUserRegistrationTests.openPage().fillingEmailForm("kfhvifdjhkf");
         assertThat(newUserRegistrationTests.isErrorMessageVisible()).isTrue();
     }
 
@@ -40,8 +32,7 @@ public class NewUserRegistrationTests extends AbstractBaseTest {
     public void createAccountWithValidEmail() {
         NewUserRegisterPage newUserRegistrationTests = new NewUserRegisterPage(EnvironmentUtils.getDriver());
         CreateAnAccountPage createAnAccountPage = new CreateAnAccountPage(EnvironmentUtils.getDriver());
-        validEmail = generateRandomEmail();
-        newUserRegistrationTests.fillingEmailForm(validEmail);
+        newUserRegistrationTests.fillingEmailForm(generateRandomEmail());
         assertThat(createAnAccountPage.isCreateAccountHeaderVisible()).isTrue();
     }
 
@@ -50,7 +41,7 @@ public class NewUserRegistrationTests extends AbstractBaseTest {
     public void registerWithEmptyFields() {
         CreateAnAccountPage createAnAccountPage = new CreateAnAccountPage(EnvironmentUtils.getDriver());
         createAnAccountPage.clickRegisterButton();
-        assertThat(createAnAccountPage.registerErrorMessageText()).isEqualTo(expectedNumberOfErrorsAlertMessage);
+        assertThat(createAnAccountPage.registerErrorMessageText()).isEqualTo("There are 8 errors");
     }
 
     @Test
@@ -70,13 +61,13 @@ public class NewUserRegistrationTests extends AbstractBaseTest {
         invalidUser.setMobilePhone("er4q2");
 
         createAnAccountPage.fillingRegisterForm(invalidUser);
-        assertThat(createAnAccountPage.getBorderColor()).isEqualTo(hexColor);
+        assertThat(createAnAccountPage.getBorderColor()).isEqualTo("#f13340");
         createAnAccountPage.clickRegisterButton();
         assertThat(createAnAccountPage.isAlertMessageVisible()).isTrue();
-        assertThat(createAnAccountPage.invalidLastNameText()).isEqualTo(invalidLastName);
-        assertThat(createAnAccountPage.invalidFirstNameText()).isEqualTo(invalidFirstName);
-        assertThat(createAnAccountPage.invalidMobileText()).isEqualTo(invalidMobile);
-        assertThat(createAnAccountPage.invalidZipText()).isEqualTo(invalidZip);
+        assertThat(createAnAccountPage.invalidLastNameText()).isEqualTo("lastname is invalid.");
+        assertThat(createAnAccountPage.invalidFirstNameText()).isEqualTo("firstname is invalid.");
+        assertThat(createAnAccountPage.invalidMobileText()).isEqualTo("phone_mobile is invalid.");
+        assertThat(createAnAccountPage.invalidZipText()).isEqualTo("The Zip/Postal code you've entered is invalid. It must follow this format: 00000");
     }
 
     @Test

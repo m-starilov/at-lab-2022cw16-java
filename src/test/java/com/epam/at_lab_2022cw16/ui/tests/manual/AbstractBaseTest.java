@@ -14,7 +14,7 @@ public abstract class AbstractBaseTest {
     @BeforeAll
     public static void openBrowser() {
         WebDriver driver = new WebDriverApp()
-                .getChrome()
+                .systemPropertyBrowser()
                 .defaultConfig()
                 .windowsSize(new Dimension(1920, 1080))
                 .build();

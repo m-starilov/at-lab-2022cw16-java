@@ -12,7 +12,7 @@ public class WebDriverApp {
         return new FirefoxBuilder();
     }
 
-    public Builder systemPropertyBrowser() {
+    public AbstractBuilder systemPropertyBrowser() {
 
         switch (EnvironmentUtils.getBrowserName()) {
             case CHROME: {
