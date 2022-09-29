@@ -1,6 +1,7 @@
 package com.epam.at_lab_2022cw16.ui.tests.manual;
 
 import com.epam.at_lab_2022cw16.ui.constants.Constants.Color;
+import com.epam.at_lab_2022cw16.ui.constants.Constants;
 import com.epam.at_lab_2022cw16.ui.model.User;
 import com.epam.at_lab_2022cw16.ui.page.AuthenticationPage;
 import com.epam.at_lab_2022cw16.ui.page.CreateAnAccountPage;
@@ -13,25 +14,18 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.extension.ExtendWith;
 
+import static com.epam.at_lab_2022cw16.ui.utils.RandomEmailCreator.generateRandomEmail;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(TestListener.class)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class NewUserRegistrationTests extends AbstractBaseTest {
-    private static final String invalidEmail = "kfhvifdjhkf";
-    private static final String validEmail = "priffujautrezau-6876@yopmail.com";
-    private static final String expectedNumberOfErrorsAlertMessage = "There are 8 errors";
-    private static final String invalidLastName = "lastname is invalid.";
-    private static final String invalidFirstName = "firstname is invalid.";
-    private static final String invalidMobile = "phone_mobile is invalid.";
-    private static final String invalidZip = "The Zip/Postal code you've entered is invalid. It must follow this format: 00000";
-
 
     @Test
     @Order(1)
     public void createAccountWithInvalidEmail() {
         AuthenticationPage newUserRegistrationTests = new AuthenticationPage(EnvironmentUtils.getDriver());
-        newUserRegistrationTests.openPage().fillingEmailForm(invalidEmail);
+        newUserRegistrationTests.openPage().fillingEmailForm("kfhvifdjhkf");
         assertThat(newUserRegistrationTests.isErrorMessageVisible()).isTrue();
     }
 
@@ -40,7 +34,7 @@ public class NewUserRegistrationTests extends AbstractBaseTest {
     public void createAccountWithValidEmail() {
         AuthenticationPage newUserRegistrationTests = new AuthenticationPage(EnvironmentUtils.getDriver());
         CreateAnAccountPage createAnAccountPage = new CreateAnAccountPage(EnvironmentUtils.getDriver());
-        newUserRegistrationTests.fillingEmailForm(validEmail);
+        newUserRegistrationTests.fillingEmailForm(generateRandomEmail());
         assertThat(createAnAccountPage.isPageTitleValid()).isTrue();
     }
 
@@ -49,7 +43,7 @@ public class NewUserRegistrationTests extends AbstractBaseTest {
     public void registerWithEmptyFields() {
         CreateAnAccountPage createAnAccountPage = new CreateAnAccountPage(EnvironmentUtils.getDriver());
         createAnAccountPage.clickRegisterButton();
-        assertThat(createAnAccountPage.registerErrorMessageText()).isEqualTo(expectedNumberOfErrorsAlertMessage);
+        assertThat(createAnAccountPage.registerErrorMessageText()).isEqualTo("There are 8 errors");
     }
 
     @Test
@@ -69,13 +63,13 @@ public class NewUserRegistrationTests extends AbstractBaseTest {
         invalidUser.setMobilePhone("er4q2");
 
         createAnAccountPage.fillingRegisterForm(invalidUser);
-        assertThat(createAnAccountPage.getBorderColor()).isEqualTo(Color.RED_ALERT.getColorHex());
+        assertThat(createAnAccountPage.getBorderColor()).isEqualTo(Constants.Color.RED_ALERT.getColorHex());
         createAnAccountPage.clickRegisterButton();
         assertThat(createAnAccountPage.isAlertMessageVisible()).isTrue();
-        assertThat(createAnAccountPage.invalidLastNameText()).isEqualTo(invalidLastName);
-        assertThat(createAnAccountPage.invalidFirstNameText()).isEqualTo(invalidFirstName);
-        assertThat(createAnAccountPage.invalidMobileText()).isEqualTo(invalidMobile);
-        assertThat(createAnAccountPage.invalidZipText()).isEqualTo(invalidZip);
+        assertThat(createAnAccountPage.invalidLastNameText()).isEqualTo("lastname is invalid.");
+        assertThat(createAnAccountPage.invalidFirstNameText()).isEqualTo("firstname is invalid.");
+        assertThat(createAnAccountPage.invalidMobileText()).isEqualTo("phone_mobile is invalid.");
+        assertThat(createAnAccountPage.invalidZipText()).isEqualTo("The Zip/Postal code you've entered is invalid. It must follow this format: 00000");
     }
 
     @Test
