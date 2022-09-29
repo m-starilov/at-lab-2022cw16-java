@@ -1,11 +1,14 @@
 package com.epam.at_lab_2022cw16.ui.tests.manual;
 
-import com.epam.at_lab_2022cw16.ui.constants.AlertMessageTexts;
-import com.epam.at_lab_2022cw16.ui.constants.PageTitles;
+import com.epam.at_lab_2022cw16.ui.constants.Constants.AlertMessageTexts;
 import com.epam.at_lab_2022cw16.ui.page.MyStoreHomepage;
 import com.epam.at_lab_2022cw16.ui.page.pageElements.Alert;
 import com.epam.at_lab_2022cw16.ui.utils.TestListener;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.openqa.selenium.WebDriver;
 
@@ -28,8 +31,7 @@ public class NewsletterSubscriptionTest extends AbstractBaseTest {
     public void openHomepage() {
         MyStoreHomepage myStoreHomepage = new MyStoreHomepage(driver);
         myStoreHomepage.openPage();
-        assertThat(myStoreHomepage.getTitle())
-                .contains(PageTitles.HOME.getPageTitle());
+        assertThat(myStoreHomepage.isPageTitleValid()).isTrue();
     }
 
     @Test
@@ -42,7 +44,7 @@ public class NewsletterSubscriptionTest extends AbstractBaseTest {
         assertThat(alert.isSuccess())
                 .isTrue();
         assertThat(alert.getMessage())
-                .contains(AlertMessageTexts.NEWSLETTER_SUCCESS_MESSAGE.getAlertMessageText());
+                .contains(AlertMessageTexts.NEWSLETTER_SUCCESS_MESSAGE);
     }
 
     @Test
@@ -55,6 +57,6 @@ public class NewsletterSubscriptionTest extends AbstractBaseTest {
         assertThat(alert.isDanger())
                 .isTrue();
         assertThat(alert.getMessage())
-                .contains(AlertMessageTexts.NEWSLETTER_FAILURE_MESSAGE.getAlertMessageText());
+                .contains(AlertMessageTexts.NEWSLETTER_FAILURE_MESSAGE);
     }
 }

@@ -7,6 +7,8 @@ import org.openqa.selenium.support.FindBy;
 
 @Log4j2
 public class OrderBankWirePaymentPage extends AbstractOrderPage {
+    private static final String PAGE_TITLE = "ORDER SUMMARY";
+
 
     @FindBy(xpath = "//div[@id='center_column']//button")
     private WebElement paymentIConfirmMyOrderButton;
@@ -16,6 +18,11 @@ public class OrderBankWirePaymentPage extends AbstractOrderPage {
 
     public OrderBankWirePaymentPage(WebDriver driver) {
         super(driver);
+    }
+
+    @Override
+    public boolean isPageTitleValid() {
+        return summary.getText().equals(PAGE_TITLE);
     }
 
     public OrderConfirmationPage clickPaymentIConfirmMyOrderButton() {

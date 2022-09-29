@@ -1,14 +1,16 @@
 Feature: As user I want to add items to wishlist and edit it
 
   Scenario: Edit wishlist
-    When I open main page
-    Then the website opens and Home page is displayed
-    When I sign in with valid credentials
-    Then My account page opened
+    When I open Home Page
+    Then I see "Home page" page title
+    When I click to Sign in button
+    And I log in with email "mikalay.murashko@gmail.com" and password "12345"
+    Then I see "My Account" page title
     When I click "Home" button
-    Then Home page opened
+    Then I see "Home page" page title
     When I chose "Summer dresses" from site top menu (Women>Dresses>Summer Dresses)
     Then page with Summer dresses opened
+    Then I see "Summer Dresses" page title
     When I change items view to List
     Then items displayed in List view with "Add to cart", "More" buttons and "Add to Wishlist", "Add to compare" links
     When I add item 1 to Wishlist

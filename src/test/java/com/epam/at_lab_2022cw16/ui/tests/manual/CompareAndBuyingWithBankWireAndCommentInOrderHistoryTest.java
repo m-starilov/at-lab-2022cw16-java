@@ -1,10 +1,17 @@
 package com.epam.at_lab_2022cw16.ui.tests.manual;
 
 import com.epam.at_lab_2022cw16.annotations.JiraTicketsLink;
-import com.epam.at_lab_2022cw16.ui.constants.AlertMessageTexts;
-import com.epam.at_lab_2022cw16.ui.constants.PageTitles;
 import com.epam.at_lab_2022cw16.ui.model.User;
-import com.epam.at_lab_2022cw16.ui.page.*;
+import com.epam.at_lab_2022cw16.ui.page.ComparisonPage;
+import com.epam.at_lab_2022cw16.ui.page.MyAccountPage;
+import com.epam.at_lab_2022cw16.ui.page.MyStoreHomepage;
+import com.epam.at_lab_2022cw16.ui.page.OrderAddressPage;
+import com.epam.at_lab_2022cw16.ui.page.OrderBankWirePaymentPage;
+import com.epam.at_lab_2022cw16.ui.page.OrderConfirmationPage;
+import com.epam.at_lab_2022cw16.ui.page.OrderHistoryPage;
+import com.epam.at_lab_2022cw16.ui.page.OrderPaymentPage;
+import com.epam.at_lab_2022cw16.ui.page.OrderShippingPage;
+import com.epam.at_lab_2022cw16.ui.page.OrderSummaryPage;
 import com.epam.at_lab_2022cw16.ui.page.pageElements.Alert;
 import com.epam.at_lab_2022cw16.ui.utils.TestListener;
 import org.junit.jupiter.api.MethodOrderer;
@@ -17,6 +24,8 @@ import org.openqa.selenium.WebDriver;
 import java.util.Arrays;
 import java.util.List;
 
+import static com.epam.at_lab_2022cw16.ui.constants.Constants.AlertMessageTexts.ORDER_HISTORY_PAGE_DANGER_MESSAGE;
+import static com.epam.at_lab_2022cw16.ui.constants.Constants.AlertMessageTexts.ORDER_HISTORY_PAGE_SUCCESS_MESSAGE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @JiraTicketsLink(id = {16299, 16331},
@@ -35,29 +44,30 @@ public class CompareAndBuyingWithBankWireAndCommentInOrderHistoryTest extends Ab
     @Order(1)
     public void openHomepageTest() {
         MyStoreHomepage homepage = new MyStoreHomepage(driver).openPage();
-        assertThat(homepage.getTitle())
-                .isEqualTo(PageTitles.HOME.getPageTitle());
+        assertThat(homepage.isPageTitleValid()).isTrue();
     }
 
     @Test
     @Order(2)
     public void loginTest() {
         User user = new User("mofrekoiquemma-6157@yopmail.com", "12345");
-        AuthenticationPage authenticationPage = new MyStoreHomepage(driver).clickSignInButton();
-        authenticationPage.inputEmail(user.getUsername());
-        authenticationPage.inputPassword(user.getPassword());
-        MyAccountPage myAccountPage = authenticationPage.proceedToMyAccountPage();
-        assertThat(myAccountPage.getTitle())
-                .isEqualTo(PageTitles.MY_ACCOUNT.getPageTitle());
+        MyAccountPage myAccountPage = new MyStoreHomepage(driver)
+                .clickSignInButton()
+                .inputEmail(user.getUsername())
+                .inputPassword(user.getPassword())
+                .proceedToMyAccountPage();
+        assertThat(myAccountPage.isPageTitleValid())
+                .isTrue();
     }
 
     @Test
     @Order(3)
     public void addToComparisonTest() {
-        WomenCatalogPage womenCatalogPage = new MyAccountPage(driver).clickWomenCatalogButton();
-        womenCatalogPage.addToCompareItemByID(5);
-        womenCatalogPage.addToCompareItemByID(6);
-        ComparisonPage comparisonPage = womenCatalogPage.clickCompareButton();
+        ComparisonPage comparisonPage = new MyAccountPage(driver)
+                .clickWomenCatalogButton()
+                .addToCompareItemByID(5)
+                .addToCompareItemByID(6)
+                .clickCompareButton();
         assertThat(comparisonPage.getNumberOfComparableItems())
                 .isEqualTo(2);
     }
@@ -66,10 +76,10 @@ public class CompareAndBuyingWithBankWireAndCommentInOrderHistoryTest extends Ab
     @Order(4)
     public void deleteFromComparisonTest() {
         ComparisonPage comparisonPage = new ComparisonPage(driver);
-        comparisonPage.addToCartItemByID(5);
-        comparisonPage.clickContinueShoppingButton();
-        comparisonPage.deleteItemFromComparisonByID(5);
-        comparisonPage.deleteItemFromComparisonByID(6);
+        comparisonPage.addToCartItemByID(5)
+                .clickContinueShoppingButton()
+                .deleteItemFromComparisonByID(5)
+                .deleteItemFromComparisonByID(6);
         assertThat(comparisonPage.getNumberOfComparableItems())
                 .isEqualTo(0);
     }
@@ -97,30 +107,32 @@ public class CompareAndBuyingWithBankWireAndCommentInOrderHistoryTest extends Ab
     @Test
     @Order(6)
     public void shippingAgreementCheckboxTest() {
-        OrderAddressPage orderAddressPage = new OrderSummaryPage(driver).clickProceedToCheckoutButton();
-        OrderShippingPage orderShippingPage = orderAddressPage.clickProceedToCheckoutButton();
-        orderShippingPage.clickProceedToCheckoutButton();
+        new OrderSummaryPage(driver).clickProceedToCheckoutButtonCommon();
+        new OrderAddressPage(driver).clickProceedToCheckoutButtonCommon();
+        OrderShippingPage orderShippingPage = new OrderShippingPage(driver);
+        orderShippingPage.clickProceedToCheckoutButtonCommon();
         assertThat(orderShippingPage.isFancyboxDisplayed())
                 .isTrue();
 
-        orderShippingPage.closeFancybox();
-        orderShippingPage.changingCheckboxState();
+        orderShippingPage.closeFancybox()
+                .changingCheckboxState();
     }
 
     @Test
     @Order(7)
     public void paymentMethodTitleTest() {
-        OrderPaymentPage orderPaymentPage = new OrderShippingPage(driver).clickProceedToCheckoutButton();
-        assertThat(orderPaymentPage.getNavigationPageTitle())
-                .isEqualTo("Your payment method");
+       new OrderShippingPage(driver).clickProceedToCheckoutButtonCommon();
+        assertThat(new OrderPaymentPage(driver).isPageTitleValid())
+                .isTrue();
     }
 
     @Test
     @Order(8)
     public void bankWirePaymentTitleTest() {
         OrderBankWirePaymentPage orderBankWirePaymentPage = new OrderPaymentPage(driver).chooseBankWirePayment();
-        assertThat(orderBankWirePaymentPage.getNavigationPageTitle())
-                .isEqualTo("Bank-wire payment.");
+        assertThat(orderBankWirePaymentPage.isPageTitleValid())
+                .isTrue();
+
         assertThat(orderBankWirePaymentPage.getTotalPriceInformation())
                 .isEqualTo(TOTAL_ORDER_PRICE);
     }
@@ -131,8 +143,8 @@ public class CompareAndBuyingWithBankWireAndCommentInOrderHistoryTest extends Ab
         List<String> bankAccountInformation = Arrays.asList("Pradeep Macharla", "xyz", "RTP");
         OrderConfirmationPage orderConfirmationPage =
                 new OrderBankWirePaymentPage(driver).clickPaymentIConfirmMyOrderButton();
-        assertThat(orderConfirmationPage.getNavigationPageTitle())
-                .isEqualTo("Order confirmation");
+        assertThat(orderConfirmationPage.isPageTitleValid())
+                .isTrue();
         assertThat(orderConfirmationPage.getConfirmationText())
                 .isEqualTo("Your order on My Store is complete.");
         assertThat(orderConfirmationPage.getAmountInformation())
@@ -145,38 +157,39 @@ public class CompareAndBuyingWithBankWireAndCommentInOrderHistoryTest extends Ab
     @Order(10)
     public void emptyCommentMessageTest() {
         MyAccountPage myAccountPage = new OrderConfirmationPage(driver).openMyAccountPage();
-        assertThat(myAccountPage.getTitle())
-                .isEqualTo(PageTitles.MY_ACCOUNT.getPageTitle());
+        assertThat(myAccountPage.isPageTitleValid())
+                .isTrue();
 
         OrderHistoryPage ordersHistoryPage = myAccountPage.clickOrderHistoryButton();
-        assertThat(ordersHistoryPage.getTitle())
-                .isEqualTo(PageTitles.ORDER_HISTORY.getPageTitle());
+        assertThat(ordersHistoryPage.isPageTitleValid())
+                .isTrue();
 
-        ordersHistoryPage.showLastOrderDetails();
-        ordersHistoryPage.clickSendButton();
-        Alert alert = ordersHistoryPage.getPageElementAlert();
+        Alert alert = ordersHistoryPage
+                .showLastOrderDetails()
+                .clickSendButton()
+                .getPageElementAlert();
         assertThat(alert.isDisplayed())
                 .isTrue();
         assertThat(alert.isDanger())
                 .isTrue();
         assertThat(alert.getMessage())
-                .contains(AlertMessageTexts.ORDER_HISTORY_PAGE_DANGER_MESSAGE.getAlertMessageText());
+                .contains(ORDER_HISTORY_PAGE_DANGER_MESSAGE);
     }
 
     @Test
     @Order(11)
     public void nonEmptyCommentMessageTest() {
-        OrderHistoryPage ordersHistoryPage = new OrderHistoryPage(driver);
-        ordersHistoryPage.selectProductFromDropdownByID("5");
-        ordersHistoryPage.setMessageText(USER_MESSAGE);
-        ordersHistoryPage.clickSendButton();
+        OrderHistoryPage ordersHistoryPage = new OrderHistoryPage(driver)
+                .selectProductFromDropdownByID("5")
+                .setMessageText(USER_MESSAGE)
+                .clickSendButton();
         Alert alert = ordersHistoryPage.getPageElementAlert();
         assertThat(alert.isDisplayed())
                 .isTrue();
         assertThat(alert.isSuccess())
                 .isTrue();
         assertThat(alert.getMessage())
-                .contains(AlertMessageTexts.ORDER_HISTORY_PAGE_SUCCESS_MESSAGE.getAlertMessageText());
+                .contains(ORDER_HISTORY_PAGE_SUCCESS_MESSAGE);
         assertThat(ordersHistoryPage.getMessageText())
                 .isEqualTo(USER_MESSAGE);
     }

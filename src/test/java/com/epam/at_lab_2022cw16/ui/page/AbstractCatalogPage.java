@@ -9,7 +9,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 import java.util.ArrayList;
@@ -61,26 +60,14 @@ public abstract class AbstractCatalogPage extends AbstractBasePage {
     @FindBy(xpath = "//a[@class='fancybox-item fancybox-close']")
     private WebElement closeInfoboxButton;
 
-    @FindBy(xpath = "//ul[@class='product_list row list']/li")
-    private List<WebElement> itemsInCatalog;
-
     @FindBy(xpath = "//a[contains(@class,'checked')]")
     private List<WebElement> checkedAddToWishlistSolidButtons;
-
-    @FindBy(xpath = "//ul[contains(@class,'product_list')]/li")
-    private List<WebElement> productsList;
 
     @FindBy(xpath = "//span[@class='product-name']")
     private WebElement addedToCardProductName;
 
     @FindBy(xpath = "//li[contains(@class,'ajax_block_product')]")
-    private List<WebElement> products;
-
-    @FindBy(xpath = "//a[@title='Add to cart']")
-    private WebElement addToCartButton;
-
-    @FindBy(xpath = "//a[@title='Proceed to checkout']")
-    private WebElement checkoutButton;
+    private List<WebElement> itemsInCatalog;
 
     @FindBy(xpath = "//*[@id='layered_price_range']")
     private WebElement priceFilterValue;
@@ -100,9 +87,6 @@ public abstract class AbstractCatalogPage extends AbstractBasePage {
     @FindBy(xpath = "//form[@class='compare-form']/button[@type='submit']")
     private WebElement compareButton;
 
-    @FindBy(xpath = "//div[@class='product-container']")
-    private List<WebElement> productContainers;
-
     @FindBy(xpath = "//span[@class='available-now']")
     private WebElement available;
 
@@ -118,9 +102,6 @@ public abstract class AbstractCatalogPage extends AbstractBasePage {
     @FindBy(xpath = "//span[contains(.,'Proceed to checkout')]")
     private WebElement proceedToCheckoutButton;
 
-    @FindBy(xpath = "//*[contains(@class,'layer_cart_product')]//h2")
-    private WebElement productAddedMessage;
-
     public AbstractCatalogPage(WebDriver driver) {
         super(driver);
     }
@@ -135,11 +116,11 @@ public abstract class AbstractCatalogPage extends AbstractBasePage {
         return new MyAccountPage(driver);
     }
 
-    public AbstractCatalogPage proceedToEveningDressesPage() {
+    public EveningDressesCatalogPage proceedToEveningDressesPage() {
         driverWait().until(ExpectedConditions.elementToBeClickable(womenDressesBarButton));
         new Actions(driver).moveToElement(womenDressesBarButton).build().perform();
         driverWait().until(ExpectedConditions.elementToBeClickable(eveningDressesButton)).click();
-        return this;
+        return new EveningDressesCatalogPage(driver);
     }
 
     public boolean infoBoxIsDisplayed() {
@@ -155,29 +136,34 @@ public abstract class AbstractCatalogPage extends AbstractBasePage {
     public int getListOfAddToCartButtonsNumberValue() {
         List<WebElement> listOfAllElements = driverWait()
                 .until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath(ADD_TO_CART_BUTTONS)));
-        return listOfAllElements.stream().filter(WebElement::isDisplayed).collect(Collectors.toList()).size();
+        return (int) listOfAllElements.stream().filter(WebElement::isDisplayed).count();
     }
 
     public int getMoreButtonsNumberValue() {
         List<WebElement> listOfAllElements = driverWait()
                 .until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath(MORE_BUTTONS)));
-        return listOfAllElements.stream().filter(WebElement::isDisplayed).collect(Collectors.toList()).size();
+        return (int) listOfAllElements.stream().filter(WebElement::isDisplayed).count();
     }
 
     public int getAddToWishListButtonsNumberValue() {
         List<WebElement> listOfAllElements = driverWait()
                 .until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath(ADD_TO_WISH_LIST_BUTTONS)));
-        return listOfAllElements.stream().filter(WebElement::isDisplayed).collect(Collectors.toList()).size();
+        return (int) listOfAllElements.stream().filter(WebElement::isDisplayed).count();
     }
 
     public int getAddToCompareButtonsValue() {
         List<WebElement> listOfAllElements = driverWait()
                 .until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath(ADD_TO_COMPARE_BUTTONS)));
-        return listOfAllElements.stream().filter(WebElement::isDisplayed).collect(Collectors.toList()).size();
+        return (int) listOfAllElements.stream().filter(WebElement::isDisplayed).count();
     }
 
     public List<ProductBlock> getProductsList() {
-        return productsList.stream().map(ProductBlock::new).collect(Collectors.toList());
+        return itemsInCatalog.stream().map(ProductBlock::new).collect(Collectors.toList());
+    }
+
+    public List<Product> getItemsInCatalog() {
+        waitForPresenceOfElement(LOADED_CATALOG);
+        return itemsInCatalog.stream().map(this::createProduct).collect(Collectors.toList());
     }
 
     public AbstractCatalogPage addToCompareItemByID(int id) {
@@ -191,13 +177,13 @@ public abstract class AbstractCatalogPage extends AbstractBasePage {
     }
 
     public AbstractCatalogPage addProductToCart(String productName) {
-        WebElement product = products.stream()
+        WebElement product = itemsInCatalog.stream()
                 .filter(element -> element.findElement(By.xpath(PRODUCT_NAME)).getText().contains(productName))
                 .findFirst()
                 .orElseThrow();
         new Actions(driver)
-                .moveToElement(product).pause(Duration.ofSeconds(3)).moveToElement(addToCartButton)
-                .click(addToCartButton)
+                .moveToElement(product).pause(Duration.ofSeconds(3)).moveToElement(addToCartButtons.get(0))
+                .click(addToCartButtons.get(0))
                 .build()
                 .perform();
         log.info("Add item in cart");
@@ -206,10 +192,6 @@ public abstract class AbstractCatalogPage extends AbstractBasePage {
 
     public boolean isProductAddedToCart(String productName) {
         return driverWait().until(ExpectedConditions.visibilityOf(addedToCardProductName)).getText().equals(productName);
-    }
-
-    public String getMessageConfirmAdditionItemToCart() {
-        return driverWait().until(ExpectedConditions.visibilityOf(productAddedMessage)).getText();
     }
 
     public ComparisonPage clickCompareButton() {
@@ -227,7 +209,7 @@ public abstract class AbstractCatalogPage extends AbstractBasePage {
 
     public AbstractCatalogPage filterByColor(String color) {
         findElement(By.xpath(format(COLOR_FILTER, color))).click();
-        waitCatalogUpload();
+        waitForPresenceOfElement(LOADED_CATALOG);
         log.info("Filter items by color " + color);
         return this;
     }
@@ -259,26 +241,26 @@ public abstract class AbstractCatalogPage extends AbstractBasePage {
     }
 
     public AbstractCatalogPage removeAllFilters() {
-        waitCatalogUpload();
+        waitForPresenceOfElement(LOADED_CATALOG);
         filterDeleteButton.forEach(WebElement::click);
         log.info("Remove all filters accept by price");
         return this;
     }
 
     public String[] getBreadCrumbs() {
-        waitCatalogUpload();
+        waitForPresenceOfElement(LOADED_CATALOG);
         return breadCrumbs.getText().split(">");
     }
 
     public List<String> findAppliedFilters() {
-        waitCatalogUpload();
+        waitForPresenceOfElement(LOADED_CATALOG);
         List<String> filters = new ArrayList<>();
         appliedFilter.forEach(element -> filters.add(element.getText().toLowerCase(Locale.ROOT)));
         return filters;
     }
 
     public String getBorderColor(WebElement element) {
-        waitCatalogUpload();
+        waitForPresenceOfElement(LOADED_CATALOG);
         return element.getCssValue("border-color");
     }
 
@@ -287,26 +269,11 @@ public abstract class AbstractCatalogPage extends AbstractBasePage {
         return getBorderColor(appliedColorFilter);
     }
 
-    public List<Product> getProducts() {
-        waitCatalogUpload();
-        List<Product> productList = new ArrayList<>();
-        for (WebElement productElement : products) {
-            productList.add(createProduct(productElement));
-        }
-        return productList;
-    }
-
-    private void waitCatalogUpload() {
-        new WebDriverWait(driver, Duration.ofSeconds(WAIT_TIMEOUT_SECONDS)).pollingEvery(Duration.ofSeconds(2))
-                .until(ExpectedConditions.presenceOfElementLocated(By.xpath(LOADED_CATALOG)));
-    }
-
     private double parseDoubleFromString(String string) {
         return Double.parseDouble(string.replace("$", "").trim());
     }
 
     private Product createProduct(WebElement productElement) {
-        waitCatalogUpload();
         Product product = new Product();
         product.setProductName(productElement.findElement(By.xpath(PRODUCT_NAME)).getText());
         product.setProductColor(productElement.findElements(By.xpath(PRODUCT_COLOR_LIST))
@@ -319,7 +286,7 @@ public abstract class AbstractCatalogPage extends AbstractBasePage {
     public void addToCartNumberOfItems(int number) {
         scrollTo(available);
         for (int i = 0; i < number; i++) {
-            moveTo(productContainers.get(i));
+            moveTo(itemsInCatalog.get(i));
             waitForVisibilityOf(addToCartButtons.get(i)).click();
             waitForVisibilityOf(continueShoppingButton).click();
         }
@@ -328,7 +295,7 @@ public abstract class AbstractCatalogPage extends AbstractBasePage {
 
     public void addOneItemToCart() {
         scrollTo(available);
-        moveTo(productContainers.get(0));
+        moveTo(itemsInCatalog.get(0));
         waitForVisibilityOf(addToCartButtons.get(0)).click();
         log.info("Added one item to the cart");
     }
@@ -340,11 +307,6 @@ public abstract class AbstractCatalogPage extends AbstractBasePage {
 
     public OrderSummaryPage proceedToCheckout() {
         waitForElementClickable(proceedToCheckoutButton).click();
-        return new OrderSummaryPage(driver);
-    }
-
-    public OrderSummaryPage clickCheckoutButton() {
-        driverWait().until(ExpectedConditions.visibilityOf(checkoutButton)).click();
         log.info("Go to cart page");
         return new OrderSummaryPage(driver);
     }

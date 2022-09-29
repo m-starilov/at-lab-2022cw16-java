@@ -1,5 +1,6 @@
 package com.epam.at_lab_2022cw16.ui.steps;
 
+import com.epam.at_lab_2022cw16.ui.constants.Constants.Color;
 import com.epam.at_lab_2022cw16.ui.model.User;
 import com.epam.at_lab_2022cw16.ui.page.CreateAnAccountPage;
 import com.epam.at_lab_2022cw16.ui.utils.EnvironmentUtils;
@@ -17,19 +18,18 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class CreateAnAccountPageStepDefinitions {
     private final WebDriver driver = EnvironmentUtils.getDriver();
-    private final String expectedNumberOfErrorsAlertMessage = "There are 8 errors";
-    private final String hexColor = "#f13340";
-    private final String invalidLastName = "lastname is invalid.";
-    private final String invalidFirstName = "firstname is invalid.";
-    private final String invalidMobile = "phone_mobile is invalid.";
-    private final String invalidZip = "The Zip/Postal code you've entered is invalid. It must follow this format: 00000";
+    private static final String expectedNumberOfErrorsAlertMessage = "There are 8 errors";
+    private static final String invalidLastName = "lastname is invalid.";
+    private static final String invalidFirstName = "firstname is invalid.";
+    private static final String invalidMobile = "phone_mobile is invalid.";
+    private static final String invalidZip = "The Zip/Postal code you've entered is invalid. It must follow this format: 00000";
 
 
     CreateAnAccountPage createAnAccountPage = new CreateAnAccountPage(driver);
 
     @Then("the email has been verified. “Create an account” page opened.")
     public void createAnAccountPageOpened() {
-        Assertions.assertThat(createAnAccountPage.isCreateAccountHeaderVisible()).isTrue();
+        Assertions.assertThat(createAnAccountPage.isPageTitleValid()).isTrue();
     }
 
     @When("the user clicks register button with empty fields in registration form")
@@ -62,7 +62,7 @@ public class CreateAnAccountPageStepDefinitions {
 
     @Then("the fields changed the color of the frame to red")
     public void verifyAlertMessagePresence() {
-        assertThat(createAnAccountPage.getBorderColor()).isEqualTo(hexColor);
+        assertThat(createAnAccountPage.getBorderColor()).isEqualTo(Color.RED_ALERT.getColorHex());
     }
 
     @And("А message is displayed at the top of the form with incorrectly filled fields.")

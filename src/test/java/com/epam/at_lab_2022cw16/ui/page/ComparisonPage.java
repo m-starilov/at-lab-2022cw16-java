@@ -12,6 +12,7 @@ import java.util.List;
 @Log4j2
 public class ComparisonPage extends AbstractBasePage {
 
+    private static final String PAGE_TITLE = "PRODUCT COMPARISON";
     private static final String PRODUCTS = "//*[@id='product_comparison']//td[contains(@class, 'ajax_block_product')]";
     private static final String PRODUCT_DELETE_BUTTON = PRODUCTS.concat("/div[@class='remove']/a[@data-id-product" +
             "='%d']");
@@ -26,6 +27,11 @@ public class ComparisonPage extends AbstractBasePage {
 
     public ComparisonPage(WebDriver driver) {
         super(driver);
+    }
+
+    @Override
+    public boolean isPageTitleValid() {
+        return summary.getText().equals(PAGE_TITLE);
     }
 
     public int getNumberOfComparableItems() {

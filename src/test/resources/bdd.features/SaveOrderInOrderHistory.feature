@@ -3,38 +3,39 @@ Feature: As a user I want to get ability to store order info in order history
 
   Scenario: Should store order info in order history
 
-    When I open catalog page
-    Then catalog page is opened. Products are displayed on the page
+    When I open WomenCatalogPage
+    Then I see "Women" page title
 
     When I put one item "Faded Short Sleeve T-shirts" in a cart
     Then alert is displayed with a message "Product successfully added to your shopping cart"
     And item  "Faded Short Sleeve T-shirts" displayed in a cart
 
-    When I press Proceed to checkout button
-    Then Shopping cart page is opened. Title of page is "SHOPPING-CART SUMMARY"
+    When I press Proceed to checkout button to Order Summary Page
+    Then I see "Shopping Cart" page title
     And added product "Faded Short Sleeve T-shirts" displayed on the page
 
-    When I press Proceed to checkout button on Order Summary Page
-    Then Authentication page is opened. Title of page is  "AUTHENTICATION"
+    When I click Proceed to checkout button at Summary page
+    Then Authentication page is opened
 
     When I log in with valid email "e1@gh.com" address and password "22222222"
-    Then Address information page opened. Title of page is "ADDRESSES"
+    Then I see "Addresses" page title
 
-    When I press Proceed to checkout button on the Address page
-    Then Shipping page opened. Title of page is "SHIPPING"
+    When I click Proceed to checkout button at Address page
+    Then I see "Shipping" page title
 
-    When I press Proceed to checkout button on the Shipping page
-    Then Alert is displayed with a message You must agree to the terms of service before continuing.
+    When I click Proceed to checkout button at Shipping page
+    Then I see modal window is displayed
 
-    When I close fancybox
-    And I click checkbox Terms of service and press Proceed to checkout button on the Shipping page
-    Then Your payment method page opened Title of page is "PLEASE CHOOSE YOUR PAYMENT METHOD"
+    When I close modal window
+    And I change checkbox state
+    And I click Proceed to checkout button at Shipping page
+    Then I see "Order Payment" page title
 
-    When I click button Pay by bank wire
-    Then Payment page opened. Title of page is "ORDER SUMMARY"
+    When I choose Pay by bank wire method
+    Then I see "Bank wire payment" page title
 
-    When I press I confirm my order button
-    Then Order confirmation page opened. Title of page is "ORDER CONFIRMATION".
+    When I click I confirm my order button
+    Then I see "Confirmation page" page title
     And A message "Your order on My Store is complete."  displayed
     And order reference is on the page
 
@@ -43,40 +44,41 @@ Feature: As a user I want to get ability to store order info in order history
 
     When I open Home Page
     And I click to My account button
-    Then My account "MY ACCOUNT" page opened
+    Then I see "My Account" page title
 
-    When I press Order history and details button
-    Then Order history "ORDER HISTORY" page opened.
+    When I go to Order History page from My Account Page
+    Then I see "Order History" page title
 
     When I click Details button
     Then order information is displayed at the bottom of the page (expected product name "Faded Short Sleeve T-shirts" and quantity 1)
 
     When I press Reorder button in the block with information about the order
-    Then Shopping cart page is opened. Title of page is "SHOPPING-CART SUMMARY"
+    Then I see "Shopping Cart" page title
     And  The 1 reordered item is in the cart
 
     When I return to Order history page
-    Then Order history "ORDER HISTORY" page opened.
+    Then I see "Order History" page title
 
     When I press Reorder button in block with list of orders
-    Then Shopping cart page is opened. Title of page is "SHOPPING-CART SUMMARY"
+    Then I see "Shopping Cart" page title
     And The 1 reordered item is in the cart
     And Previews items is deleted
 
-    When I press Proceed to checkout button on the Cart page
-    Then Address information page opened. Title of page is "ADDRESSES"
+    When I click Proceed to checkout button at Summary page
+    Then I see "Addresses" page title
 
-    When I press Proceed to checkout button on the Address page
-    Then Shipping page opened. Title of page is "SHIPPING"
+    When I click Proceed to checkout button at Address page
+    Then I see "Shipping" page title
 
-    When I click checkbox Terms of service and press Proceed to checkout button on the Shipping page
-    Then Your payment method page opened Title of page is "PLEASE CHOOSE YOUR PAYMENT METHOD"
+    When I change checkbox state
+    And I click Proceed to checkout button at Shipping page
+    Then I see "Order Payment" page title
 
-    When I click button Pay by bank wire
-    Then Payment page opened. Title of page is "ORDER SUMMARY"
+    When I choose Pay by bank wire method
+    Then I see "Bank wire payment" page title
 
-    When I press I confirm my order button
-    Then Order confirmation page opened. Title of page is "ORDER CONFIRMATION".
+    When I click I confirm my order button
+    Then I see "Confirmation page" page title
     And A message "Your order on My Store is complete."  displayed
 
 

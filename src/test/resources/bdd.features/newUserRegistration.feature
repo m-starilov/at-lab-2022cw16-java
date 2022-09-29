@@ -22,4 +22,4 @@ Feature: As a user I want to get ability to create a new account
     When  the user fills fields with valid data
       | firstName | lastName    | birthMonth | birthDay | birthYear | password | address  | city    | postalCode | mobilePhone |
       | 123-dfd   | Sark-isy@an | 05         | 12       | 2005      | -------- | dfdfdfds | fdfdgfd | 3423       | er4q2       |
-    Then My account page is opened
+    Then I see "My Account" page title

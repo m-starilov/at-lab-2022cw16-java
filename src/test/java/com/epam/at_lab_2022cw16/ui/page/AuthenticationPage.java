@@ -1,20 +1,25 @@
 package com.epam.at_lab_2022cw16.ui.page;
 
 import lombok.extern.log4j.Log4j2;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.time.Duration;
 import java.util.List;
 
-import static com.epam.at_lab_2022cw16.ui.constants.PageTitles.ALREADY_REGISTERED;
-import static com.epam.at_lab_2022cw16.ui.constants.PageTitles.CREATE_AN_ACCOUNT;
+import static com.epam.at_lab_2022cw16.ui.constants.Constants.ALREADY_REGISTERED;
+import static com.epam.at_lab_2022cw16.ui.constants.Constants.CREATE_AN_ACCOUNT;
 
 @Log4j2
 public class AuthenticationPage extends AbstractBasePage {
-
+    private static final String PAGE_TITLE = "AUTHENTICATION";
     private static final String BASE_URL = "http://automationpractice.com/index" +
             ".php?controller=authentication&back=my-account";
+
 
     @FindBy(xpath = "//input[@id='email']")
     private WebElement emailField;
@@ -37,6 +42,18 @@ public class AuthenticationPage extends AbstractBasePage {
     @FindBy(xpath = "//form[@id='login_form']/h3")
     private WebElement loginFormTitle;
 
+    @FindBy(xpath = "//*[@id=\"create_account_error\"]")
+    private WebElement createAccountError;
+
+    @FindBy(xpath = "//*[@id='email_create']")
+    private WebElement newEmailField;
+
+    @FindBy(xpath = "//*[@id='SubmitCreate']")
+    private WebElement createAccountButton;
+
+    @FindBy(xpath = "//*[@id='create_account_error']/ol/li/text()")
+    private WebElement invalid_email_address;
+
     public AuthenticationPage(WebDriver driver) {
         super(driver);
     }
@@ -45,6 +62,11 @@ public class AuthenticationPage extends AbstractBasePage {
     public AuthenticationPage openPage() {
         driver.get(BASE_URL);
         return this;
+    }
+
+    @Override
+    public boolean isPageTitleValid() {
+        return summary.getText().equals(PAGE_TITLE);
     }
 
     public AuthenticationPage inputEmail(String email) {
@@ -69,17 +91,30 @@ public class AuthenticationPage extends AbstractBasePage {
 
     public boolean isCreateAccountFormVisible() {
         return waitForVisibilityOf(createAccountForm.get(0)).isDisplayed()
-                && createAccountFormTitle.getText().equals(CREATE_AN_ACCOUNT.getPageTitle());
+                && createAccountFormTitle.getText().equals(CREATE_AN_ACCOUNT);
     }
 
     public boolean isLoginFormVisible() {
         return waitForVisibilityOf(loginForm.get(0)).isDisplayed()
-                && loginFormTitle.getText().equals(ALREADY_REGISTERED.getPageTitle());
+                && loginFormTitle.getText().equals(ALREADY_REGISTERED);
     }
 
     public OrderAddressPage proceedToOrderAddressPage() {
         signInButton.click();
         log.info("Sign In button is pressed");
         return new OrderAddressPage(driver);
+    }
+
+    public void fillingEmailForm(String email) {
+        newEmailField.clear();
+        newEmailField.sendKeys(email);
+        createAccountButton.click();
+        new WebDriverWait(driver, Duration.ofSeconds(WAIT_TIMEOUT_SECONDS))
+                .until(ExpectedConditions
+                        .visibilityOfElementLocated(By.xpath("//*[@id='create_account_error'] | //*[@id='submitAccount']")));
+    }
+
+    public boolean isErrorMessageVisible() {
+        return isDisplayed(createAccountError);
     }
 }

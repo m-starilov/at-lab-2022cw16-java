@@ -11,7 +11,6 @@ public class ProductPage extends AbstractBasePage {
 
     public ProductPage(WebDriver driver) {
         super(driver);
-
     }
 
     public String getProductTitle() {

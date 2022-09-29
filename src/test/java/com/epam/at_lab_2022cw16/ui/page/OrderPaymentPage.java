@@ -7,12 +7,18 @@ import org.openqa.selenium.support.FindBy;
 
 @Log4j2
 public class OrderPaymentPage extends AbstractOrderPage {
+    private static final String PAGE_TITLE = "PLEASE CHOOSE YOUR PAYMENT METHOD";
 
     @FindBy(xpath = "//a[@title='Pay by bank wire']")
     private WebElement payByBankWireButton;
 
     public OrderPaymentPage(WebDriver driver) {
         super(driver);
+    }
+
+    @Override
+    public boolean isPageTitleValid() {
+        return summary.getText().equals(PAGE_TITLE);
     }
 
     public OrderBankWirePaymentPage chooseBankWirePayment() {

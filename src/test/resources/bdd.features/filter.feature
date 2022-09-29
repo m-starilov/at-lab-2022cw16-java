@@ -3,8 +3,8 @@
   Feature: As a user I want to get ability to sort and filter products in the catalog
 
   Scenario: Should be able sort and filter products
-    Given the user opens WomenCatalogPage
-    Then the WomenCatalogPage opened
+    Given I open WomenCatalogPage
+    Then I see "Women" page title
 
     When the user click on dropdown list Sort by and select sort "price:desc"
     Then all products are displayed on the page according sort "price:desc"

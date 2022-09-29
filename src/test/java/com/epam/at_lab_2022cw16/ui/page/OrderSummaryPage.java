@@ -5,16 +5,13 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedCondition;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Log4j2
 public class OrderSummaryPage extends AbstractOrderPage {
-
-    @FindBy(xpath = "//div[@id='center_column']//a[@title='Proceed to checkout']")
-    private WebElement proceedToCheckoutButton;
+    private static final String PAGE_TITLE = "SHOPPING-CART SUMMARY";
 
     @FindBy(xpath = "//span[@id='summary_products_quantity']")
     private WebElement summaryProductsQuantity;
@@ -38,10 +35,9 @@ public class OrderSummaryPage extends AbstractOrderPage {
         super(driver);
     }
 
-    public OrderAddressPage clickProceedToCheckoutButton() {
-        proceedToCheckoutButton.click();
-        log.info("Go to Address information");
-        return new OrderAddressPage(driver);
+    @Override
+    public boolean isPageTitleValid() {
+        return getSummary().equals(PAGE_TITLE);
     }
 
     public String getSummaryProductsQuantity() {
@@ -61,11 +57,7 @@ public class OrderSummaryPage extends AbstractOrderPage {
         productQuantityInput.sendKeys(qty);
         log.info("Try to set Product quantity value to \"" + qty + "\"");
         if (qty.matches("[0-9]+")) {
-            driverWait().until(new ExpectedCondition<Boolean>() {
-                public Boolean apply(WebDriver driver) {
-                    return (productQuantityHiddenInput.getAttribute("value").equals(qty));
-                }
-            });
+            driverWait().until((ExpectedCondition<Boolean>) driver -> (productQuantityHiddenInput.getAttribute("value").equals(qty)));
         }
         return this;
     }
@@ -76,11 +68,6 @@ public class OrderSummaryPage extends AbstractOrderPage {
 
     public boolean isProductVisible() {
         return waitForVisibilityOf(productInTable).isDisplayed();
-    }
-
-    public AuthenticationPage clickProceedToCheckoutButtonAsUnauthorizedUser() {
-        driverWait().until(ExpectedConditions.visibilityOf(proceedToCheckoutButton)).click();
-        return new AuthenticationPage(driver);
     }
 
     public List<String> getAddedProductNames() {

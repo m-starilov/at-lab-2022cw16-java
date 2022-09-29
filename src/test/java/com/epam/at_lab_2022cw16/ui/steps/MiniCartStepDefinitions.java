@@ -19,10 +19,10 @@ public class MiniCartStepDefinitions {
         new SummerDressesCatalogPage(driver).openPage();
     }
 
-    @Then("I see {string} catalog page title and list of {int} items")
-    public void checkCatalogCategoryName(String categoryName, int quantity) {
+    @Then("Catalog page was opened and list of {int} items")
+    public void checkCatalogCategoryName(int quantity) {
         SummerDressesCatalogPage summerDressesCatalogPage = new SummerDressesCatalogPage(driver);
-        assertThat(summerDressesCatalogPage.getTitle()).isEqualTo(categoryName);
+        assertThat(summerDressesCatalogPage.isPageTitleValid()).isTrue();
         assertThat(summerDressesCatalogPage.getProductsList().size()).isEqualTo(quantity);
     }
 
@@ -74,11 +74,11 @@ public class MiniCartStepDefinitions {
         new ProductPage(driver).clickCheckOutButtonInMiniCart();
     }
 
-    @Then("Cart page is opened. I see correct {string} title and shopping cart with {string} item and {string} " +
+    @Then("Cart page is opened. I see shopping cart with {string} item and {string} " +
             "summary products quantity")
-    public void checkOrderPageTitleAndQuantity(String title, String quantity, String summary) {
+    public void checkOrderPageTitleAndQuantity(String quantity, String summary) {
         OrderSummaryPage orderSummaryPage = new OrderSummaryPage(driver);
-        assertThat(orderSummaryPage.getTitle()).isEqualTo(title);
+        assertThat(orderSummaryPage.isPageTitleValid()).isTrue();
         assertThat(orderSummaryPage.getProductQuantity()).isEqualTo(quantity);
         assertThat(orderSummaryPage.getSummaryProductsQuantity()).isEqualTo(summary);
     }

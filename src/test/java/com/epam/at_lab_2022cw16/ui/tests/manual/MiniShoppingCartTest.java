@@ -1,7 +1,6 @@
 package com.epam.at_lab_2022cw16.ui.tests.manual;
 
-import com.epam.at_lab_2022cw16.ui.constants.AlertMessageTexts;
-import com.epam.at_lab_2022cw16.ui.constants.PageTitles;
+import com.epam.at_lab_2022cw16.ui.constants.Constants.AlertMessageTexts;
 import com.epam.at_lab_2022cw16.ui.page.OrderSummaryPage;
 import com.epam.at_lab_2022cw16.ui.page.ProductPage;
 import com.epam.at_lab_2022cw16.ui.page.SummerDressesCatalogPage;
@@ -25,8 +24,7 @@ public class MiniShoppingCartTest extends AbstractBaseTest {
     public void openSummerDressesPageTest() {
         SummerDressesCatalogPage summerDressesCatalogPage = new SummerDressesCatalogPage(driver);
         summerDressesCatalogPage.openPage();
-        assertThat(summerDressesCatalogPage.getTitle())
-                .isEqualTo(PageTitles.SUMMER_DRESSES_CATALOG.getPageTitle());
+        assertThat(summerDressesCatalogPage.isPageTitleValid()).isTrue();
         assertThat(summerDressesCatalogPage.getProductsList().size()).isEqualTo(3);
     }
 
@@ -75,7 +73,7 @@ public class MiniShoppingCartTest extends AbstractBaseTest {
     @Order(7)
     public void goToOrderSummaryPageFromMiniCartTest() {
         OrderSummaryPage orderSummaryPage = new OrderSummaryPage(driver).clickCheckOutButtonInMiniCart();
-        assertThat(orderSummaryPage.getTitle()).isEqualTo(PageTitles.ORDER.getPageTitle());
+        assertThat(orderSummaryPage.isPageTitleValid()).isTrue();
         assertThat(orderSummaryPage.getProductQuantity()).isEqualTo("1");
         assertThat(orderSummaryPage.getSummaryProductsQuantity()).isEqualTo("1 Product");
     }
@@ -95,7 +93,7 @@ public class MiniShoppingCartTest extends AbstractBaseTest {
         orderSummaryPage.removeFirstItemFromMiniCart();
         assertThat(orderSummaryPage.isMiniCartEmpty()).isTrue();
         assertThat(orderSummaryPage.getAlertMessage())
-                .isEqualTo(AlertMessageTexts.EMPTY_CART_TEXT.getAlertMessageText());
+                .isEqualTo(AlertMessageTexts.EMPTY_CART_TEXT);
     }
 
 }

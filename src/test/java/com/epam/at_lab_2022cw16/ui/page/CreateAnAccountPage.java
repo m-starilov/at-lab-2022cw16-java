@@ -10,11 +10,14 @@ import org.openqa.selenium.support.FindBy;
 import static java.lang.String.format;
 
 public class CreateAnAccountPage extends AbstractBasePage {
-    private final String MYACCOUNT_HEADER = "//*[@id=\"noSlide\"]/h1";
-    private final String ALLERT_MESSAGE = "//*[@id=\"center_column\"]/div[@class='alert alert-danger']";
-    private final String birthDay = "//*[@id=\"days\"]/option[@value=%s]";
-    private final String birthMonth = "//*[@id=\"months\"]/option[@value=%s]";
-    private final String birthYear = "//*[@id=\"years\"]/option[@value=%s]";
+    private static final String birthDay = "//*[@id=\"days\"]/option[@value=%s]";
+    private static final String birthMonth = "//*[@id=\"months\"]/option[@value=%s]";
+    private static final String birthYear = "//*[@id=\"years\"]/option[@value=%s]";
+    private static final String PAGE_TITLE = "CREATE AN ACCOUNT";
+
+
+    @FindBy (xpath = "//*[@id='center_column']/div[@class='alert alert-danger']")
+    private WebElement alertMessage;
     @FindBy(xpath = "//*[@id=\"submitAccount\"]")
     private WebElement registerButton;
 
@@ -79,8 +82,9 @@ public class CreateAnAccountPage extends AbstractBasePage {
         super(driver);
     }
 
-    public boolean isCreateAccountHeaderVisible() {
-        return isDisplayed(By.xpath(MYACCOUNT_HEADER));
+    @Override
+    public boolean isPageTitleValid() {
+        return summary.getText().equals(PAGE_TITLE);
     }
 
     public String registerErrorMessageText() {
@@ -122,7 +126,7 @@ public class CreateAnAccountPage extends AbstractBasePage {
     }
 
     public boolean isAlertMessageVisible() {
-        return isDisplayed(By.xpath(ALLERT_MESSAGE));
+        return isDisplayed(alertMessage);
     }
 
     public String invalidLastNameText() {

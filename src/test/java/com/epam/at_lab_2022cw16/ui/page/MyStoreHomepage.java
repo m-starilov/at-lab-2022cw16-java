@@ -11,6 +11,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 @Log4j2
 public class MyStoreHomepage extends AbstractBasePage {
     private static final String HOMEPAGE = "http://automationpractice.com/index.php";
+    private static final String PAGE_TITLE = "Automation Practice Website";
+
 
     @FindBy(xpath = "//a[@class='login']")
     private WebElement signInButton;
@@ -41,19 +43,18 @@ public class MyStoreHomepage extends AbstractBasePage {
         return this;
     }
 
+    @Override
+    public boolean isPageTitleValid() {
+        return summary.getText().equals(PAGE_TITLE);
+    }
+
     public AuthenticationPage clickSignInButton() {
         signInButton.click();
         log.info("Go to Authentication Page");
         return new AuthenticationPage(driver);
     }
 
-    public AuthenticationPage pressSignInButton() {
-        signInButton.click();
-        log.info("Press Sign in button");
-        return new AuthenticationPage(driver);
-    }
-
-    public AbstractCatalogPage openSummerDressesCatalog() {
+    public SummerDressesCatalogPage openSummerDressesCatalog() {
         new Actions(driver).moveToElement(womenDressesBarButton).build().perform();
         summerDressesButton.click();
         log.info("Press Summer dresses catalog button");

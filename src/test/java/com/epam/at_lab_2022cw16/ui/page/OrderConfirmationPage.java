@@ -10,6 +10,8 @@ import java.util.List;
 
 @Log4j2
 public class OrderConfirmationPage extends AbstractOrderPage {
+    private static final String PAGE_TITLE = "ORDER CONFIRMATION";
+
 
     @FindBy(xpath = "//div[@class='box']")
     private WebElement confirmationAllText;
@@ -26,11 +28,13 @@ public class OrderConfirmationPage extends AbstractOrderPage {
     @FindBy(xpath = "//div[@class='box']/strong")
     private List<WebElement> bankAccountInformation;
 
-    @FindBy(xpath = "//*[@id='header']//a[contains(text(),'Sign out')]")
-    private WebElement signOutButton;
-
     public OrderConfirmationPage(WebDriver driver) {
         super(driver);
+    }
+
+    @Override
+    public boolean isPageTitleValid() {
+        return summary.getText().equals(PAGE_TITLE);
     }
 
     public String getConfirmationText() {
@@ -64,10 +68,5 @@ public class OrderConfirmationPage extends AbstractOrderPage {
     public OrderHistoryPage clickBackToOrdersButton() {
         backToOrdersButton.click();
         return new OrderHistoryPage(driver);
-    }
-
-    public void clickSignOut() {
-        signOutButton.click();
-        log.info("Sign out");
     }
 }

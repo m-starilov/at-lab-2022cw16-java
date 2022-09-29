@@ -15,6 +15,7 @@ import java.util.stream.Collectors;
 
 @Log4j2
 public class WishlistPage extends AbstractBasePage {
+    private static final String PAGE_TITLE = "MY WISHLISTS";
 
     @FindBy(xpath = "//a[contains(text(), 'View')]")
     private WebElement viewWishlistButton;
@@ -44,6 +45,11 @@ public class WishlistPage extends AbstractBasePage {
         super(driver);
     }
 
+    @Override
+    public boolean isPageTitleValid() {
+        return getSummary().equals(PAGE_TITLE);
+    }
+
     public WishlistPage pressViewWishlistButton() {
         driverWait().until(ExpectedConditions.elementToBeClickable(viewWishlistButton)).click();
         log.info("Press view wishlist button");
@@ -57,7 +63,7 @@ public class WishlistPage extends AbstractBasePage {
         return this;
     }
 
-    public AbstractCatalogPage proceedToTShirtsCatalogPage() {
+    public TShirtsCatalogPage proceedToTShirtsCatalogPage() {
         new Actions(driver).moveToElement(womenDressesBarButton).build().perform();
         tShirtsButton.click();
         log.info("Press T-Shirt catalog button");
