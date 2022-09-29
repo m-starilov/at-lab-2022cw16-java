@@ -1,5 +1,6 @@
 package com.epam.at_lab_2022cw16.ui.tests.manual;
 
+import com.epam.at_lab_2022cw16.annotations.JiraTicketsLink;
 import com.epam.at_lab_2022cw16.ui.constants.Constants.AlertMessageTexts;
 import com.epam.at_lab_2022cw16.ui.page.OrderSummaryPage;
 import com.epam.at_lab_2022cw16.ui.page.ProductPage;
@@ -14,6 +15,9 @@ import org.openqa.selenium.WebDriver;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@JiraTicketsLink(id = 16325,
+        description = "Mini cart test check",
+        url = "https://jira.epam.com/jira/browse/EPMFARMATS-16325")
 @ExtendWith(TestListener.class)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class MiniShoppingCartTest extends AbstractBaseTest {

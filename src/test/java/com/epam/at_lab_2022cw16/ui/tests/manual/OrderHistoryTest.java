@@ -27,8 +27,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @JiraTicketsLink(id = {16318, 16324},
         description = "Check if order saves in order history and check ability to reorder item from order history",
-        url = {"https://jira.epam.com/jira/browse/EPMFARMATS-16318", "https://jira.epam.com/jira/browse/EPMFARMATS-16324"})
-
+        url = {"https://jira.epam.com/jira/browse/EPMFARMATS-16318",
+                "https://jira.epam.com/jira/browse/EPMFARMATS-16324"})
 @ExtendWith(TestListener.class)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class OrderHistoryTest extends AbstractBaseTest {
