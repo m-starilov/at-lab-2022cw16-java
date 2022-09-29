@@ -16,9 +16,9 @@ public class AuthenticationPageStepDefinitions {
 
     @When("I log in with email {string} and password {string}")
     public void login(String email, String password) {
-        User user = new User(email, password);
+        User user = User.create().setEmail(email).setPassword(password).build();
         new AuthenticationPage(driver)
-                .inputEmail(user.getUsername())
+                .inputEmail(user.getEmail())
                 .inputPassword(user.getPassword())
                 .proceedToMyAccountPage();
     }

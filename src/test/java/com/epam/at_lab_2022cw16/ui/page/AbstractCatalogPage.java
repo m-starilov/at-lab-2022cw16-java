@@ -274,13 +274,12 @@ public abstract class AbstractCatalogPage extends AbstractBasePage {
     }
 
     private Product createProduct(WebElement productElement) {
-        Product product = new Product();
-        product.setProductName(productElement.findElement(By.xpath(PRODUCT_NAME)).getText());
-        product.setProductColor(productElement.findElements(By.xpath(PRODUCT_COLOR_LIST))
-                .stream().map(element -> element.getAttribute("style"))
-                .collect(Collectors.toList()));
-        product.setProductPrice(parseDoubleFromString(productElement.findElement(By.xpath(PRODUCT_PRICE)).getText()));
-        return product;
+        return Product.create()
+                .setProductName(productElement.findElement(By.xpath(PRODUCT_NAME)).getText())
+                .setProductPrice(parseDoubleFromString(productElement.findElement(By.xpath(PRODUCT_PRICE)).getText()))
+                .setProductColor(productElement.findElements(By.xpath(PRODUCT_COLOR_LIST))
+                        .stream().map(element -> element.getAttribute("style"))
+                        .collect(Collectors.toList())).build();
     }
 
     public void addToCartNumberOfItems(int number) {

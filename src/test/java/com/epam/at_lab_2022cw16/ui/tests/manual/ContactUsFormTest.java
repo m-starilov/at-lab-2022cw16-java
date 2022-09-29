@@ -104,9 +104,9 @@ public class ContactUsFormTest extends AbstractBaseTest {
     @Test
     @Order(7)
     public void loginTest() {
-        User user = new User("mofrekoiquemma-6157@yopmail.com", "12345");
+        User user = User.create().setEmail("mofrekoiquemma-6157@yopmail.com").setPassword("12345").build();
         MyAccountPage myAccountPage = new MyStoreHomepage(driver).clickSignInButton()
-                .inputEmail(user.getUsername())
+                .inputEmail(user.getEmail())
                 .inputPassword(user.getPassword()).proceedToMyAccountPage();
         assertThat(myAccountPage.isPageTitleValid()).isTrue();
     }

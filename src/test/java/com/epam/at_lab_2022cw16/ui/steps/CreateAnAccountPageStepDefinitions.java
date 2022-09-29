@@ -45,18 +45,18 @@ public class CreateAnAccountPageStepDefinitions {
 
     @When("the user fills fields with invalid data")
     public void fillFieldsWithInvalidData(DataTable dataTable) {
-        User invalidUser = new User();
         List<Map<String, String>> dataMap = dataTable.asMaps();
-        invalidUser.setFirstName(dataMap.get(0).get("firstName"));
-        invalidUser.setLastName(dataMap.get(0).get("lastName"));
-        invalidUser.setBirthMonth(dataMap.get(0).get("birthMonth"));
-        invalidUser.setBirthDay(dataMap.get(0).get("birthDay"));
-        invalidUser.setBirthYear(dataMap.get(0).get("birthYear"));
-        invalidUser.setPassword(dataMap.get(0).get("password"));
-        invalidUser.setAddress(dataMap.get(0).get("address"));
-        invalidUser.setCity(dataMap.get(0).get("city"));
-        invalidUser.setPostalCode(dataMap.get(0).get("postalCode"));
-        invalidUser.setMobilePhone(dataMap.get(0).get("mobilePhone"));
+        User invalidUser = User.create()
+                .setFirstName(dataMap.get(0).get("firstName"))
+                .setLastName(dataMap.get(0).get("lastName"))
+                .setBirthMonth(dataMap.get(0).get("birthMonth"))
+                .setBirthDay(dataMap.get(0).get("birthDay"))
+                .setBirthYear(dataMap.get(0).get("birthYear"))
+                .setPassword(dataMap.get(0).get("password"))
+                .setAddress(dataMap.get(0).get("address"))
+                .setCity(dataMap.get(0).get("city"))
+                .setPostalCode(dataMap.get(0).get("postalCode"))
+                .setMobilePhone(dataMap.get(0).get("mobilePhone")).build();
         createAnAccountPage.fillingRegisterForm(invalidUser);
     }
 
@@ -77,18 +77,18 @@ public class CreateAnAccountPageStepDefinitions {
 
     @When("the user fills fields with valid data")
     public void fillFieldsWithValidData(DataTable dataTable) {
-        User validUser = new User();
         List<Map<String, String>> dataMap = dataTable.asMaps();
-        validUser.setFirstName(dataMap.get(0).get("firstName"));
-        validUser.setLastName(dataMap.get(0).get("lastName"));
-        validUser.setBirthMonth(dataMap.get(0).get("birthMonth"));
-        validUser.setBirthDay(dataMap.get(0).get("birthDay"));
-        validUser.setBirthYear(dataMap.get(0).get("birthYear"));
-        validUser.setPassword(dataMap.get(0).get("password"));
-        validUser.setAddress(dataMap.get(0).get("address"));
-        validUser.setCity(dataMap.get(0).get("city"));
-        validUser.setPostalCode(dataMap.get(0).get("postalCode"));
-        validUser.setMobilePhone(dataMap.get(0).get("mobilePhone"));
+        User validUser = User.create()
+                .setFirstName(dataMap.get(0).get("firstName"))
+                .setLastName(dataMap.get(0).get("lastName"))
+                .setBirthMonth(dataMap.get(0).get("birthMonth"))
+                .setBirthDay(dataMap.get(0).get("birthDay"))
+                .setBirthYear(dataMap.get(0).get("birthYear"))
+                .setPassword(dataMap.get(0).get("password"))
+                .setAddress(dataMap.get(0).get("address"))
+                .setCity(dataMap.get(0).get("city"))
+                .setPostalCode(dataMap.get(0).get("postalCode"))
+                .setMobilePhone(dataMap.get(0).get("mobilePhone")).build();
         createAnAccountPage.fillingRegisterForm(validUser);
         createAnAccountPage.clickRegisterButton();
     }
