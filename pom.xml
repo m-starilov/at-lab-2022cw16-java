@@ -45,11 +45,11 @@
                     <properties>
                         <configurationParameters>
                             cucumber.junit-platform.naming-strategy=long
-                            cucumber.glue=com.epam.at_lab_2022cw16.ui
+                            cucumber.glue=com.epam.atlab2022cw16.ui
                             cucumber.plugin=pretty, html:target/cucumber-reports/CucumberTest.html
                             cucumber.execution.parallel.enabled=true
                             cucumber.execution.parallel.config.strategy=custom
-                            cucumber.execution.parallel.config.custom.class=com.epam.at_lab_2022cw16.strategy.CustomParallelExecutionConfigurationStrategy
+                            cucumber.execution.parallel.config.custom.class=com.epam.atlab2022cw16.ui.strategies.CustomParallelExecutionConfigurationStrategy
                         </configurationParameters>
                     </properties>
                 </configuration>
