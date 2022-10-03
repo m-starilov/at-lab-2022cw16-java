@@ -1,0 +1,4 @@
+{
+  "error": true,
+  "reason": "Value of type 'Float' required for key 'longitude'."
+}
