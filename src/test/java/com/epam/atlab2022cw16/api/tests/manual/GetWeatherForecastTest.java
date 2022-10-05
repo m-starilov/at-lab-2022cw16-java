@@ -20,14 +20,14 @@ import static com.epam.atlab2022cw16.api.utils.JsonUtils.getComparatorForCurrent
 import static com.epam.atlab2022cw16.api.utils.JsonUtils.getComparatorForGenerationTime;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@JiraTicketsLink(id = 16298,
-        description = "Test API endpoint (https://api.open-meteo.com/v1/forecast) with/without required/unrequired " +
-                "parameters using happy path, positive and negative tests",
-        url = "https://jira.epam.com/jira/browse/EPMFARMATS-16298")
 @Tags({
         @Tag("api"),
         @Tag("manual")
 })
+@JiraTicketsLink(id = 16298,
+        description = "Test API endpoint (https://api.open-meteo.com/v1/forecast) with/without required/unrequired " +
+                "parameters using happy path, positive and negative tests",
+        url = "https://jira.epam.com/jira/browse/EPMFARMATS-16298")
 public class GetWeatherForecastTest {
     private RequestSpecification requestSpec;
 

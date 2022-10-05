@@ -8,12 +8,17 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.skyscreamer.jsonassert.RegularExpressionValueMatcher;
 import org.skyscreamer.jsonassert.comparator.CustomComparator;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import static com.epam.atlab2022cw16.api.utils.DataUtils.getISO8601CurrentDate;
 
 public class JsonUtils {
+
+    public static void assertEquals(String expected, String actual) throws JSONException {
+        JSONAssert.assertEquals(expected, actual, JSONCompareMode.NON_EXTENSIBLE);
+    }
+
+    public static void assertEquals(String expected, String actual, CustomComparator customComparator) throws JSONException {
+        JSONAssert.assertEquals(expected, actual, customComparator);
+    }
 
     public static CustomComparator getComparatorForGenerationTime() {
         return createCustomComparator(getGenerationTimerCustomization());
@@ -24,31 +29,44 @@ public class JsonUtils {
     }
 
     public static CustomComparator getComparatorForCurrentWeather() {
-        return createCustomComparator(getCurrentWeatherCustomization());
+        return createCustomComparator(getGenerationTimerCustomization(),
+                getCurrentWeatherTemperatureCustomization(),
+                getCurrentWeatherWindSpeedCustomization(),
+                getCurrentWeatherWindDirectionCustomization(),
+                getCurrentWeatherWeatherCodeCustomization(),
+                getCurrentWeatherTimeCustomization());
     }
 
     public static Customization getGenerationTimerCustomization() {
         return createCustomizationForDouble("generationtime_ms");
     }
 
-    public static Customization[] getCurrentWeatherCustomization() {
-        List<Customization> customizations = new ArrayList<>();
-        customizations.add(createCustomizationForDouble("generationtime_ms"));
-        customizations.add(createCustomizationForDouble("current_weather.temperature"));
-        customizations.add(createCustomizationForDouble("current_weather.windspeed"));
-        customizations.add(createCustomizationForDouble("current_weather.winddirection"));
-        customizations.add(createCustomizationForDouble("current_weather.weathercode"));
-        customizations.add(createCustomization("current_weather.time",
-                getISO8601CurrentDate() + "T[0-9]{2}:[0-9]{2}"));
-        return customizations.toArray(Customization[]::new);
+    public static Customization getCurrentWeatherTemperatureCustomization() {
+        return createCustomizationForDouble("current_weather.temperature");
     }
 
-    public static void assertEquals(String expected, String actual) throws JSONException {
-        JSONAssert.assertEquals(expected, actual, JSONCompareMode.NON_EXTENSIBLE);
+    public static Customization getCurrentWeatherWindSpeedCustomization() {
+        return createCustomizationForDouble("current_weather.windspeed");
     }
 
-    public static void assertEquals(String expected, String actual, CustomComparator customComparator) throws JSONException {
-        JSONAssert.assertEquals(expected, actual, customComparator);
+    public static Customization getCurrentWeatherWindDirectionCustomization() {
+        return createCustomizationForDouble("current_weather.winddirection");
+    }
+
+    public static Customization getCurrentWeatherWeatherCodeCustomization() {
+        return createCustomizationForDouble("current_weather.weathercode");
+    }
+
+    public static Customization getCurrentWeatherTimeCustomization() {
+        return createRegexCustomization("current_weather.time",
+                getISO8601CurrentDate() + "T[0-2][0-9]:00");
+    }
+
+    public static Customization getStarDateIsOutOfRangeErrorCustomization() {
+        return createRegexCustomization("reason",
+                "Parameter 'start_date' is out of allowed range " +
+                        "from 20[0-9][0-9]-[0-1][0-9]-[0-3][0-9] " +
+                        "to 20[0-9][0-9]-[0-1][0-9]-[0-3][0-9]");
     }
 
     public static Customization getArrayDailyTimeSizeCustomization() {
@@ -123,15 +141,23 @@ public class JsonUtils {
         return getArrayCustomizationForDouble("daily.et0_fao_evapotranspiration");
     }
 
+    public static Customization getArrayHourlyTimeSizeCustomization() {
+        return getArrayCustomizationForDateWithTime("hourly.time");
+    }
+
+    public static Customization getArrayDailyTemperature2mSizeCustomization() {
+        return getArrayCustomizationForDouble("hourly.temperature_2m");
+    }
+
     public static Customization getCustomizationForLatitudeOutOfRange() {
-        return createCustomization("reason", "Latitude must be in range of -90 to 90°. Given: [+-]?[0-9]*[.]?[0-9]*.");
+        return createRegexCustomization("reason", "Latitude must be in range of -90 to 90°. Given: [+-]?[0-9]*[.]?[0-9]*.");
     }
 
     private static CustomComparator createCustomComparator(Customization... customizations) {
         return new CustomComparator(JSONCompareMode.NON_EXTENSIBLE, customizations);
     }
 
-    private static Customization createCustomization(String path, String pattern) {
+    private static Customization createRegexCustomization(String path, String pattern) {
         return new Customization(path, new RegularExpressionValueMatcher<>(pattern));
     }
 
@@ -140,7 +166,7 @@ public class JsonUtils {
     }
 
     private static Customization getArrayCustomizationForDouble(String jsonPath) {
-        return  new Customization(jsonPath, (actual1, expected1) -> {
+        return new Customization(jsonPath, (actual1, expected1) -> {
             JSONArray actualValue = (JSONArray) actual1;
             JSONArray expectedValue = (JSONArray) expected1;
             return (actualValue.length() == expectedValue.length()) &&
@@ -149,7 +175,7 @@ public class JsonUtils {
     }
 
     private static Customization getArrayCustomizationForSimpleDate(String jsonPath) {
-        return  new Customization(jsonPath, (actual1, expected1) -> {
+        return new Customization(jsonPath, (actual1, expected1) -> {
             JSONArray actualValue = (JSONArray) actual1;
             JSONArray expectedValue = (JSONArray) expected1;
             return (actualValue.length() == expectedValue.length()) &&
@@ -158,11 +184,12 @@ public class JsonUtils {
     }
 
     private static Customization getArrayCustomizationForDateWithTime(String jsonPath) {
-        return  new Customization(jsonPath, (actual1, expected1) -> {
+        return new Customization(jsonPath, (actual1, expected1) -> {
             JSONArray actualValue = (JSONArray) actual1;
             JSONArray expectedValue = (JSONArray) expected1;
             return (actualValue.length() == expectedValue.length()) &&
                     actualValue.toString().matches("\\[(\"20(21|22)-[0-1][0-9]-[0-3][0-9]T[0-2][0-9]:[0-6][0-9]\",?)+\\]");
         });
     }
+
 }

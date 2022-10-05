@@ -1,0 +1,4 @@
+{
+  "reason": "Cannot initialize IconSurfaceVariable from invalid String value temperature_2m_wrong for key hourly",
+  "error": true
+}
