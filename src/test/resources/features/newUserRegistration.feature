@@ -9,7 +9,7 @@ Feature: As a user I want to get ability to create a new account
     When  the user enters "kfhvifdjhkf" in the “Email address” field and press the “Create an account” button
     Then the email has not been verified. “Invalid email address.” is displayed.
 
-    When the user enters "lellessakale-8336@yopmail.com" in the “Email address” field and press the “Create an account” button
+    When the user enters validEmail in the “Email address” field and press the “Create an account” button
     Then the email has been verified. “Create an account” page opened.
 
     When  the user clicks register button with empty fields in registration form
@@ -22,6 +22,6 @@ Feature: As a user I want to get ability to create a new account
     And А message is displayed at the top of the form with incorrectly filled fields.
 
     When  the user fills fields with valid data
-      | firstName | lastName    | birthMonth | birthDay | birthYear | password | address  | city    | postalCode | mobilePhone |
-      | 123-dfd   | Sark-isy@an | 05         | 12       | 2005      | -------- | dfdfdfds | fdfdgfd | 3423       | er4q2       |
+      | firstName | lastName | birthMonth | birthDay | birthYear | password   | address        | city    | postalCode | mobilePhone |
+      | Josslen   | Bomond   | 10         | 07       | 1999      | 0123456789 | Freedom str,12 | Alabama | 00056      | 012345346   |
     Then I see "My Account" page title
