@@ -65,7 +65,7 @@ public class GetWeatherForecastTest {
 
     @Test
     public void requestRightBorderLatitudeAndLongitude() throws IOException, JSONException {
-        String expected = getStringFromFile("/json/weatherForecast400NoDataForThisLocationResponse.json");
+        String expected = getStringFromFile("/json/400NoDataForThisLocation.json");
         Response response = requestSpec
                 .param("latitude", 90f)
                 .param("longitude", 180f)
@@ -87,7 +87,7 @@ public class GetWeatherForecastTest {
 
     @Test
     public void requestOutOfBorderLatitudeAndLongitude() throws IOException, JSONException {
-        String expected = getStringFromFile("/json/weatherForecast400LatitudeMustBeInRangeResponse.json");
+        String expected = getStringFromFile("/json/400LatitudeMustBeInRange.json");
         Response response = requestSpec
                 .param("latitude", -91f)
                 .param("longitude", -181f)
@@ -98,7 +98,7 @@ public class GetWeatherForecastTest {
 
     @Test
     public void requestInvalidLatitude() throws IOException, JSONException {
-        String expected = getStringFromFile("/json/weatherForecast400FloatRequiredForLatitudeResponse.json");
+        String expected = getStringFromFile("/json/400FloatRequiredForLatitude.json");
         Response response = requestSpec
                 .param("latitude", "41,64")
                 .param("longitude", 41.64f)
@@ -109,7 +109,7 @@ public class GetWeatherForecastTest {
 
     @Test
     public void requestInvalidLongitude() throws IOException, JSONException {
-        String expected = getStringFromFile("/json/weatherForecast400FloatRequiredForLongitudeResponse.json");
+        String expected = getStringFromFile("/json/400FloatRequiredForLongitude.json");
         Response response = requestSpec
                 .param("latitude", 41.64f)
                 .param("longitude", "41,64")
@@ -120,7 +120,7 @@ public class GetWeatherForecastTest {
 
     @Test
     public void requestWithoutParameters() throws IOException, JSONException {
-        String expected = getStringFromFile("/json/weatherForecast400FloatRequiredForLatitudeResponse.json");
+        String expected = getStringFromFile("/json/400FloatRequiredForLatitude.json");
         Response response = requestSpec.get();
         assertEquals(400, response.statusCode());
         JsonUtils.assertEquals(expected, response.body().asString());

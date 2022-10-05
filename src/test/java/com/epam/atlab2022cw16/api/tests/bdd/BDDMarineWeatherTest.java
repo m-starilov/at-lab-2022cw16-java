@@ -55,7 +55,7 @@ public class BDDMarineWeatherTest extends AbstractAPIBaseTest {
 
     @Test
     public void requestWithLeftBorderCoordinatesValues() throws JSONException, IOException {
-        String expectedBody = DataUtils.getStringFromFile("/json/weatherForecast400NoDataForThisLocationResponse.json");
+        String expectedBody = DataUtils.getStringFromFile("/json/400NoDataForThisLocation.json");
         String actualBody = requestSpec
                 .when()
                     .queryParam("latitude", -90f)
@@ -70,7 +70,7 @@ public class BDDMarineWeatherTest extends AbstractAPIBaseTest {
 
     @Test
     public void requestWithOutOfLeftBorderCoordinatesValues() throws JSONException, IOException {
-        String expectedBody = DataUtils.getStringFromFile("/json/weatherForecast400LatitudeMustBeInRangeResponse.json");
+        String expectedBody = DataUtils.getStringFromFile("/json/400LatitudeMustBeInRange.json");
         String actualBody = requestSpec
                 .when()
                     .queryParam("latitude", -91f)
@@ -85,7 +85,7 @@ public class BDDMarineWeatherTest extends AbstractAPIBaseTest {
 
     @Test
     public void requestWithRightBorderCoordinatesValues() throws JSONException, IOException {
-        String expectedBody = DataUtils.getStringFromFile("/json/weatherForecast400NoDataForThisLocationResponse.json");
+        String expectedBody = DataUtils.getStringFromFile("/json/400NoDataForThisLocation.json");
         String actualBody = requestSpec
                 .when()
                     .queryParam("latitude", 90f)
@@ -100,7 +100,7 @@ public class BDDMarineWeatherTest extends AbstractAPIBaseTest {
 
     @Test
     public void requestWithOutOfRightBorderCoordinatesValues() throws JSONException, IOException {
-        String expectedBody = DataUtils.getStringFromFile("/json/weatherForecast400LatitudeMustBeInRangeResponse.json");
+        String expectedBody = DataUtils.getStringFromFile("/json/400LatitudeMustBeInRange.json");
         String actualBody = requestSpec
                 .when()
                     .queryParam("latitude", 91f)
