@@ -8,6 +8,7 @@ import io.cucumber.java.en.When;
 import org.assertj.core.api.Assertions;
 import org.openqa.selenium.WebDriver;
 
+import static com.epam.atlab2022cw16.ui.utils.RandomEmailCreator.generateRandomEmail;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class AuthenticationPageStepDefinitions {
@@ -49,5 +50,10 @@ public class AuthenticationPageStepDefinitions {
     @Then("the email has not been verified. “Invalid email address.” is displayed.")
     public void verifyInvalidEmailAddressErrorPresence() {
         Assertions.assertThat(new AuthenticationPage(driver).isErrorMessageVisible()).isTrue();
+    }
+
+    @When("the user enters validEmail in the “Email address” field and press the “Create an account” button")
+    public void theUserEntersValidEmailInTheEmailAddressFieldAndPressTheCreateAnAccountButton() {
+        new AuthenticationPage(driver).fillingEmailForm(generateRandomEmail());
     }
 }

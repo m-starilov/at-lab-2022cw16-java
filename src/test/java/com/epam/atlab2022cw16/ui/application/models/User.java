@@ -113,8 +113,8 @@ public class User {
             user.setPostalCode(postalCode);
             user.setMobilePhone(mobilePhone);
             user.setBirthDay(birthDay);
-            user.setBirthMonth(birthYear);
-            user.setBirthYear(birthMonth);
+            user.setBirthMonth(birthMonth);
+            user.setBirthYear(birthYear);
             return user;
         }
 
