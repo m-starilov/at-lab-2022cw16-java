@@ -6,10 +6,7 @@ import com.epam.atlab2022cw16.ui.application.constants.Constants.Color;
 import com.epam.atlab2022cw16.ui.application.models.Product;
 import com.epam.atlab2022cw16.ui.application.pages.WomenCatalogPage;
 import com.epam.atlab2022cw16.ui.utils.TestListener;
-import org.junit.jupiter.api.MethodOrderer;
-import org.junit.jupiter.api.Order;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.util.ArrayList;
@@ -26,6 +23,10 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
         url = "https://jira.epam.com/jira/browse/EPMFARMATS-16307")
 @ExtendWith(TestListener.class)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+@Tags({
+        @Tag("ui"),
+        @Tag("manual")
+})
 public class CatalogTest extends AbstractBaseTest {
 
     private static final List<String> selectedFilter = new ArrayList<>();

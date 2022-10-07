@@ -1,5 +1,6 @@
 #JiraTicket: id = 16320,  url = "https://jira.epam.com/jira/browse/EPMFARMATS-16320
-
+@ui
+@bdd
 Feature: As a user I want to get ability to create a new account
 
   Scenario: Registration as new user on the website

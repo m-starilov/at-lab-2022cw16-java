@@ -1,5 +1,6 @@
 #JiraTicket: id = 16346,  url = https://jira.epam.com/jira/browse/EPMFARMATS-16346
-
+@ui
+@bdd
 Feature: Mini cart
 
   Scenario: Check mini cart

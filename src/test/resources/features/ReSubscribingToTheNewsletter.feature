@@ -1,5 +1,6 @@
 #JiraTicket: id = 16365,  url = "https://jira.epam.com/jira/browse/EPMFARMATS-16365
-
+@ui
+@bdd
 Feature: Checking the possibility to subscribe to the newsletter twice
 
   Scenario: Checking the possibility to subscribe to the newsletter twice

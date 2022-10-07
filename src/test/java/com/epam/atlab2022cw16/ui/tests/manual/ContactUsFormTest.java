@@ -9,10 +9,7 @@ import com.epam.atlab2022cw16.ui.application.pages.MyAccountPage;
 import com.epam.atlab2022cw16.ui.application.pages.MyStoreHomepage;
 import com.epam.atlab2022cw16.ui.application.modules.Alert;
 import com.epam.atlab2022cw16.ui.utils.TestListener;
-import org.junit.jupiter.api.MethodOrderer;
-import org.junit.jupiter.api.Order;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.openqa.selenium.WebDriver;
 
@@ -23,6 +20,10 @@ import static org.assertj.core.api.Assertions.assertThat;
         url = "https://jira.epam.com/jira/browse/EPMFARMATS-16323")
 @ExtendWith(TestListener.class)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+@Tags({
+        @Tag("ui"),
+        @Tag("manual")
+})
 public class ContactUsFormTest extends AbstractBaseTest {
 
     private static final String EMAIL_ADDRESS = "mofrekoiquemma-6157@yopmail.com";

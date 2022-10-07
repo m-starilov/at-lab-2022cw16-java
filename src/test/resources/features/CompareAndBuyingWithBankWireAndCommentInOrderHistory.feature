@@ -1,6 +1,7 @@
 #JiraTicket: id = {16336, 16364},  url = {"https://jira.epam.com/jira/browse/EPMFARMATS-16336#",
 # "https://jira.epam.com/jira/browse/EPMFARMATS-16364"})
-
+@ui
+@bdd
 Feature: Compare And Buying With BankWire, Comment In Order History
 
   Scenario: Compare And Buying With BankWire And Comment In Order History
