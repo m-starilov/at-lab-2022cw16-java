@@ -1,5 +1,6 @@
 #JiraTicket: id = 16344,  url = https://jira.epam.com/jira/browse/EPMFARMATS-16344
-
+@ui
+@bdd
 Feature: As user I want to add items to wishlist and edit it
 
   Scenario: Edit wishlist

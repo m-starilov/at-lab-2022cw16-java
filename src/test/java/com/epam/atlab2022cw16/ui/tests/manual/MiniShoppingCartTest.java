@@ -6,10 +6,7 @@ import com.epam.atlab2022cw16.ui.application.pages.OrderSummaryPage;
 import com.epam.atlab2022cw16.ui.application.pages.ProductPage;
 import com.epam.atlab2022cw16.ui.application.pages.SummerDressesCatalogPage;
 import com.epam.atlab2022cw16.ui.utils.TestListener;
-import org.junit.jupiter.api.MethodOrderer;
-import org.junit.jupiter.api.Order;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.openqa.selenium.WebDriver;
 
@@ -20,6 +17,10 @@ import static org.assertj.core.api.Assertions.assertThat;
         url = "https://jira.epam.com/jira/browse/EPMFARMATS-16325")
 @ExtendWith(TestListener.class)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+@Tags({
+        @Tag("ui"),
+        @Tag("manual")
+})
 public class MiniShoppingCartTest extends AbstractBaseTest {
     private final WebDriver driver = getWebDriver();
 
