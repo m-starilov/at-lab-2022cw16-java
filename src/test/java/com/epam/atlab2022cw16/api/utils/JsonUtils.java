@@ -158,7 +158,7 @@ public class JsonUtils {
     }
 
     public static Customization getCustomizationForInvalidInitializationOfVariable() {
-        return createCustomization("reason", "Cannot initialize \\w+ from invalid String value \\w+ for key \\w+");
+        return createRegexCustomization("reason", "Cannot initialize \\w+ from invalid String value \\w+ for key \\w+");
     }
 
     private static CustomComparator createCustomComparator(Customization... customizations) {
