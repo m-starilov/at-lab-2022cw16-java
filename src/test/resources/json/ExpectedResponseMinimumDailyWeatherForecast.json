@@ -1,0 +1,33 @@
+{
+  "latitude": 41.625,
+  "longitude": 41.625,
+  "generationtime_ms": 0.2580881118774414,
+  "utc_offset_seconds": 3600,
+  "timezone": "Europe/London",
+  "timezone_abbreviation": "BST",
+  "elevation": 6.0,
+  "daily_units": {
+    "time": "iso8601",
+    "temperature_2m_max": "°C"
+  },
+  "daily": {
+    "time": [
+      "2022-10-06",
+      "2022-10-07",
+      "2022-10-08",
+      "2022-10-09",
+      "2022-10-10",
+      "2022-10-11",
+      "2022-10-12"
+    ],
+    "temperature_2m_max": [
+      20.0,
+      22.0,
+      22.6,
+      21.9,
+      19.0,
+      18.2,
+      21.2
+    ]
+  }
+}
