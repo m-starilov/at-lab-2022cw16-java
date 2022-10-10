@@ -1,0 +1,4 @@
+{
+  "reason": "Both 'start_date' and 'end_date' must be set in the url",
+  "error": true
+}
