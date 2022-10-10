@@ -19,6 +19,10 @@ public class JsonUtils {
         return createCustomComparator(getGenerationTimerCustomization());
     }
 
+    public static CustomComparator getComparatorForLatitudeOutOfRange() {
+        return createCustomComparator(getCustomizationForLatitudeOutOfRange());
+    }
+
     public static CustomComparator getComparatorForCurrentWeather() {
         return createCustomComparator(getCurrentWeatherCustomization());
     }
@@ -117,6 +121,10 @@ public class JsonUtils {
 
     public static Customization getArrayDailyEt0FaoEvapotranspirationSizeCustomization() {
         return getArrayCustomizationForDouble("daily.et0_fao_evapotranspiration");
+    }
+
+    public static Customization getCustomizationForLatitudeOutOfRange() {
+        return createCustomization("reason", "Latitude must be in range of -90 to 90°. Given: [+-]?[0-9]*[.]?[0-9]*.");
     }
 
     private static CustomComparator createCustomComparator(Customization... customizations) {
