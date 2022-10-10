@@ -1,0 +1,4 @@
+{
+  "error": true,
+  "reason": "Parameter 'past_days' is mutually exclusive with 'start_date' and 'end_date'"
+}
