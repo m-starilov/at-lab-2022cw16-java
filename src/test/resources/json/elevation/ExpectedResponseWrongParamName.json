@@ -1,0 +1,4 @@
+{
+  "error": true,
+  "reason": "Parameter 'latitude' and 'longitude' must have the same amount of elements"
+}
