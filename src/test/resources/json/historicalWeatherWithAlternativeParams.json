@@ -1,0 +1,29 @@
+{
+  "latitude": 52.0,
+  "longitude": 13.0,
+  "generationtime_ms": 0.3110170364379883,
+  "utc_offset_seconds": 3600,
+  "timezone": "Europe/London",
+  "timezone_abbreviation": "BST",
+  "elevation": 76.0,
+  "daily_units": {
+    "time": "unixtime",
+    "temperature_2m_max": "°F",
+    "precipitation_hours": "h",
+    "windspeed_10m_max": "m/s"
+  },
+  "daily": {
+    "time": [
+      1640991600
+    ],
+    "temperature_2m_max": [
+      54.8
+    ],
+    "precipitation_hours": [
+      3.0
+    ],
+    "windspeed_10m_max": [
+      5.39
+    ]
+  }
+}
