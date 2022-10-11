@@ -1,0 +1,4 @@
+{
+  "error": true,
+  "reason": "Cannot initialize Era5DailyWeatherVariable from invalid String value temperature_2m_maximus for key daily"
+}
