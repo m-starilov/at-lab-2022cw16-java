@@ -23,6 +23,10 @@ public class JsonUtils {
         return createCustomComparator(getCustomizationForLatitudeOutOfRange());
     }
 
+    public static CustomComparator getComparatorForInvalidInitializationOfVariable() {
+        return createCustomComparator(getCustomizationForInvalidInitializationOfVariable());
+    }
+
     public static CustomComparator getComparatorForCurrentWeather() {
         return createCustomComparator(getCurrentWeatherCustomization());
     }
@@ -125,6 +129,10 @@ public class JsonUtils {
 
     public static Customization getCustomizationForLatitudeOutOfRange() {
         return createCustomization("reason", "Latitude must be in range of -90 to 90°. Given: [+-]?[0-9]*[.]?[0-9]*.");
+    }
+
+    public static Customization getCustomizationForInvalidInitializationOfVariable() {
+        return createCustomization("reason", "Cannot initialize \\w+ from invalid String value \\w+ for key \\w+");
     }
 
     private static CustomComparator createCustomComparator(Customization... customizations) {
