@@ -1,0 +1,21 @@
+{
+  "latitude": 41.625,
+  "longitude": 41.625,
+  "generationtime_ms": 0.2130270004272461,
+  "utc_offset_seconds": 14400,
+  "timezone": "Asia/Tbilisi",
+  "timezone_abbreviation": "+04",
+  "elevation": 4.0,
+  "daily_units": {
+    "time": "iso8601",
+    "weathercode": "wmo code"
+  },
+  "daily": {
+    "time": [
+      "2022-09-01"
+    ],
+    "weathercode": [
+      45.0
+    ]
+  }
+}

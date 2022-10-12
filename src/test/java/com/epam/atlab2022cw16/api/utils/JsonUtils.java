@@ -199,5 +199,4 @@ public class JsonUtils {
                     actualValue.toString().matches("\\[(\"20(21|22)-[0-1][0-9]-[0-3][0-9]T[0-2][0-9]:[0-6][0-9]\",?)+\\]");
         });
     }
-
 }
