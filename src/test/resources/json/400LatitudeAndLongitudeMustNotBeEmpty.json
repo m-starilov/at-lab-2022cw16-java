@@ -1,0 +1,4 @@
+{
+  "reason": "Parameter 'latitude' and 'longitude' must not be empty",
+  "error": true
+}
