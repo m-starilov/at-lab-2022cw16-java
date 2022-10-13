@@ -7,27 +7,21 @@ import com.epam.atlab2022cw16.ui.application.pages.AuthenticationPage;
 import com.epam.atlab2022cw16.ui.application.pages.CreateAnAccountPage;
 import com.epam.atlab2022cw16.ui.application.pages.MyAccountPage;
 import com.epam.atlab2022cw16.ui.utils.EnvironmentUtils;
-import com.epam.atlab2022cw16.ui.utils.TestListener;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Tags;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
-import org.junit.jupiter.api.extension.ExtendWith;
 
 import static com.epam.atlab2022cw16.ui.utils.RandomEmailCreator.generateRandomEmail;
 import static org.assertj.core.api.Assertions.assertThat;
 
+@Tag("ui")
+@Tag("manual")
 @JiraTicketsLink(id = 16292,
         description = "New user registration test (requested fields only)",
         url = "https://jira.epam.com/jira/browse/EPMFARMATS-16292")
-@ExtendWith(TestListener.class)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-@Tags({
-        @Tag("ui"),
-        @Tag("manual")
-})
 public class NewUserRegistrationTests extends AbstractBaseTest {
 
     @Test

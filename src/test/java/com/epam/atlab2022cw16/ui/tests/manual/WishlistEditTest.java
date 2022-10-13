@@ -9,14 +9,11 @@ import com.epam.atlab2022cw16.ui.application.pages.MyStoreHomepage;
 import com.epam.atlab2022cw16.ui.application.pages.WishlistPage;
 import com.epam.atlab2022cw16.ui.application.pages.WomenCatalogPage;
 import com.epam.atlab2022cw16.ui.application.modules.ProductBlock;
-import com.epam.atlab2022cw16.ui.utils.TestListener;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Tags;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.openqa.selenium.WebDriver;
 
 import java.util.List;
@@ -25,15 +22,12 @@ import static com.epam.atlab2022cw16.ui.application.constants.Constants.AlertMes
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+@Tag("ui")
+@Tag("manual")
 @JiraTicketsLink(id = 16319,
         description = "Edit user's Wishlist test",
         url = "https://jira.epam.com/jira/browse/EPMFARMATS-16319")
-@ExtendWith(TestListener.class)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-@Tags({
-        @Tag("ui"),
-        @Tag("manual")
-})
 public class WishlistEditTest extends AbstractBaseTest {
     private final WebDriver driver = getWebDriver();
 
