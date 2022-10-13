@@ -5,7 +5,13 @@ import com.epam.atlab2022cw16.ui.application.constants.Constants.AlertMessageTex
 import com.epam.atlab2022cw16.ui.application.pages.MyStoreHomepage;
 import com.epam.atlab2022cw16.ui.application.modules.Alert;
 import com.epam.atlab2022cw16.ui.utils.TestListener;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Tags;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.openqa.selenium.WebDriver;
 

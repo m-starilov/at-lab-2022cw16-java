@@ -1,22 +1,19 @@
 package com.epam.atlab2022cw16.api.tests.bdd;
 
-import com.epam.atlab2022cw16.api.utils.DataUtils;
+import com.epam.atlab2022cw16.api.tests.AbstractAPIBaseTest;
 import com.epam.atlab2022cw16.api.utils.JsonUtils;
 import com.epam.atlab2022cw16.ui.annotations.JiraTicketsLink;
 import io.restassured.RestAssured;
-import io.restassured.builder.RequestSpecBuilder;
-import io.restassured.http.ContentType;
-import io.restassured.specification.RequestSpecification;
 import org.json.JSONException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Tags;
 import org.junit.jupiter.api.Test;
-import org.skyscreamer.jsonassert.JSONAssert;
-import org.skyscreamer.jsonassert.JSONCompareMode;
 
 import java.io.IOException;
 
+import static com.epam.atlab2022cw16.api.utils.FileUtils.getStringFromFile;
+import static com.epam.atlab2022cw16.api.utils.JsonUtils.assertEquals;
 
 @Tags({
         @Tag("api"),
@@ -25,21 +22,19 @@ import java.io.IOException;
 @JiraTicketsLink(id = 16360,
         description = "[BDD][API]Geocoding API testing",
         url = "https://jira.epam.com/jira/browse/EPMFARMATS-16360")
-public class GeocodingTests {
-    private RequestSpecification requestSpecification;
+public class GeocodingTests extends AbstractAPIBaseTest {
 
     @BeforeEach
     void createSpec() {
-        requestSpecification = RestAssured.given(new RequestSpecBuilder()
-                .setBaseUri("https://geocoding-api.open-meteo.com/v1/search")
-                .setContentType(ContentType.JSON)
-                .build());
+        baseRequestSpec
+                .baseUri("https://geocoding-api.open-meteo.com")
+                .basePath("v1/search");
     }
 
     @Test
     public void getRequestWithRequiredValidParameters() throws JSONException, IOException {
-        String expected = DataUtils.getStringFromFile("/json/GeocodingAPIWithRequiredParams.json");
-        String actual = requestSpecification
+        String expected = getStringFromFile("/json/16360/GeocodingAPIWithRequiredParams.json");
+        String actual = baseRequestSpec
                 .given()
                     .param("name", "Berlin")
                 .when()
@@ -48,14 +43,13 @@ public class GeocodingTests {
                     .statusCode(200)
                 .extract()
                     .asString();
-        JsonUtils.assertEquals(expected, actual, JsonUtils.getComparatorForGenerationTime());
-
+        assertEquals(expected, actual, JsonUtils.getGenerationTimerCustomization());
     }
 
     @Test
     public void getRequestWithRequiredAndNonRequiredValidParameters() throws JSONException, IOException {
-        String expected = DataUtils.getStringFromFile("/json/GeocodingAPIWithRequiredAndNonRequiredValidParam.json");
-        String actual = requestSpecification
+        String expected = getStringFromFile("/json/16360/GeocodingAPIWithRequiredAndNonRequiredValidParam.json");
+        String actual = baseRequestSpec
                 .given()
                     .param("name", "Kiev")
                     .param("count", 1)
@@ -66,13 +60,13 @@ public class GeocodingTests {
                     .statusCode(200)
                 .extract()
                     .asString();
-        JsonUtils.assertEquals(expected, actual, JsonUtils.getComparatorForGenerationTime());
+        assertEquals(expected, actual, JsonUtils.getGenerationTimerCustomization());
     }
 
     @Test
     public void getRequestWithOnlyNonRequiredParameters() throws JSONException, IOException {
-        String expected = DataUtils.getStringFromFile("/json/GeocodingAPIWithOnlyNonRequiredParams.json");
-        String actual = requestSpecification
+        String expected = getStringFromFile("/json/16360/GeocodingAPIWithOnlyNonRequiredParams.json");
+        String actual = baseRequestSpec
                 .given()
                     .param("count", 1)
                     .param("format", "json")
@@ -82,13 +76,13 @@ public class GeocodingTests {
                     .statusCode(400)
                 .extract()
                     .asString();
-        JsonUtils.assertEquals(expected, actual);
+        assertEquals(expected, actual);
     }
 
     @Test
     public void getRequestWith3CharactersInNameParameter() throws JSONException, IOException {
-        String expected = DataUtils.getStringFromFile("/json/GeocodingAPIWith3CharactersInName.json");
-        String actual = requestSpecification
+        String expected = getStringFromFile("/json/16360/GeocodingAPIWith3CharactersInName.json");
+        String actual = baseRequestSpec
                 .given()
                     .param("name", "Ber")
                 .when()
@@ -97,13 +91,13 @@ public class GeocodingTests {
                     .statusCode(200)
                 .extract()
                     .asString();
-        JsonUtils.assertEquals(expected, actual, JsonUtils.getComparatorForGenerationTime());
+        assertEquals(expected, actual, JsonUtils.getGenerationTimerCustomization());
     }
 
     @Test
     public void getRequestWith2CharactersInNameParameter() throws JSONException, IOException {
-        String expected = DataUtils.getStringFromFile("/json/GeocodingAPIWithOnly2CharactersInName.json");
-        String actual = RestAssured.given(requestSpecification)
+        String expected = getStringFromFile("/json/16360/GeocodingAPIWithOnly2CharactersInName.json");
+        String actual = RestAssured.given(baseRequestSpec)
                 .given()
                     .param("name", "Be")
                 .when()
@@ -112,13 +106,13 @@ public class GeocodingTests {
                     .statusCode(200)
                 .extract()
                     .asString();
-        JsonUtils.assertEquals(expected, actual, JsonUtils.getComparatorForGenerationTime());
+        assertEquals(expected, actual, JsonUtils.getGenerationTimerCustomization());
     }
 
     @Test
     public void getRequestWithOneCharacterInNameParameter() throws JSONException, IOException {
-        String expected = DataUtils.getStringFromFile("/json/GeocodingAPIWithOneCharacterInName.json");
-        String actual = RestAssured.given(requestSpecification)
+        String expected = getStringFromFile("/json/16360/GeocodingAPIWithOneCharacterInName.json");
+        String actual = RestAssured.given(baseRequestSpec)
                 .given()
                     .param("name", "B")
                 .when()
@@ -127,13 +121,13 @@ public class GeocodingTests {
                     .statusCode(200)
                 .extract()
                     .asString();
-        JsonUtils.assertEquals(expected, actual, JsonUtils.getComparatorForGenerationTime());
+        assertEquals(expected, actual, JsonUtils.getGenerationTimerCustomization());
     }
 
     @Test
     public void getRequestWithInvalidNameParam() throws JSONException, IOException {
-        String expected = DataUtils.getStringFromFile("/json/GeocodingAPIWithInvalidNameParam.json");
-        String actual = requestSpecification
+        String expected = getStringFromFile("/json/16360/GeocodingAPIWithInvalidNameParam.json");
+        String actual = baseRequestSpec
                 .given()
                     .param("nam", "Berlin")
                 .when()
@@ -142,13 +136,13 @@ public class GeocodingTests {
                     .statusCode(400)
                 .extract()
                     .asString();
-        JsonUtils.assertEquals(expected, actual);
+        assertEquals(expected, actual);
     }
 
     @Test
     public void getRequestLanguageParameter() throws JSONException, IOException {
-        String expected = DataUtils.getStringFromFile("/json/GeocodingAPIWithLanguageParam.json");
-        String actual = requestSpecification
+        String expected = getStringFromFile("/json/16360/GeocodingAPIWithLanguageParam.json");
+        String actual = baseRequestSpec
                 .given()
                     .param("name", "Berlin")
                     .param("language", "ru")
@@ -158,13 +152,13 @@ public class GeocodingTests {
                     .statusCode(200)
                 .extract()
                     .asString();
-        JsonUtils.assertEquals(expected, actual, JsonUtils.getComparatorForGenerationTime());
+        assertEquals(expected, actual, JsonUtils.getGenerationTimerCustomization());
     }
 
     @Test
     public void getRequestInvalidLanguageParameter() throws JSONException, IOException {
-        String expected = DataUtils.getStringFromFile("/json/GeocodingWithInvalidLanguageParam.json");
-        String actual = requestSpecification
+        String expected = getStringFromFile("/json/16360/GeocodingWithInvalidLanguageParam.json");
+        String actual = baseRequestSpec
                 .given()
                     .param("name", "Berlin")
                     .param("language", "rus")
@@ -174,6 +168,6 @@ public class GeocodingTests {
                     .statusCode(200)
                 .extract()
                     .asString();
-        JsonUtils.assertEquals(expected, actual, JsonUtils.getComparatorForGenerationTime());
+        assertEquals(expected, actual, JsonUtils.getGenerationTimerCustomization());
     }
 }

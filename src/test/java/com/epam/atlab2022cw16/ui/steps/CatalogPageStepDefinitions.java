@@ -189,8 +189,8 @@ public class CatalogPageStepDefinitions {
         new WomenCatalogPage(driver).addProductToCart(productName);
     }
 
-    @Then("alert is displayed with a message {string}")
-    public void alertIsDisplayedWithAMessage(String message) {
+    @Then("alert is displayed with a message Product successfully added to your shopping cart")
+    public void alertIsDisplayedWithAMessage() {
         assertTrue(new WomenCatalogPage(driver).isProductAddedTitleVisible());
     }
 

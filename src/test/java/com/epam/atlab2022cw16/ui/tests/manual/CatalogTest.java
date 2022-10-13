@@ -6,7 +6,12 @@ import com.epam.atlab2022cw16.ui.application.constants.Constants.Color;
 import com.epam.atlab2022cw16.ui.application.models.Product;
 import com.epam.atlab2022cw16.ui.application.pages.WomenCatalogPage;
 import com.epam.atlab2022cw16.ui.utils.TestListener;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Tags;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.util.ArrayList;
@@ -101,7 +106,6 @@ public class CatalogTest extends AbstractBaseTest {
         String actualColor = page.getBorderColorFilterByColor(filterByColor.getColorHex());
         assertEquals(selectedFilterBorderColor, actualColor);
     }
-
 
     @Order(8)
     @Test

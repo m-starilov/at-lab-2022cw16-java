@@ -11,7 +11,6 @@ public class MyAccountPage extends AbstractBasePage {
 
     private static final String PAGE_TITLE = "MY ACCOUNT";
 
-
     @FindBy(xpath = "//a[@title='Women']")
     private WebElement womenCatalogButton;
 

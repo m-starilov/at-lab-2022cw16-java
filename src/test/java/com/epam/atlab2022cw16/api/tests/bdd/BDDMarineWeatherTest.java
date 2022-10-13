@@ -1,13 +1,8 @@
 package com.epam.atlab2022cw16.api.tests.bdd;
 
 import com.epam.atlab2022cw16.api.tests.AbstractAPIBaseTest;
-import com.epam.atlab2022cw16.api.utils.DataUtils;
 import com.epam.atlab2022cw16.api.utils.JsonUtils;
 import com.epam.atlab2022cw16.ui.annotations.JiraTicketsLink;
-import io.restassured.RestAssured;
-import io.restassured.builder.RequestSpecBuilder;
-import io.restassured.http.ContentType;
-import io.restassured.specification.RequestSpecification;
 import org.json.JSONException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
@@ -16,6 +11,9 @@ import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 
+import static com.epam.atlab2022cw16.api.utils.DateUtils.getISO8601CurrentDate;
+import static com.epam.atlab2022cw16.api.utils.DateUtils.getISO8601PastDaysDate;
+import static com.epam.atlab2022cw16.api.utils.FileUtils.getStringFromFile;
 import static com.epam.atlab2022cw16.api.utils.JsonUtils.assertEquals;
 
 @Tags({
@@ -28,156 +26,159 @@ import static com.epam.atlab2022cw16.api.utils.JsonUtils.assertEquals;
         url = "https://jira.epam.com/jira/browse/EPMFARMATS-16352")
 public class BDDMarineWeatherTest extends AbstractAPIBaseTest {
 
-    private RequestSpecification requestSpec;
-
     @BeforeEach
     public void initTest() {
-        requestSpec = RestAssured.given(new RequestSpecBuilder()
-                        .setBaseUri("https://marine-api.open-meteo.com")
-                        .setBasePath("v1/marine")
-                        .setContentType(ContentType.JSON)
-                        .build()
-                        .log().all());
+         baseRequestSpec
+                        .baseUri("https://marine-api.open-meteo.com")
+                        .basePath("v1/marine");
     }
 
     @Test
     public void requestWithoutAnyParameters() throws JSONException, IOException {
-        String expectedBody = DataUtils.getStringFromFile("/json/ExpectedResponseWithEmptyQuery.json");
-        String actualBody = requestSpec
+        String expectedBody = getStringFromFile("/json/16352/ExpectedResponseWithEmptyQuery.json");
+        String actualBody = baseRequestSpec
                 .when()
                     .get()
                 .then()
                     .statusCode(400)
-                .extract().asString();
-
+                .extract()
+                    .asString();
         assertEquals(expectedBody, actualBody);
     }
 
     @Test
     public void requestWithLeftBorderCoordinatesValues() throws JSONException, IOException {
-        String expectedBody = DataUtils.getStringFromFile("/json/400NoDataForThisLocation.json");
-        String actualBody = requestSpec
-                .when()
+        String expectedBody = getStringFromFile("/json/16352/400NoDataForThisLocation.json");
+        String actualBody = baseRequestSpec
+                .given()
                     .queryParam("latitude", -90f)
                     .queryParam("longitude", -180f)
+                .when()
                     .get()
                 .then()
                     .statusCode(400)
-                .extract().asString();
-
+                .extract()
+                    .asString();
         assertEquals(expectedBody, actualBody);
     }
 
     @Test
     public void requestWithOutOfLeftBorderCoordinatesValues() throws JSONException, IOException {
-        String expectedBody = DataUtils.getStringFromFile("/json/400LatitudeMustBeInRange.json");
-        String actualBody = requestSpec
-                .when()
+        String expectedBody = getStringFromFile("/json/16352/400LatitudeMustBeInRange.json");
+        String actualBody = baseRequestSpec
+                .given()
                     .queryParam("latitude", -91f)
                     .queryParam("longitude", -181f)
+                .when()
                     .get()
                 .then()
                     .statusCode(400)
-                .extract().asString();
-
-        assertEquals(expectedBody, actualBody, JsonUtils.getComparatorForLatitudeOutOfRange());
+                .extract()
+                    .asString();
+        assertEquals(expectedBody, actualBody, JsonUtils.getCustomizationForLatitudeOutOfRange());
     }
 
     @Test
     public void requestWithRightBorderCoordinatesValues() throws JSONException, IOException {
-        String expectedBody = DataUtils.getStringFromFile("/json/400NoDataForThisLocation.json");
-        String actualBody = requestSpec
-                .when()
+        String expectedBody = getStringFromFile("/json/16352/400NoDataForThisLocation.json");
+        String actualBody = baseRequestSpec
+                .given()
                     .queryParam("latitude", 90f)
                     .queryParam("longitude", 180f)
+                .when()
                     .get()
                 .then()
                     .statusCode(400)
-                .extract().asString();
-
+                .extract()
+                    .asString();
         assertEquals(expectedBody, actualBody);
     }
 
     @Test
     public void requestWithOutOfRightBorderCoordinatesValues() throws JSONException, IOException {
-        String expectedBody = DataUtils.getStringFromFile("/json/400LatitudeMustBeInRange.json");
-        String actualBody = requestSpec
-                .when()
+        String expectedBody = getStringFromFile("/json/16352/400LatitudeMustBeInRange.json");
+        String actualBody = baseRequestSpec
+                .given()
                     .queryParam("latitude", 91f)
                     .queryParam("longitude", 181f)
+                .when()
                     .get()
                 .then()
                     .statusCode(400)
-                .extract().asString();
-
-        assertEquals(expectedBody, actualBody, JsonUtils.getComparatorForLatitudeOutOfRange());
+                .extract()
+                    .asString();
+        assertEquals(expectedBody, actualBody, JsonUtils.getCustomizationForLatitudeOutOfRange());
     }
 
     @Test
     public void requestWithCoordinatesAndStartDateParameters() throws JSONException, IOException {
-        String expectedBody = DataUtils.getStringFromFile("/json/ExpectedResponseWithOnlyStartDate.json");
-        String actualBody = requestSpec
-                .when()
+        String expectedBody = getStringFromFile("/json/16352/ExpectedResponseWithOnlyStartDate.json");
+        String actualBody = baseRequestSpec
+                .given()
                     .queryParam("latitude", 41.625f)
                     .queryParam("longitude", 41.625f)
-                    .queryParam("start_date", DataUtils.getISO8601CurrentDate())
+                    .queryParam("start_date", getISO8601CurrentDate())
+                .when()
                     .get()
                 .then()
                     .statusCode(400)
-                .extract().asString();
-
+                .extract()
+                    .asString();
         assertEquals(expectedBody, actualBody);
     }
 
     @Test
     public void requestWithCoordinatesAndEndDateBeforeStartDateParameters() throws JSONException, IOException {
-        String expectedBody = DataUtils.getStringFromFile("/json/ExpectedResponseWithEndDateBeforeStartDate.json");
-        String actualBody = requestSpec
-                .when()
+        String expectedBody = getStringFromFile("/json/16352/ExpectedResponseWithEndDateBeforeStartDate.json");
+        String actualBody = baseRequestSpec
+                .given()
                     .queryParam("latitude", 41.625f)
                     .queryParam("longitude", 41.625f)
-                    .queryParam("start_date", DataUtils.getISO8601CurrentDate())
-                    .queryParam("end_date", DataUtils.getISO8601PastDaysDate(3))
+                    .queryParam("start_date", getISO8601CurrentDate())
+                    .queryParam("end_date", getISO8601PastDaysDate(3))
+                .when()
                     .get()
                 .then()
                     .statusCode(400)
-                .extract().asString();
-
+                .extract()
+                    .asString();
         assertEquals(expectedBody, actualBody);
     }
 
     @Test
     public void requestWithValidCoordinatesAndDaysParameters() throws JSONException, IOException {
-        String expectedBody = DataUtils.getStringFromFile("/json/marineWeather200MinimalValidResponse.json");
-        String actualBody = requestSpec
-                .when()
+        String expectedBody = getStringFromFile("/json/16352/marineWeather200MinimalValidResponse.json");
+        String actualBody = baseRequestSpec
+                .given()
                     .queryParam("latitude", 41.625f)
                     .queryParam("longitude", 41.625f)
-                    .queryParam("start_date", DataUtils.getISO8601CurrentDate())
-                    .queryParam("end_date", DataUtils.getISO8601CurrentDate())
+                    .queryParam("start_date", getISO8601CurrentDate())
+                    .queryParam("end_date", getISO8601CurrentDate())
+                .when()
                     .get()
                 .then()
                     .statusCode(200)
-                .extract().asString();
-
-        assertEquals(expectedBody, actualBody, JsonUtils.getComparatorForGenerationTime());
+                .extract()
+                    .asString();
+        assertEquals(expectedBody, actualBody, JsonUtils.getGenerationTimerCustomization());
     }
 
     @Test
     public void requestWithValidCoordinatesStartEndDatesAndPastDaysParameters() throws JSONException, IOException {
-        String expectedBody = DataUtils.getStringFromFile("/json/ExpectedResponseWithPastDaysStartAndEndDaysParameters.json");
-        String actualBody = requestSpec
-                .when()
+        String expectedBody = getStringFromFile("/json/16352/ExpectedResponseWithPastDaysStartAndEndDaysParameters.json");
+        String actualBody = baseRequestSpec
+                .given()
                     .queryParam("latitude", 41.625f)
                     .queryParam("longitude", 41.625f)
-                    .queryParam("start_date", DataUtils.getISO8601CurrentDate())
-                    .queryParam("end_date", DataUtils.getISO8601CurrentDate())
+                    .queryParam("start_date", getISO8601CurrentDate())
+                    .queryParam("end_date", getISO8601CurrentDate())
                     .queryParam("past_days", 3)
+                .when()
                     .get()
                 .then()
                     .statusCode(400)
-                .extract().asString();
-
+                .extract()
+                    .asString();
         assertEquals(expectedBody, actualBody);
     }
 }

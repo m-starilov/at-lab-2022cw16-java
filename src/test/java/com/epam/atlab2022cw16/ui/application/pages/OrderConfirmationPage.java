@@ -12,7 +12,6 @@ import java.util.List;
 public class OrderConfirmationPage extends AbstractOrderPage {
     private static final String PAGE_TITLE = "ORDER CONFIRMATION";
 
-
     @FindBy(xpath = "//div[@class='box']")
     private WebElement confirmationAllText;
 

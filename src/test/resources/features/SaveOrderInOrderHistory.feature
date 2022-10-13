@@ -10,7 +10,7 @@ Feature: As a user I want to get ability to store order info in order history
     Then I see "Women" page title
 
     When I put one item "Faded Short Sleeve T-shirts" in a cart
-    Then alert is displayed with a message "Product successfully added to your shopping cart"
+    Then alert is displayed with a message Product successfully added to your shopping cart
     And item  "Faded Short Sleeve T-shirts" displayed in a cart
 
     When I press Proceed to checkout button to Order Summary Page
@@ -83,10 +83,3 @@ Feature: As a user I want to get ability to store order info in order history
     When I click I confirm my order button
     Then I see "Confirmation page" page title
     And A message "Your order on My Store is complete."  displayed
-
-
-
-
-
-
-

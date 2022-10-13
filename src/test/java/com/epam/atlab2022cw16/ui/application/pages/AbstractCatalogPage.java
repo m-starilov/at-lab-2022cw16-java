@@ -35,7 +35,6 @@ public abstract class AbstractCatalogPage extends AbstractBasePage {
     private static final String ADD_TO_WISH_LIST_BUTTONS = "//a[contains(@class,'addToWishlist wishlistProd')]";
     private static final String ADD_TO_COMPARE_BUTTONS = "//a[contains(text(),'Add to Compare')]";
 
-
     @FindBy(xpath = "//a[@class='addToWishlist wishlistProd_4']")
     private WebElement addEveningDressToWishlistButton;
 

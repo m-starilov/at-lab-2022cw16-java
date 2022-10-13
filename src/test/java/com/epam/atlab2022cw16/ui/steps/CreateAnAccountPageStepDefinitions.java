@@ -24,7 +24,6 @@ public class CreateAnAccountPageStepDefinitions {
     private static final String invalidMobile = "phone_mobile is invalid.";
     private static final String invalidZip = "The Zip/Postal code you've entered is invalid. It must follow this format: 00000";
 
-
     CreateAnAccountPage createAnAccountPage = new CreateAnAccountPage(driver);
 
     @Then("the email has been verified. “Create an account” page opened.")

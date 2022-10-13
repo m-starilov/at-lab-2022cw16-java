@@ -13,7 +13,6 @@ public class MyStoreHomepage extends AbstractBasePage {
     private static final String HOMEPAGE = "http://automationpractice.com/index.php";
     private static final String PAGE_TITLE = "Automation Practice Website";
 
-
     @FindBy(xpath = "//a[@class='login']")
     private WebElement signInButton;
 

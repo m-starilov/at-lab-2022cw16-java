@@ -20,7 +20,6 @@ public class AuthenticationPage extends AbstractBasePage {
     private static final String BASE_URL = "http://automationpractice.com/index" +
             ".php?controller=authentication&back=my-account";
 
-
     @FindBy(xpath = "//input[@id='email']")
     private WebElement emailField;
 
