@@ -1,0 +1,24 @@
+{
+  "results": [
+    {
+      "id": 2890943,
+      "name": "Kieve",
+      "latitude": 53.27456,
+      "longitude": 12.59377,
+      "elevation": 68.0,
+      "feature_code": "PPL",
+      "country_code": "DE",
+      "admin1_id": 2872567,
+      "admin3_id": 8648413,
+      "admin4_id": 6548066,
+      "timezone": "Europe/Berlin",
+      "population": 164,
+      "country_id": 2921044,
+      "country": "Germany",
+      "admin1": "Mecklenburg-Vorpommern",
+      "admin3": "Mecklenburgische Seenplatte",
+      "admin4": "Kieve"
+    }
+  ],
+  "generationtime_ms": 0.45609474
+}

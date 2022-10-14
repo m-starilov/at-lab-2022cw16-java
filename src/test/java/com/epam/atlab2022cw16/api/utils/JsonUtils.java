@@ -41,6 +41,20 @@ public class JsonUtils {
                 getCurrentWeatherTimeCustomization());
     }
 
+    public static CustomComparator getComparatorForHourlyWeather() {
+        return createCustomComparator(getGenerationTimerCustomization(),
+                getArrayHourlyTimeSizeCustomization(),
+                getArrayCustomizationForDouble("hourly.surface_air_pressure"));
+    }
+
+    public static CustomComparator getComparatorForOutOfBoundStartDate() {
+        return createCustomComparator(getReasonStartDateOutOfBoundCustomization());
+    }
+
+    public static CustomComparator getComparatorForOutOfBoundEndDate() {
+        return createCustomComparator(getReasonEndDateOutOfBoundCustomization());
+    }
+
     public static Customization getGenerationTimerCustomization() {
         return createCustomizationForDouble("generationtime_ms");
     }
@@ -59,6 +73,16 @@ public class JsonUtils {
 
     public static Customization getCurrentWeatherWeatherCodeCustomization() {
         return createCustomizationForDouble("current_weather.weathercode");
+    }
+
+    public static Customization getReasonStartDateOutOfBoundCustomization() {
+        return new Customization("reason",
+                new RegularExpressionValueMatcher<>("Parameter 'start_date' is out of allowed range from \\d{4}-\\d{2}-\\d{2} to \\d{4}-\\d{2}-\\d{2}"));
+    }
+
+    public static Customization getReasonEndDateOutOfBoundCustomization() {
+        return new Customization("reason",
+                new RegularExpressionValueMatcher<>("Parameter 'end_date' is out of allowed range from \\d{4}-\\d{2}-\\d{2} to \\d{4}-\\d{2}-\\d{2}"));
     }
 
     public static Customization getCurrentWeatherTimeCustomization() {
@@ -170,7 +194,8 @@ public class JsonUtils {
     }
 
     private static Customization createCustomizationForDouble(String path) {
-        return new Customization(path, new RegularExpressionValueMatcher<>("[+-]?[0-9]*[.][0-9]+"));
+        return new Customization(path, new RegularExpressionValueMatcher<>("[+-]?[0-9]*[.][0-9]+|null"));
+
     }
 
     private static Customization getArrayCustomizationForDouble(String jsonPath) {
@@ -178,7 +203,7 @@ public class JsonUtils {
             JSONArray actualValue = (JSONArray) actual1;
             JSONArray expectedValue = (JSONArray) expected1;
             return (actualValue.length() == expectedValue.length()) &&
-                    actualValue.toString().matches("\\[([+-]?[0-9]*[.]?[0-9]+,?)+\\]");
+                    actualValue.toString().matches("\\[([+-]?[0-9]*[.]?[0-9],?)+]");
         });
     }
 
