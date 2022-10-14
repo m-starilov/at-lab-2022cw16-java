@@ -1,0 +1,4 @@
+{
+    "error": true,
+    "reason": "Parameter 'end_date' is out of allowed range from 1959-01-01 to 2022-10-06"
+}
