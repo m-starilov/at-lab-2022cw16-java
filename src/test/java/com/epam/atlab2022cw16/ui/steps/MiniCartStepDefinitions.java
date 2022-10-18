@@ -1,5 +1,6 @@
 package com.epam.atlab2022cw16.ui.steps;
 
+import com.epam.atlab2022cw16.ui.application.pages.MyAccountPage;
 import com.epam.atlab2022cw16.ui.application.pages.OrderSummaryPage;
 import com.epam.atlab2022cw16.ui.application.pages.ProductPage;
 import com.epam.atlab2022cw16.ui.application.pages.SummerDressesCatalogPage;
@@ -27,7 +28,7 @@ public class MiniCartStepDefinitions {
     }
 
     @When("I add {int} items to cart")
-    public void addTwoItems(int number) {
+    public void addSomeItems(int number) {
         new SummerDressesCatalogPage(driver).addToCartNumberOfItems(number);
     }
 
@@ -83,11 +84,32 @@ public class MiniCartStepDefinitions {
         assertThat(orderSummaryPage.getSummaryProductsQuantity()).isEqualTo(summary);
     }
 
-    @Then("I see empty mini cart and cart page has {string} alert message")
-    public void checkThatAllCartsAreEmpty(String alertMessage) {
+    @Then("Mini cart is empty")
+    public void checkThatAllCartsAreEmpty() {
         OrderSummaryPage orderSummaryPage = new OrderSummaryPage(driver);
         assertThat(orderSummaryPage.isMiniCartEmpty()).isTrue();
-        assertThat(orderSummaryPage.getAlertMessage()).isEqualTo(alertMessage);
     }
 
+    @When("I click Sign out button")
+    public void signOutTest() {
+        OrderSummaryPage orderSummaryPage = new OrderSummaryPage(driver);
+        orderSummaryPage.clickSignOutButton();
+    }
+
+    @Then("Page has not account button")
+    public void isAccountVisible() {
+        OrderSummaryPage orderSummaryPage = new OrderSummaryPage(driver);
+        assertThat(orderSummaryPage.isAccountVisible()).isFalse();
+    }
+
+    @When("I click mini cart button")
+    public void clickToMiniCart() {
+        new MyAccountPage(driver).clickToMiniCart();
+    }
+
+    @Then("Sign in button is displayed")
+    public void isSignInButtonDisplayed() {
+        OrderSummaryPage orderSummaryPage = new OrderSummaryPage(driver);
+        assertThat(orderSummaryPage.isSignInButtonVisible()).isTrue();
+    }
 }

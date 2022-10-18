@@ -2,8 +2,8 @@ package com.epam.atlab2022cw16.ui.steps;
 
 import com.devskiller.jfairy.Fairy;
 import com.devskiller.jfairy.producer.person.Person;
-import com.epam.atlab2022cw16.ui.application.pages.MyStoreHomepage;
 import com.epam.atlab2022cw16.ui.application.modules.Alert;
+import com.epam.atlab2022cw16.ui.application.pages.MyStoreHomepage;
 import com.epam.atlab2022cw16.ui.utils.EnvironmentUtils;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
@@ -12,6 +12,7 @@ import io.cucumber.java.en.When;
 import org.openqa.selenium.WebDriver;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class HomepageStepDefinitions {
 
@@ -68,5 +69,10 @@ public class HomepageStepDefinitions {
                 .isTrue();
         assertThat(alert.getMessage())
                 .contains(message);
+    }
+
+    @Then("Home page is opened")
+    public void authenticationPageIsOpenedTitleOfPageIs() {
+        assertTrue(new MyStoreHomepage(driver).isPageTitleValid());
     }
 }

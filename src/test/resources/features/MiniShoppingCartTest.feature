@@ -1,7 +1,8 @@
 #JiraTicket: id = 16346,  url = https://jira.epam.com/jira/browse/EPMFARMATS-16346
 @ui
 @bdd
-Feature: Mini cart
+Feature: As a user I want to be able to use a use mini cart to display,
+  open and delete items and go to the shopping cart page
 
   Scenario: Check mini cart
 
@@ -30,5 +31,6 @@ Feature: Mini cart
     Then I see mini cart is displayed as a block with 1 items
 
     When I delete 1 item from mini cart
-    Then I see empty mini cart and cart page has "Your shopping cart is empty." alert message
+    Then Cart page has Empty cart alert message
+    And Mini cart is empty
 

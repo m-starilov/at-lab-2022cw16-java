@@ -122,6 +122,11 @@ public abstract class AbstractBasePage {
         return new AuthenticationPage(driver);
     }
 
+    public boolean isSignInButtonVisible() {
+        log.info("Check is Sign in button visible");
+        return signInButton.isDisplayed();
+    }
+
     public void clickSignOutButton() {
         signOutButton.click();
         log.info("Sign out button clicked");

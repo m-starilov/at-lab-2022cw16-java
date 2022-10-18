@@ -1,5 +1,6 @@
 package com.epam.atlab2022cw16.ui.steps;
 
+import com.epam.atlab2022cw16.ui.application.constants.Constants;
 import com.epam.atlab2022cw16.ui.application.pages.OrderAddressPage;
 import com.epam.atlab2022cw16.ui.application.pages.OrderBankWirePaymentPage;
 import com.epam.atlab2022cw16.ui.application.pages.OrderConfirmationPage;
@@ -102,6 +103,13 @@ public class OrderPageStepDefinitions {
         new OrderConfirmationPage(driver).openMyAccountPage();
     }
 
+    @Then("Cart page has Empty cart alert message")
+    public void getAlertMessage() {
+        OrderSummaryPage orderSummaryPage = new OrderSummaryPage(driver);
+        assertThat(orderSummaryPage.getAlertMessage())
+                .isEqualTo(Constants.AlertMessageTexts.EMPTY_CART_TEXT);
+    }
+
     @And("The {int} reordered item is in the cart")
     public void isReorderedItemsInTheCart(int quantity) {
         OrderSummaryPage orderSummaryPage = new OrderSummaryPage(driver);
@@ -109,7 +117,6 @@ public class OrderPageStepDefinitions {
         assertThat(oldOrderProductName).contains(itemsFromCurrentOrder.get(0));
         assertEquals(quantity, orderSummaryPage.getSummaryProductsQuantityAsInt());
     }
-
 
     @And("Previews items is deleted")
     public void isDeletedPreviewsItems() {
