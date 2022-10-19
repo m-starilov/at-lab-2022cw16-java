@@ -92,5 +92,4 @@ public class CommonStepDefinitions {
         return isTrue;
     }
 
-
 }

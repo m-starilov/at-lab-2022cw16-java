@@ -15,7 +15,6 @@ public class CreateAnAccountPage extends AbstractBasePage {
     private static final String birthYear = "//*[@id=\"years\"]/option[@value=%s]";
     private static final String PAGE_TITLE = "CREATE AN ACCOUNT";
 
-
     @FindBy (xpath = "//*[@id='center_column']/div[@class='alert alert-danger']")
     private WebElement alertMessage;
     @FindBy(xpath = "//*[@id=\"submitAccount\"]")

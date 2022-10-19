@@ -1,12 +1,9 @@
 package com.epam.atlab2022cw16.api.tests.manual;
 
 import com.epam.atlab2022cw16.api.tests.AbstractAPIBaseTest;
-import com.epam.atlab2022cw16.api.utils.DataUtils;
 import com.epam.atlab2022cw16.api.utils.JsonUtils;
 import com.epam.atlab2022cw16.ui.annotations.JiraTicketsLink;
 import io.restassured.RestAssured;
-import io.restassured.builder.RequestSpecBuilder;
-import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import org.json.JSONException;
@@ -17,6 +14,7 @@ import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 
+import static com.epam.atlab2022cw16.api.utils.FileUtils.getStringFromFile;
 import static com.epam.atlab2022cw16.api.utils.JsonUtils.assertEquals;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -30,17 +28,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class HistoricalWeatherWithAdditionalParametersTest extends AbstractAPIBaseTest {
 
     private RequestSpecification withHourlyAndDailyParamsRequestSpec;
-    private RequestSpecification baseRequestSpec;
 
     @BeforeEach
     public void initTest() {
-        baseRequestSpec = RestAssured.given(new RequestSpecBuilder()
-                .setBaseUri("https://archive-api.open-meteo.com")
-                .setBasePath("v1/era5")
-                .setContentType(ContentType.JSON)
-                .addParam("latitude", 52f)
-                .addParam("longitude", 13f)
-                .build());
+        baseRequestSpec
+                .baseUri("https://archive-api.open-meteo.com")
+                .basePath("v1/era5")
+                .param("latitude", 52f)
+                .param("longitude", 13f);
         withHourlyAndDailyParamsRequestSpec = RestAssured.given(baseRequestSpec)
                 .param("hourly", "temperature_2m", "relativehumidity_2m", "dewpoint_2m", "apparent_temperature",
                         "pressure_msl", "surface_pressure", "precipitation", "rain", "snowfall", "cloudcover", "cloudcover_low",
@@ -58,7 +53,7 @@ public class HistoricalWeatherWithAdditionalParametersTest extends AbstractAPIBa
 
     @Test
     public void requestWithValidTimezoneParameterForOneDay() throws JSONException, IOException {
-        String expectedBody = DataUtils.getStringFromFile("/json/historicalWeatherWithAllParamsForOneDay.json");
+        String expectedBody = getStringFromFile("/json/16312/historicalWeatherWithAllParamsForOneDay.json");
         Response response = withHourlyAndDailyParamsRequestSpec
                 .queryParam("start_date", "2022-01-01")
                 .queryParam("end_date", "2022-01-01")
@@ -67,12 +62,12 @@ public class HistoricalWeatherWithAdditionalParametersTest extends AbstractAPIBa
 
         assertThat(response.getStatusCode())
                 .isEqualTo(200);
-        assertEquals(expectedBody, response.getBody().asString(), JsonUtils.getComparatorForGenerationTime());
+        assertEquals(expectedBody, response.getBody().asString(), JsonUtils.getGenerationTimerCustomization());
     }
 
     @Test
     public void requestWithValidTimezoneParameterForOneMonth() throws JSONException, IOException {
-        String expectedBody = DataUtils.getStringFromFile("/json/historicalWeatherAllParamsForMonth.json");
+        String expectedBody = getStringFromFile("/json/16312/historicalWeatherAllParamsForMonth.json");
         Response response = withHourlyAndDailyParamsRequestSpec
                 .queryParam("start_date", "2022-01-01")
                 .queryParam("end_date", "2022-01-31")
@@ -81,12 +76,12 @@ public class HistoricalWeatherWithAdditionalParametersTest extends AbstractAPIBa
 
         assertThat(response.getStatusCode())
                 .isEqualTo(200);
-        assertEquals(expectedBody, response.getBody().asString(), JsonUtils.getComparatorForGenerationTime());
+        assertEquals(expectedBody, response.getBody().asString(), JsonUtils.getGenerationTimerCustomization());
     }
 
     @Test
     public void requestWithValidTimezoneParameterForOneYear() throws JSONException, IOException {
-        String expectedBody = DataUtils.getStringFromFile("/json/historicalWeatherAllParamsForOneYear.json");
+        String expectedBody = getStringFromFile("/json/16312/historicalWeatherAllParamsForOneYear.json");
         Response response = withHourlyAndDailyParamsRequestSpec
                 .queryParam("start_date", "2021-01-01")
                 .queryParam("end_date", "2021-12-31")
@@ -96,12 +91,12 @@ public class HistoricalWeatherWithAdditionalParametersTest extends AbstractAPIBa
 
         assertThat(response.getStatusCode())
                 .isEqualTo(200);
-        assertEquals(expectedBody, response.getBody().asString(), JsonUtils.getComparatorForGenerationTime());
+        assertEquals(expectedBody, response.getBody().asString(), JsonUtils.getGenerationTimerCustomization());
     }
 
     @Test
     public void requestWithAlternateParametersUnits() throws JSONException, IOException {
-        String expectedBody = DataUtils.getStringFromFile("/json/historicalWeatherWithAlternativeParams.json");
+        String expectedBody = getStringFromFile("/json/16312/historicalWeatherWithAlternativeParams.json");
         Response response = baseRequestSpec
                 .queryParam("start_date", "2022-01-01")
                 .queryParam("end_date", "2022-01-01")
@@ -115,12 +110,12 @@ public class HistoricalWeatherWithAdditionalParametersTest extends AbstractAPIBa
 
         assertThat(response.getStatusCode())
                 .isEqualTo(200);
-        assertEquals(expectedBody, response.getBody().asString(), JsonUtils.getComparatorForGenerationTime());
+        assertEquals(expectedBody, response.getBody().asString(), JsonUtils.getGenerationTimerCustomization());
     }
 
     @Test
     public void requestWithInvalidTimezoneParameter() throws IOException, JSONException {
-        String expectedBody = DataUtils.getStringFromFile("/json/400InvalidTimezone.json");
+        String expectedBody = getStringFromFile("/json/16312/400InvalidTimezone.json");
         Response response = withHourlyAndDailyParamsRequestSpec
                 .queryParam("start_date", "2022-01-01")
                 .queryParam("end_date", "2022-01-01")
@@ -134,7 +129,7 @@ public class HistoricalWeatherWithAdditionalParametersTest extends AbstractAPIBa
 
     @Test
     public void requestWithoutTimezoneParameter() throws IOException, JSONException {
-        String expectedBody = DataUtils.getStringFromFile("/json/400TimezoneIsRequired.json");
+        String expectedBody = getStringFromFile("/json/16312/400TimezoneIsRequired.json");
         Response response = withHourlyAndDailyParamsRequestSpec
                 .queryParam("start_date", "2022-01-01")
                 .queryParam("end_date", "2022-01-01")
@@ -147,7 +142,7 @@ public class HistoricalWeatherWithAdditionalParametersTest extends AbstractAPIBa
 
     @Test
     public void requestWithInvalidParameterName() throws IOException, JSONException {
-        String expectedBody = DataUtils.getStringFromFile("/json/400CannotInitInvalidDailyVariable.json");
+        String expectedBody = getStringFromFile("/json/16312/400CannotInitInvalidDailyVariable.json");
         Response response = baseRequestSpec
                 .queryParam("start_date", "2022-01-01")
                 .queryParam("end_date", "2022-01-01")
@@ -157,6 +152,7 @@ public class HistoricalWeatherWithAdditionalParametersTest extends AbstractAPIBa
 
         assertThat(response.getStatusCode())
                 .isEqualTo(400);
-        assertEquals(expectedBody, response.getBody().asString(), JsonUtils.getComparatorForInvalidInitializationOfVariable());
+        assertEquals(expectedBody, response.getBody().asString(),
+                JsonUtils.getCustomizationForInvalidInitializationOfVariable());
     }
 }

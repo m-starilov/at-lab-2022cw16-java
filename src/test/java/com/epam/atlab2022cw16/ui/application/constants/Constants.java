@@ -9,7 +9,6 @@ public class Constants {
     public static final String CREATE_AN_ACCOUNT = "CREATE AN ACCOUNT";
     public static final String ALREADY_REGISTERED = "ALREADY REGISTERED?";
 
-
     public static class AlertMessageTexts {
 
         public static final String WISHLIST_DELETE_TEXT = "Do you really want to delete this wishlist ?";
@@ -65,6 +64,5 @@ public class Constants {
             return colorRGB;
         }
     }
-
 
 }
