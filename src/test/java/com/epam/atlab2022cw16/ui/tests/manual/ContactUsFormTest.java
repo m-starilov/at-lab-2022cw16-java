@@ -54,7 +54,7 @@ public class ContactUsFormTest extends AbstractBaseTest {
     @Order(3)
     public void invalidEmailTest() {
         ContactUsPage contactUsPage = new ContactUsPage(driver).clickSendMessageButton();
-        Alert alert = contactUsPage.getMessageSentAlert();
+        Alert alert = contactUsPage.getPageElementAlert();
         assertThat(alert.isDisplayed())
                 .isTrue();
         assertThat(alert.isDanger())
@@ -68,7 +68,7 @@ public class ContactUsFormTest extends AbstractBaseTest {
     public void emptyMessageTest() {
         ContactUsPage contactUsPage = new ContactUsPage(driver).inputEmail(EMAIL_ADDRESS);
         contactUsPage.clickSendMessageButton();
-        Alert alert = contactUsPage.getMessageSentAlert();
+        Alert alert = contactUsPage.getPageElementAlert();
         assertThat(alert.isDisplayed())
                 .isTrue();
         assertThat(alert.isDanger())
@@ -83,7 +83,7 @@ public class ContactUsFormTest extends AbstractBaseTest {
         ContactUsPage contactUsPage = new ContactUsPage(driver).inputEmail(EMAIL_ADDRESS);
         contactUsPage.inputMessage(MESSAGE)
                 .clickSendMessageButton();
-        Alert alert = contactUsPage.getMessageSentAlert();
+        Alert alert = contactUsPage.getPageElementAlert();
         assertThat(alert.isDisplayed())
                 .isTrue();
         assertThat(alert.isDanger())
@@ -98,7 +98,7 @@ public class ContactUsFormTest extends AbstractBaseTest {
         Alert alert = new ContactUsPage(driver).inputEmail(EMAIL_ADDRESS)
                 .inputMessage(MESSAGE)
                 .selectSubjectHeading(Constants.CUSTOMER_SERVICE)
-                .clickSendMessageButton().getMessageSentAlert();
+                .clickSendMessageButton().getPageElementAlert();
         assertThat(alert.isDisplayed())
                 .isTrue();
         assertThat(alert.isSuccess())
@@ -129,7 +129,7 @@ public class ContactUsFormTest extends AbstractBaseTest {
     public void emptyMessageAsAuthorizedUserTest() {
         Alert alert =  new ContactUsPage(driver).inputEmail(EMAIL_ADDRESS)
                 .clickSendMessageButton()
-                .getMessageSentAlert();
+                .getPageElementAlert();
         assertThat(alert.isDisplayed())
                 .isTrue();
         assertThat(alert.isDanger())
@@ -143,7 +143,7 @@ public class ContactUsFormTest extends AbstractBaseTest {
     public void noSubjectSelectedAsAuthorizedUserTest() {
         Alert alert = new ContactUsPage(driver).inputEmail(EMAIL_ADDRESS)
                 .inputMessage(MESSAGE)
-                .clickSendMessageButton().getMessageSentAlert();
+                .clickSendMessageButton().getPageElementAlert();
         assertThat(alert.isDisplayed())
                 .isTrue();
         assertThat(alert.isDanger())
@@ -171,7 +171,7 @@ public class ContactUsFormTest extends AbstractBaseTest {
                 .selectSubjectHeading(Constants.CUSTOMER_SERVICE)
                 .selectOrderReference(1)
                 .clickSendMessageButton()
-                .getMessageSentAlert();
+                .getPageElementAlert();
         assertThat(alert.isDisplayed())
                 .isTrue();
         assertThat(alert.isSuccess())

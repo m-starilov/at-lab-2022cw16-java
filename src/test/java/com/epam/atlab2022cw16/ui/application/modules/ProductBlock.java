@@ -10,7 +10,7 @@ public class ProductBlock {
     private static final String ADD_TO_WISHLIST_BUTTON = ".//a[contains(@class,'addToWishlist wishlistProd')]";
     private static final String ADD_TO_WISHLIST_SOLID_BUTTON = ".//a[contains(@class,'checked')]";
 
-    private WebElement sourceElement;
+    private final WebElement sourceElement;
 
     public ProductBlock(WebElement element) {
         this.sourceElement = element;

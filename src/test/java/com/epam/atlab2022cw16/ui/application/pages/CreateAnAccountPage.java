@@ -10,71 +10,68 @@ import org.openqa.selenium.support.FindBy;
 import static java.lang.String.format;
 
 public class CreateAnAccountPage extends AbstractBasePage {
-    private static final String birthDay = "//*[@id=\"days\"]/option[@value=%s]";
-    private static final String birthMonth = "//*[@id=\"months\"]/option[@value=%s]";
-    private static final String birthYear = "//*[@id=\"years\"]/option[@value=%s]";
+    private static final String birthDay = "//*[@id='days']/option[@value=%s]";
+    private static final String birthMonth = "//*[@id='months']/option[@value=%s]";
+    private static final String birthYear = "//*[@id='years']/option[@value=%s]";
     private static final String PAGE_TITLE = "CREATE AN ACCOUNT";
 
     @FindBy (xpath = "//*[@id='center_column']/div[@class='alert alert-danger']")
     private WebElement alertMessage;
-    @FindBy(xpath = "//*[@id=\"submitAccount\"]")
+    @FindBy(xpath = "//*[@id='submitAccount']")
     private WebElement registerButton;
 
-    @FindBy(xpath = "//*[@id=\"id_gender1\"]")
+    @FindBy(xpath = "//*[@id='id_gender1']")
     private WebElement genderCheckbox;
 
-    @FindBy(xpath = "//*[@id=\"customer_firstname\"]")
+    @FindBy(xpath = "//*[@id='customer_firstname']")
     private WebElement firstNameField;
 
-    @FindBy(xpath = "//*[@id=\"customer_lastname\"]")
+    @FindBy(xpath = "//*[@id='customer_lastname']")
     private WebElement lastNameField;
 
-    @FindBy(xpath = "//*[@id=\"passwd\"]")
+    @FindBy(xpath = "//*[@id='passwd']")
     private WebElement passwordField;
 
-    @FindBy(xpath = "//*[@id=\"days\"]")
+    @FindBy(xpath = "//*[@id='days']")
     private WebElement birthDaySelect;
 
-    @FindBy(xpath = "//*[@id=\"months\"]")
+    @FindBy(xpath = "//*[@id='months']")
     private WebElement monthSelect;
 
-    @FindBy(xpath = "//*[@id=\"years\"]")
+    @FindBy(xpath = "//*[@id='years']")
     private WebElement yearSelect;
 
-    @FindBy(xpath = "//*[@id=\"address1\"]")
+    @FindBy(xpath = "//*[@id='address1']")
     private WebElement addressField;
 
-    @FindBy(xpath = "//*[@id=\"city\"]")
+    @FindBy(xpath = "//*[@id='city']")
     private WebElement cityField;
 
-    @FindBy(xpath = "//*[@id=\"id_state\"]")
+    @FindBy(xpath = "//*[@id='id_state']")
     private WebElement stateSelect;
 
-    @FindBy(xpath = "//*[@id=\"id_state\"]/option[46]")
+    @FindBy(xpath = "//*[@id='id_state']/option[46]")
     private WebElement stateTexas;
 
-    @FindBy(xpath = "//*[@id=\"postcode\"]")
+    @FindBy(xpath = "//*[@id='postcode']")
     private WebElement postCode;
 
-    @FindBy(xpath = "//*[@id=\"phone_mobile\"]")
+    @FindBy(xpath = "//*[@id='phone_mobile']")
     private WebElement mobileField;
 
-    @FindBy(xpath = "//*[@id=\"submitAccount\"]")
-    private WebElement submitAccount;
-
-    @FindBy(xpath = "//*[@id=\"center_column\"]/div/p")
+    @FindBy(xpath = "//*[@id='center_column']/div/p")
     private WebElement numberOfErrorsEmptyReg;
 
-    @FindBy(xpath = "//*[@id=\"center_column\"]/div/ol/li[1]")
+    @FindBy(xpath = "//*[@id='center_column']/div/ol/li[1]")
     private WebElement invalidLastNameErrorText;
 
-    @FindBy(xpath = "//*[@id=\"center_column\"]/div/ol/li[2]")
+    @FindBy(xpath = "//*[@id='center_column']/div/ol/li[2]")
     private WebElement invalidFirstNameErrorText;
 
-    @FindBy(xpath = "//*[@id=\"center_column\"]/div/ol/li[3]")
+    @FindBy(xpath = "//*[@id='center_column']/div/ol/li[3]")
     private WebElement invalidMobileErrorText;
 
-    @FindBy(xpath = "//*[@id=\"center_column\"]/div/ol/li[4]")
+    @FindBy(xpath = "//*[@id='center_column']/div/ol/li[4]")
     private WebElement invalidZipErrorText;
 
     public CreateAnAccountPage(WebDriver driver) {

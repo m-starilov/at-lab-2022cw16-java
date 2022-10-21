@@ -102,11 +102,4 @@ public class WishlistPage extends AbstractBasePage {
     public boolean isWishListTableNotVisible() {
         return driverWait().until(ExpectedConditions.invisibilityOf(wishlistTable));
     }
-
-    public int getWishListTableSize() {
-        List<WebElement> listOfAllElements = new WebDriverWait(driver, Duration.ofSeconds(WAIT_TIMEOUT_SECONDS))
-                .until(ExpectedConditions
-                        .presenceOfAllElementsLocatedBy(By.xpath("//div[@id='block-history']")));
-        return listOfAllElements.stream().filter(WebElement::isDisplayed).collect(Collectors.toList()).size();
-    }
 }

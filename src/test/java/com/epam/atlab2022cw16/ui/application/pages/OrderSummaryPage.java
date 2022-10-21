@@ -22,9 +22,6 @@ public class OrderSummaryPage extends AbstractOrderPage {
     @FindBy(xpath = "//td[contains(@class, 'cart_quantity')]/input[@type='hidden']")
     private WebElement productQuantityHiddenInput;
 
-    @FindBy(xpath = "//p[contains(@class, 'alert')]")
-    private WebElement alertMessage;
-
     @FindBy(xpath = "//table//tr[@id]")
     private WebElement productInTable;
 
@@ -60,10 +57,6 @@ public class OrderSummaryPage extends AbstractOrderPage {
             driverWait().until((ExpectedCondition<Boolean>) driver -> (productQuantityHiddenInput.getAttribute("value").equals(qty)));
         }
         return this;
-    }
-
-    public String getAlertMessage() {
-        return waitForVisibilityOf(alertMessage).getText().trim();
     }
 
     public boolean isProductVisible() {

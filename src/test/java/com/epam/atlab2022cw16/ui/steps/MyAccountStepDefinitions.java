@@ -1,6 +1,5 @@
 package com.epam.atlab2022cw16.ui.steps;
 
-import com.epam.atlab2022cw16.ui.application.pages.AuthenticationPage;
 import com.epam.atlab2022cw16.ui.application.pages.MyAccountPage;
 import com.epam.atlab2022cw16.ui.utils.EnvironmentUtils;
 import io.cucumber.java.en.Then;

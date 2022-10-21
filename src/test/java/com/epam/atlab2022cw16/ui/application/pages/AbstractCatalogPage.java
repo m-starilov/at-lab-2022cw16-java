@@ -35,14 +35,8 @@ public abstract class AbstractCatalogPage extends AbstractBasePage {
     private static final String ADD_TO_WISH_LIST_BUTTONS = "//a[contains(@class,'addToWishlist wishlistProd')]";
     private static final String ADD_TO_COMPARE_BUTTONS = "//a[contains(text(),'Add to Compare')]";
 
-    @FindBy(xpath = "//a[@class='addToWishlist wishlistProd_4']")
-    private WebElement addEveningDressToWishlistButton;
-
     @FindBy(xpath = "//a[@class='account']")
     private WebElement myAccountPageButton;
-
-    @FindBy(xpath = "//a[@class='addToWishlist wishlistProd_1']")
-    private WebElement addTShirtToWishlistButton;
 
     @FindBy(xpath = "//div[@id='block_top_menu']//a[@title='Women']")
     private WebElement womenDressesBarButton;
@@ -58,9 +52,6 @@ public abstract class AbstractCatalogPage extends AbstractBasePage {
 
     @FindBy(xpath = "//a[@class='fancybox-item fancybox-close']")
     private WebElement closeInfoboxButton;
-
-    @FindBy(xpath = "//a[contains(@class,'checked')]")
-    private List<WebElement> checkedAddToWishlistSolidButtons;
 
     @FindBy(xpath = "//span[@class='product-name']")
     private WebElement addedToCardProductName;

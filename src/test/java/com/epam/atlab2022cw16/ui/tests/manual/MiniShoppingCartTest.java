@@ -102,7 +102,7 @@ public class MiniShoppingCartTest extends AbstractBaseTest {
         OrderSummaryPage orderSummaryPage = new OrderSummaryPage(driver);
         orderSummaryPage.removeFirstItemFromMiniCart();
         assertThat(orderSummaryPage.isMiniCartEmpty()).isTrue();
-        assertThat(orderSummaryPage.getAlertMessage())
+        assertThat(orderSummaryPage.getPageElementAlert().getMessage())
                 .isEqualTo(AlertMessageTexts.EMPTY_CART_TEXT);
     }
 

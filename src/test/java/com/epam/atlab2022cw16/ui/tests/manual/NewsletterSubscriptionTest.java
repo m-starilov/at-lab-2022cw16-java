@@ -50,7 +50,7 @@ public class NewsletterSubscriptionTest extends AbstractBaseTest {
         MyStoreHomepage myStoreHomepage = new MyStoreHomepage(driver);
         myStoreHomepage.sendEmailToNewsletterField(generatedEmail)
                 .pressSubmitNewsletterButton();
-        Alert alert = myStoreHomepage.getNewsletterAlert();
+        Alert alert = myStoreHomepage.getPageElementAlert();
         assertThat(alert.isSuccess())
                 .isTrue();
         assertThat(alert.getMessage())
@@ -63,7 +63,7 @@ public class NewsletterSubscriptionTest extends AbstractBaseTest {
         MyStoreHomepage myStoreHomepage = new MyStoreHomepage(driver);
         myStoreHomepage.sendEmailToNewsletterField(generatedEmail)
                 .pressSubmitNewsletterButton();
-        Alert alert = myStoreHomepage.getNewsletterAlert();
+        Alert alert = myStoreHomepage.getPageElementAlert();
         assertThat(alert.isDanger())
                 .isTrue();
         assertThat(alert.getMessage())

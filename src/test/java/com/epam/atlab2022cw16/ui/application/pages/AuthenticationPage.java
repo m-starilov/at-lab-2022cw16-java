@@ -41,7 +41,7 @@ public class AuthenticationPage extends AbstractBasePage {
     @FindBy(xpath = "//form[@id='login_form']/h3")
     private WebElement loginFormTitle;
 
-    @FindBy(xpath = "//*[@id=\"create_account_error\"]")
+    @FindBy(xpath = "//*[@id='create_account_error']")
     private WebElement createAccountError;
 
     @FindBy(xpath = "//*[@id='email_create']")
@@ -49,9 +49,6 @@ public class AuthenticationPage extends AbstractBasePage {
 
     @FindBy(xpath = "//*[@id='SubmitCreate']")
     private WebElement createAccountButton;
-
-    @FindBy(xpath = "//*[@id='create_account_error']/ol/li/text()")
-    private WebElement invalid_email_address;
 
     public AuthenticationPage(WebDriver driver) {
         super(driver);

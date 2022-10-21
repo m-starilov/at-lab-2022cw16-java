@@ -14,7 +14,7 @@ Feature: As a user I want to get ability to sort and filter products in the cata
     Then all products are displayed on the page according sort "name:desc"
 
     When the user click on dropdown list Sort by and select sort "price:asc"
-    Then all products are displayed on the page according sort "name:asc"
+    Then all products are displayed on the page according sort "price:asc"
 
     When the user click on dropdown list Sort by and select sort "name:asc"
     Then all products are displayed on the page according sort "name:asc"

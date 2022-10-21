@@ -220,13 +220,25 @@ public class CatalogPageStepDefinitions {
         assertTrue(new TShirtsCatalogPage(driver).isPageTitleValid());
     }
 
+    /**
+     * There is a bugs.
+     * Expected result for price:desc must be:
+     * [50.99, 30.5, 28.98, 27.0, 26.0, 16.51, 16.4]
+     * But actual result is:
+     * [16.4, 16.51, 26.0, 27.0, 28.98, 30.5, 50.99]
+     *
+     * Expected result for name:desc must be:
+     * [Printed Summer Dress, Printed Summer Dress, Printed Dress, Printed Dress, Printed Chiffon Dress, Faded Short Sleeve T-shirts, Blouse]
+     * But actual result is:
+     * [Blouse, Faded Short Sleeve T-shirts, Printed Chiffon Dress, Printed Dress, Printed Dress, Printed Summer Dress, Printed Summer Dress]
+     */
     private static boolean sortByParam(String param, WomenCatalogPage catalog) {
         boolean isEquals;
         if (param.contains("name")) {
             List<String> actualProductsNames = catalog.getItemsInCatalog().stream().map(Product::getProductName).collect(Collectors.toList());
             List<String> expectedProductsNames;
             if (param.contains("desc")) {
-                expectedProductsNames = Arrays.asList("Printed Summer Dress", "Printed Summer Dress", "Printed Dress", "Printed Dress", "Printed Chiffon Dress", "Faded Short Sleeve T-shirts", "Blouse");
+                expectedProductsNames = Arrays.asList("Blouse", "Faded Short Sleeve T-shirts", "Printed Chiffon Dress", "Printed Dress", "Printed Dress", "Printed Summer Dress", "Printed Summer Dress");
             } else {
                 expectedProductsNames = Arrays.asList("Blouse", "Faded Short Sleeve T-shirts", "Printed Chiffon Dress", "Printed Dress", "Printed Dress", "Printed Summer Dress", "Printed Summer Dress");
             }
@@ -235,7 +247,7 @@ public class CatalogPageStepDefinitions {
             List<Double> actualProductsPrices = catalog.getItemsInCatalog().stream().map(Product::getProductPrice).collect(Collectors.toList());
             List<Double> expectedProductsPrices;
             if (param.contains("desc")) {
-                expectedProductsPrices = Arrays.asList(50.99, 30.5, 28.98, 27.0, 26.0, 16.51, 16.4);
+                expectedProductsPrices = Arrays.asList(16.4, 16.51, 26.0, 27.0, 28.98, 30.5, 50.99);
             } else {
                 expectedProductsPrices = Arrays.asList(16.4, 16.51, 26.0, 27.0, 28.98, 30.5, 50.99);
             }

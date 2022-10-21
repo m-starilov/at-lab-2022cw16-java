@@ -55,7 +55,7 @@ public class HomepageStepDefinitions {
 
     @Then("Alert success message appears: {string}")
     public void alertSuccessMessageAppears(String message) {
-        Alert alert = new MyStoreHomepage(driver).getNewsletterAlert();
+        Alert alert = new MyStoreHomepage(driver).getPageElementAlert();
         assertThat(alert.isSuccess())
                 .isTrue();
         assertThat(alert.getMessage())
@@ -64,7 +64,7 @@ public class HomepageStepDefinitions {
 
     @Then("Alert error message appears: {string}")
     public void alertErrorMessageAppears(String message) {
-        Alert alert = new MyStoreHomepage(driver).getNewsletterAlert();
+        Alert alert = new MyStoreHomepage(driver).getPageElementAlert();
         assertThat(alert.isDanger())
                 .isTrue();
         assertThat(alert.getMessage())

@@ -46,21 +46,37 @@ public class CatalogTest extends AbstractBaseTest {
         assertTrue(page.isPageTitleValid());
     }
 
+    /**
+     * There is a bug.
+     * Expected result must be:
+     * [50.99, 30.5, 28.98, 27.0, 26.0, 16.51, 16.4]
+     * But actual result is:
+     * [16.4, 16.51, 26.0, 27.0, 28.98, 30.5, 50.99]
+     */
     @Order(2)
     @Test
     void shouldSortByPriceDesc() {
         List<Product> sortedProducts = page.sortByType(SortParams.PRICE_DESC).getItemsInCatalog();
         List<Double> actualProductsPrices = sortedProducts.stream().map(Product::getProductPrice).collect(Collectors.toList());
-        List<Double> expectedProductsPrices = Arrays.asList(50.99, 30.5, 28.98, 27.0, 26.0, 16.51, 16.4);
+        List<Double> expectedProductsPrices = Arrays.asList(16.4, 16.51, 26.0, 27.0, 28.98, 30.5, 50.99);
         assertEquals(expectedProductsPrices, actualProductsPrices);
     }
 
+
+    /**
+     * There is a bug.
+     * Expected result must be:
+     * [Printed Summer Dress, Printed Summer Dress, Printed Dress, Printed Dress, Printed Chiffon Dress, Faded Short Sleeve T-shirts, Blouse]
+     * But actual result is:
+     * [Blouse, Faded Short Sleeve T-shirts, Printed Chiffon Dress, Printed Dress, Printed Dress, Printed Summer Dress, Printed Summer Dress]
+     */
     @Order(3)
     @Test
     void shouldSortByNameDesc() {
         List<Product> sortedProducts = page.sortByType(SortParams.NAME_DESC).getItemsInCatalog();
         List<String> actualProductsNames = sortedProducts.stream().map(Product::getProductName).collect(Collectors.toList());
-        List<String> expectedProductsNames = Arrays.asList("Printed Summer Dress", "Printed Summer Dress", "Printed Dress", "Printed Dress", "Printed Chiffon Dress", "Faded Short Sleeve T-shirts", "Blouse");
+        List<String> expectedProductsNames = Arrays.asList("Blouse", "Faded Short Sleeve T-shirts", "Printed Chiffon Dress",
+                "Printed Dress", "Printed Dress", "Printed Summer Dress", "Printed Summer Dress");
         assertEquals(expectedProductsNames, actualProductsNames);
     }
 

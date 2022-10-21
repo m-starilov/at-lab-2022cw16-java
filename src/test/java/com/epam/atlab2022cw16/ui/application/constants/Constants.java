@@ -2,9 +2,7 @@ package com.epam.atlab2022cw16.ui.application.constants;
 
 public class Constants {
 
-    public static final String CHOOSE = "-- Choose --";
     public static final String CUSTOMER_SERVICE = "Customer service";
-    public static final String WEBMASTER = "Webmaster";
     public static final String MY_WISHLIST_NAME = "My wishlist";
     public static final String CREATE_AN_ACCOUNT = "CREATE AN ACCOUNT";
     public static final String ALREADY_REGISTERED = "ALREADY REGISTERED?";
@@ -31,20 +29,10 @@ public class Constants {
         public static final String PRICE_DESC = "price:desc";
         public static final String NAME_ASC = "name:asc";
         public static final String NAME_DESC = "name:desc";
-        public static final String QUANTITY = "quantity:desc";
-        public static final String REFERENCE_ASC = "reference:asc";
-        public static final String REFERENCE_DESC = "reference:desc";
     }
 
     public enum Color {
-        ORANGE("#F39C11;", "rgb(243, 156, 17)"),
-        BEIGE("#f5f5dc;", "rgb(245, 245, 220)"),
-        WHITE("#ffffff;", "rgb(255, 255, 255)"),
-        BLACK("#434A54;", "rgb(67, 74, 84)"),
-        BLUE("#5D9CEC;", "rgb(93, 156, 236)"),
-        GREEN("#A0D468;", "rgb(160, 212, 104)"),
         YELLOW("#F1C40F;", "rgb(241, 196, 15)"),
-        PINK("#FCCACD;", "rgb(252, 202, 205)"),
         RED("#ff0000", "rgb(255, 0, 0)"),
         RED_ALERT("#f13340", "");
 
