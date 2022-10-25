@@ -15,12 +15,6 @@ public class Product {
 
         private Builder() {}
 
-        private Builder(Product product) {
-            this.productName = product.productName;
-            this.productPrice = product.productPrice;
-            this.productColor = product.productColor;
-        }
-
         public Builder setProductName(String productName) {
             this.productName = productName;
             return this;
@@ -44,10 +38,6 @@ public class Product {
             return product;
         }
 
-    }
-
-    public Builder edit() {
-        return new Builder(this);
     }
 
     public static Builder create()

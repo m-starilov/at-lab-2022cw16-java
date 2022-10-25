@@ -20,7 +20,7 @@ Feature: As a user I want to get ability to store order info in order history
     When I click Proceed to checkout button at Summary page
     Then Authentication page is opened
 
-    When I log in with valid email "e1@gh.com" address and password "22222222"
+    When I log in with email "e1@gh.com" and password "22222222"
     Then I see "Addresses" page title
 
     When I click Proceed to checkout button at Address page

@@ -1,6 +1,5 @@
 package com.epam.atlab2022cw16.ui.application.pages;
 
-import com.epam.atlab2022cw16.ui.application.modules.Alert;
 import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -19,9 +18,6 @@ public class ContactUsPage extends AbstractBasePage {
 
     @FindBy(xpath = "//button[@id='submitMessage']")
     private WebElement submitMessageButton;
-
-    @FindBy(xpath = "//*[contains(@class, 'alert')]")
-    private WebElement alert;
 
     @FindBy(xpath = "//input[@id='email']")
     private WebElement emailAddressInput;
@@ -55,10 +51,6 @@ public class ContactUsPage extends AbstractBasePage {
         submitMessageButton.click();
         log.info("Try to send message");
         return this;
-    }
-
-    public Alert getMessageSentAlert() {
-        return new Alert(alert, driverWait());
     }
 
     public ContactUsPage inputEmail(String email) {

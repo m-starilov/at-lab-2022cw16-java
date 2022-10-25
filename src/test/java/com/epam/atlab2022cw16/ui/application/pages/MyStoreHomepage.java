@@ -1,6 +1,5 @@
 package com.epam.atlab2022cw16.ui.application.pages;
 
-import com.epam.atlab2022cw16.ui.application.modules.Alert;
 import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -27,9 +26,6 @@ public class MyStoreHomepage extends AbstractBasePage {
 
     @FindBy(xpath = "//button[@name='submitNewsletter']")
     private WebElement submitNewsletterButton;
-
-    @FindBy(xpath = "//*[contains(@class, 'alert')]")
-    private WebElement alert;
 
     public MyStoreHomepage(WebDriver driver) {
         super(driver);
@@ -71,9 +67,5 @@ public class MyStoreHomepage extends AbstractBasePage {
         driverWait().until(ExpectedConditions.elementToBeClickable(submitNewsletterButton)).click();
         log.info("Submit newsletter button pressed");
         return this;
-    }
-
-    public Alert getNewsletterAlert() {
-        return new Alert(alert, driverWait());
     }
 }

@@ -108,10 +108,6 @@ public abstract class AbstractBasePage {
         return driver.findElements(by);
     }
 
-    public String getCSSValue(WebElement element, String cssParam) {
-        return element.getCssValue(cssParam);
-    }
-
     public AbstractBasePage openPage() throws OperationNotSupportedException {
         throw new OperationNotSupportedException("Opening the page directly is not possible");
     }

@@ -123,7 +123,7 @@ public class ShoppingCartSignOutTest extends AbstractBaseTest {
     public void signOutTest() {
         OrderSummaryPage orderSummaryPage = new OrderSummaryPage(driver);
         orderSummaryPage.clickSignOutButton();
-        assertThat(orderSummaryPage.getAlertMessage())
+        assertThat(orderSummaryPage.getPageElementAlert().getMessage())
                 .isEqualTo(AlertMessageTexts.EMPTY_CART_TEXT);
         assertThat(orderSummaryPage.isAccountVisible()).isFalse();
     }
@@ -145,7 +145,7 @@ public class ShoppingCartSignOutTest extends AbstractBaseTest {
         MyAccountPage myAccountPage = new MyAccountPage(driver);
         assertThat(myAccountPage.isMiniCartEmpty()).isTrue();
         OrderSummaryPage orderSummaryPage = myAccountPage.clickToMiniCart();
-        assertThat(orderSummaryPage.getAlertMessage())
+        assertThat(orderSummaryPage.getPageElementAlert().getMessage())
                 .isEqualTo(AlertMessageTexts.EMPTY_CART_TEXT);
     }
 }

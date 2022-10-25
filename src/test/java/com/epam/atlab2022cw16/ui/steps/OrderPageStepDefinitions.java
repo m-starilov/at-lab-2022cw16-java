@@ -106,7 +106,7 @@ public class OrderPageStepDefinitions {
     @Then("Cart page has Empty cart alert message")
     public void getAlertMessage() {
         OrderSummaryPage orderSummaryPage = new OrderSummaryPage(driver);
-        assertThat(orderSummaryPage.getAlertMessage())
+        assertThat(orderSummaryPage.getPageElementAlert().getMessage())
                 .isEqualTo(Constants.AlertMessageTexts.EMPTY_CART_TEXT);
     }
 
