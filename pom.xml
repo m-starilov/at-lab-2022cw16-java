@@ -33,6 +33,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.tests.parallel.count>1</project.tests.parallel.count>
         <browser>chrome</browser>
+        <exclude/>
     </properties>
 
     <build>
@@ -61,6 +62,11 @@
                             junit.jupiter.extensions.autodetection.enabled = true
                         </configurationParameters>
                     </properties>
+                    <excludes>
+                        <exclude>
+                            ${exclude}
+                        </exclude>
+                    </excludes>
                 </configuration>
             </plugin>
             <plugin>

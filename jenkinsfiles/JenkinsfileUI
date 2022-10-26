@@ -1,0 +1,37 @@
+pipeline {
+    agent {
+        label 'windows'
+    }
+
+    triggers {
+        cron 'H H(8-20)/3 * * H(1-5)'
+    }
+
+    parameters {
+        choice (choices: ['chrome', 'firefox'], name: 'browser')
+        string (defaultValue: '3', name: 'testCount')
+        string(name: 'testTag', defaultValue: 'ui', description: '')
+    }
+
+    stages {
+        stage('Test') {
+            steps {
+                echo 'Try to run tests : '
+                echo "Browser: ${browser}"
+                echo "Fork count: ${testCount}"
+                bat "mvn -Dbrowser=${browser} -Dproject.tests.parallel.count=${testCount} -Dgroups=${testTag} clean test"
+            }
+        }
+
+    }
+    post {
+        always {
+            junit '/target/surefire-reports/TEST-*.xml'
+            archiveArtifacts allowEmptyArchive: true, artifacts: '**/target/surefire-reports/TEST-*.xml', followSymlinks: false
+            archiveArtifacts allowEmptyArchive: true, artifacts: '**/target/cucumber-reports/CucumberTest.html', followSymlinks: false
+        }
+        failure {
+            archiveArtifacts allowEmptyArchive: true, artifacts: '**/target/screenshots/*.png', followSymlinks: false
+        }
+    }
+}

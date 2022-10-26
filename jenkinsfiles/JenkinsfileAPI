@@ -1,0 +1,29 @@
+pipeline {
+    agent {
+        label 'windows'
+    }
+    triggers {
+        cron 'H H(8-20)/3 * * H(1-5)'
+    }
+    parameters {
+        string(name: 'forkCount', defaultValue: '3', description: '')
+        string(name: 'testTag', defaultValue: 'api', description: '')
+        string(name: 'testSuite', defaultValue: 'com/epam/atlab2022cw16/ui/tests/bdd/RunCucumberTest', description: '')
+    }
+    stages {
+        stage('Test') {
+            steps {
+                bat "mvn -Dproject.tests.parallel.count=${forkCount} -Dexclude=${testSuite} -Dgroups=${testTag} clean test"
+            }
+        }
+    }
+    post {
+        always {
+            junit '/target/surefire-reports/TEST-*.xml'
+            archiveArtifacts artifacts: '/target/surefire-reports/TEST-*.xml'
+        }
+        failure {
+            archiveArtifacts artifacts: '/target/**'
+        }
+    }
+}
