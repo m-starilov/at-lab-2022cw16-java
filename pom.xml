@@ -21,6 +21,9 @@
         <rest-assured.version>5.2.0</rest-assured.version>
         <jsonassert.version>1.5.1</jsonassert.version>
         <slf4j.version>2.0.3</slf4j.version>
+        <agent-java-junit5.version>5.1.5</agent-java-junit5.version>
+        <logger-java-log4j.version>5.1.5</logger-java-log4j.version>
+        <agent-java-cucumber6.version>5.1.2</agent-java-cucumber6.version>
         <maven-surefire-plugin.version>3.0.0-M7</maven-surefire-plugin.version>
         <maven-compiler-plugin.version>3.10.1</maven-compiler-plugin.version>
 
@@ -50,9 +53,12 @@
                             cucumber.junit-platform.naming-strategy=long
                             cucumber.glue=com.epam.atlab2022cw16.ui
                             cucumber.plugin=pretty, html:target/cucumber-reports/CucumberTest.html
+                            cucumber.plugin=pretty, com.epam.reportportal.cucumber.StepReporter
+                            cucumber.plugin=pretty, com.epam.reportportal.cucumber.ScenarioReporter
                             cucumber.execution.parallel.enabled=true
                             cucumber.execution.parallel.config.strategy=custom
                             cucumber.execution.parallel.config.custom.class=com.epam.atlab2022cw16.ui.strategies.CustomParallelExecutionConfigurationStrategy
+                            junit.jupiter.extensions.autodetection.enabled = true
                         </configurationParameters>
                     </properties>
                 </configuration>
@@ -153,6 +159,21 @@
             <artifactId>jsonassert</artifactId>
             <version>${jsonassert.version}</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.epam.reportportal</groupId>
+            <artifactId>agent-java-junit5</artifactId>
+            <version>${agent-java-junit5.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.epam.reportportal</groupId>
+            <artifactId>logger-java-log4j</artifactId>
+            <version>${logger-java-log4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.epam.reportportal</groupId>
+            <artifactId>agent-java-cucumber6</artifactId>
+            <version>${agent-java-cucumber6.version}</version>
         </dependency>
     </dependencies>
 

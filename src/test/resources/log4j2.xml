@@ -1,21 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Configuration>
+<Configuration packages="com.epam.ta.reportportal.log4j.appender" status="WARN">
+    <properties>
+        <property name="pattern">%d %p %c{2} [%t] %l %m%n</property>
+    </properties>
     <Appenders>
-        <Console name="Console">
-            <PatternLayout>
-                <Pattern>%d %p %c{2} [%t] %l %m%n</Pattern>
-            </PatternLayout>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="${pattern}"/>
         </Console>
         <File name="File" fileName="target/logs/YourLogo_automation.log">
-            <PatternLayout>
-                <Pattern>%d %p %c{2} [%t] %m%n</Pattern>
-            </PatternLayout>
+            <PatternLayout pattern="${pattern}"/>
         </File>
+        <ReportPortalLog4j2Appender name="ReportPortalAppender">
+            <PatternLayout pattern="${pattern}" />
+        </ReportPortalLog4j2Appender>
     </Appenders>
     <Loggers>
-        <Root level="trace">
-            <AppenderRef ref="Console"/>
+        <Root level="DEBUG">
+            <AppenderRef ref="Console" level="INFO"/>
             <AppenderRef ref="File"/>
+            <AppenderRef ref="ReportPortalAppender"/>
         </Root>
     </Loggers>
 </Configuration>

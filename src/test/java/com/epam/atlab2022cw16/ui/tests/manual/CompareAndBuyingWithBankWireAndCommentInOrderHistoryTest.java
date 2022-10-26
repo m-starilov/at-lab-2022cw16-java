@@ -13,14 +13,11 @@ import com.epam.atlab2022cw16.ui.application.pages.OrderPaymentPage;
 import com.epam.atlab2022cw16.ui.application.pages.OrderShippingPage;
 import com.epam.atlab2022cw16.ui.application.pages.OrderSummaryPage;
 import com.epam.atlab2022cw16.ui.application.modules.Alert;
-import com.epam.atlab2022cw16.ui.utils.TestListener;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Tags;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.openqa.selenium.WebDriver;
 
 import java.util.Arrays;
@@ -30,16 +27,13 @@ import static com.epam.atlab2022cw16.ui.application.constants.Constants.AlertMes
 import static com.epam.atlab2022cw16.ui.application.constants.Constants.AlertMessageTexts.ORDER_HISTORY_PAGE_SUCCESS_MESSAGE;
 import static org.assertj.core.api.Assertions.assertThat;
 
+@Tag("ui")
+@Tag("manual")
 @JiraTicketsLink(id = {16299, 16331},
         description = "Test check authorization, adding to comparison, creating order and adding comment to order",
         url = {"https://jira.epam.com/jira/browse/EPMFARMATS-16299#",
                 "https://jira.epam.com/jira/browse/EPMFARMATS-16331"})
-@ExtendWith(TestListener.class)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-@Tags({
-        @Tag("ui"),
-        @Tag("manual")
-})
 public class CompareAndBuyingWithBankWireAndCommentInOrderHistoryTest extends AbstractBaseTest {
 
     private static final String TOTAL_ORDER_PRICE = "$59.96";
