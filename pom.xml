@@ -53,9 +53,7 @@
                         <configurationParameters>
                             cucumber.junit-platform.naming-strategy=long
                             cucumber.glue=com.epam.atlab2022cw16.ui
-                            cucumber.plugin=pretty, html:target/cucumber-reports/CucumberTest.html
-                            cucumber.plugin=pretty, com.epam.reportportal.cucumber.StepReporter
-                            cucumber.plugin=pretty, com.epam.reportportal.cucumber.ScenarioReporter
+                            cucumber.plugin=pretty, com.epam.reportportal.cucumber.ScenarioReporter, html:target/cucumber-reports/CucumberTest.html
                             cucumber.execution.parallel.enabled=true
                             cucumber.execution.parallel.config.strategy=custom
                             cucumber.execution.parallel.config.custom.class=com.epam.atlab2022cw16.ui.strategies.CustomParallelExecutionConfigurationStrategy
