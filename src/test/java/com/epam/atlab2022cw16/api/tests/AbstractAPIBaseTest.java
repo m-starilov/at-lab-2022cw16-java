@@ -1,5 +1,7 @@
 package com.epam.atlab2022cw16.api.tests;
 
+import com.epam.reportportal.listeners.LogLevel;
+import com.epam.reportportal.restassured.ReportPortalRestAssuredLoggingFilter;
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.config.EncoderConfig;
@@ -28,6 +30,7 @@ public abstract class AbstractAPIBaseTest {
                 .addFilter(new ErrorLoggingFilter())
                 .addFilter(new ResponseLoggingFilter())
                 .addFilter(new RequestLoggingFilter())
+                .addFilter(new ReportPortalRestAssuredLoggingFilter(42, LogLevel.INFO))
                 .setConfig(RestAssuredConfig.config()
                         .httpClient(httpClientConfig()
                                 .setParam(ClientPNames.COOKIE_POLICY, CookiePolicy.BROWSER_COMPATIBILITY))
