@@ -23,6 +23,7 @@
         <slf4j.version>2.0.3</slf4j.version>
         <agent-java-junit5.version>5.1.5</agent-java-junit5.version>
         <logger-java-log4j.version>5.1.5</logger-java-log4j.version>
+        <logger-java-rest-assured.version>5.2.1</logger-java-rest-assured.version>
         <agent-java-cucumber6.version>5.1.2</agent-java-cucumber6.version>
         <maven-surefire-plugin.version>3.0.0-M7</maven-surefire-plugin.version>
         <maven-compiler-plugin.version>3.10.1</maven-compiler-plugin.version>
@@ -53,7 +54,7 @@
                         <configurationParameters>
                             cucumber.junit-platform.naming-strategy=long
                             cucumber.glue=com.epam.atlab2022cw16.ui
-                            cucumber.plugin=pretty, com.epam.reportportal.cucumber.ScenarioReporter, html:target/cucumber-reports/CucumberTest.html
+                            cucumber.plugin=pretty, html:target/cucumber-reports/CucumberTest.html, com.epam.reportportal.cucumber.ScenarioReporter
                             cucumber.execution.parallel.enabled=true
                             cucumber.execution.parallel.config.strategy=custom
                             cucumber.execution.parallel.config.custom.class=com.epam.atlab2022cw16.ui.strategies.CustomParallelExecutionConfigurationStrategy
@@ -178,6 +179,11 @@
             <groupId>com.epam.reportportal</groupId>
             <artifactId>agent-java-cucumber6</artifactId>
             <version>${agent-java-cucumber6.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.epam.reportportal</groupId>
+            <artifactId>logger-java-rest-assured</artifactId>
+            <version>${logger-java-rest-assured.version}</version>
         </dependency>
     </dependencies>
 
